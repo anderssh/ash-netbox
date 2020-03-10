@@ -1,9 +1,5 @@
 # netbox
 
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/pdk/latest/pdk_generating_modules.html .
-
-The README template below provides a starting point with details about what information to include in your README.
-
 #### Table of Contents
 
 1. [Description](#description)
@@ -17,9 +13,7 @@ The README template below provides a starting point with details about what info
 
 ## Description
 
-Briefly tell users why they might want to use your module. Explain what your module does and what kind of problems users can solve with it.
-
-This should be a fairly short description helps the user decide if your module is what they want.
+Puppet module for installing and configuring Netbox, an IPAM (IP Adress Management) tool initially conceived by the network engineering team at DigitalOcean. [The documentation for Netbox can be fount here](https://netbox.readthedocs.io/) 
 
 ## Setup
 
