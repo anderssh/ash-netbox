@@ -22,7 +22,6 @@ class netbox::install (
     python36-devel,
     libxml2-devel,
     libxslt-devel,
-    libxslt-devel,
     libffi-devel,
     openssl-devel,
     redhat-rpm-config
