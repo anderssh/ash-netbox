@@ -33,9 +33,14 @@ If your module requires anything extra before setting up (pluginsync enabled, an
 
 If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
 
-### Beginning with netbox
+### Beginning with nifi
 
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+Add dependency modules to your puppet environment:
+
+* camptocamp/systemd
+* puppet/archive
+* puppetlabs/inifile
+* puppetlabs/stdlib
 
 ## Usage
 
