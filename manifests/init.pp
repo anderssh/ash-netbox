@@ -52,7 +52,7 @@
 #   }
 #
 class netbox (
-  String $version = '1.11.1',
+  String $version = '',
   String $download_url = '',
   String $download_checksum = '',
   Stdlib::Absolutepath $download_tmp_dir = '/var/tmp',
@@ -61,6 +61,11 @@ class netbox (
   String $download_checksum_type = 'sha256',
   Stdlib::Absolutepath $install_root = '/opt/netbox',
   Stdlib::Absolutepath $var_directory = '/var/opt/netbox',
+  Boolean $should_install = false,
+  Boolean $should_configure = false,
+  Boolean $handle_database = true,
+  Boolean $handle_service = false,
+
 ) {
 
   if $handle_database {
