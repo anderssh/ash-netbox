@@ -29,14 +29,6 @@
 # @param download_tmp_dir
 #   Temporary directory for downloading the tarball.
 #
-# @param service_limit_nofile
-#   The limit on number of open files permitted for the service. Used
-#   for LimitNOFILE= in netbox.service.
-#
-# @param service_limit_nproc
-#   The limit on number of processes permitted for the service. Used
-#   for LimitNPROC= in netbox.service.
-#
 # @param install_root
 #   The root directory of the netbox installation.
 #
