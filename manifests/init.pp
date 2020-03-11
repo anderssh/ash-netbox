@@ -37,6 +37,10 @@
 #   directories beneath this path.  This will implicitly add netbox
 #   properties for working directories and repositories.
 #
+#
+# @param handle_database [Boolean]
+#   Should the PostgreSQL database be handled by this module. Defaults to true.
+#
 # @example Defaults
 #   include netbox
 #
@@ -59,30 +63,39 @@ class netbox (
   Stdlib::Absolutepath $var_directory = '/var/opt/netbox',
 ) {
 
-  class { 'netbox::install':
-    install_root           => $install_root,
-    version                => $version,
-    user                   => $user,
-    group                  => $group,
-    download_url           => $download_url,
-    download_checksum      => $download_checksum,
-    download_checksum_type => $download_checksum_type,
-    download_tmp_dir       => $download_tmp_dir,
+  if $handle_database {
+    class { 'netbox::database':
+    }
   }
 
-  class { 'netbox::config':
-    install_root  => $install_root,
-    user          => $user,
-    group         => $group,
-    var_directory => $var_directory,
-    version       => $version,
+  if $should_install {
+    class { 'netbox::install':
+      install_root           => $install_root,
+      version                => $version,
+      user                   => $user,
+      group                  => $group,
+      download_url           => $download_url,
+      download_checksum      => $download_checksum,
+      download_checksum_type => $download_checksum_type,
+      download_tmp_dir       => $download_tmp_dir,
+    }
+  }
+  if $should_configure {
+    class { 'netbox::config':
+      install_root  => $install_root,
+      user          => $user,
+      group         => $group,
+      var_directory => $var_directory,
+      version       => $version,
+    }
+  }
+  if $handle_service {
+    class {'netbox::service':
+      install_root => $install_root,
+      version      => $version,
+      user         => $user,
+    }
   }
 
-  class {'netbox::service':
-    install_root => $install_root,
-    version      => $version,
-    user         => $user,
-  }
-
-  Class['netbox::install'] -> Class['netbox::config'] ~> Class['netbox::service']
+#  Class['netbox::install'] -> Class['netbox::config'] ~> Class['netbox::service']
 }
