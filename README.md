@@ -27,7 +27,7 @@ If your module requires anything extra before setting up (pluginsync enabled, an
 
 If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
 
-### Beginning with nifi
+### Beginning with Netbox
 
 Add dependency modules to your puppet environment:
 
