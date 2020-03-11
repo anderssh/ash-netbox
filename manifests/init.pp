@@ -64,12 +64,18 @@ class netbox (
   Boolean $should_install = false,
   Boolean $should_configure = false,
   Boolean $handle_database = true,
+  Boolean $handle_redis = true,
   Boolean $handle_service = false,
 
 ) {
 
   if $handle_database {
     class { 'netbox::database':
+    }
+  }
+
+  if $handle_redis {
+    class { 'netbox::redis':
     }
   }
 
