@@ -13,21 +13,15 @@
 
 ## Description
 
-Puppet module for installing and configuring Netbox, an IPAM (IP Adress Management) tool initially conceived by the network engineering team at DigitalOcean. [The documentation for Netbox can be fount here](https://netbox.readthedocs.io/) 
+Puppet module for installing and configuring Netbox, an IPAM (IP Adress Management) tool initially conceived by the network engineering team at DigitalOcean. [The documentation for Netbox can be found here](https://netbox.readthedocs.io/) 
 
 ## Setup
 
-### What netbox affects **OPTIONAL**
+### What netbox affects
 
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
+This module installs and configures Netbox. Netbox needs PostgreSQL and Redis to work, and this module can optionally handle that too.
 
-If there's more that they should know about, though, this is the place to mention:
-
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
+### Setup Requirements 
 
 If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
 
@@ -41,6 +35,12 @@ Add dependency modules to your puppet environment:
 * puppet/archive
 * puppetlabs/inifile
 * puppetlabs/stdlib
+
+If you ar going to use this module to install PostgreSQL and Redis, then you need these as well:
+
+* puppetlabs/postgresql
+* puppetlabs/concat
+* puppet/redis
 
 ## Usage
 
