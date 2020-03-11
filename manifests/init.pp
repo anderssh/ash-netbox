@@ -61,7 +61,7 @@ class netbox (
   String $download_checksum_type = 'sha256',
   Stdlib::Absolutepath $install_root = '/opt/netbox',
   Stdlib::Absolutepath $var_directory = '/var/opt/netbox',
-  Boolean $should_install = false,
+  Boolean $should_install = true,
   Boolean $should_configure = false,
   Boolean $handle_database = true,
   Boolean $handle_redis = true,
