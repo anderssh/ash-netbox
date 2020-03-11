@@ -8,7 +8,7 @@
 class netbox::database (
   String $database_name = 'netbox',
   String $database_user = 'netbox',
-  String $user_password = 'mypassword'
+  String $database_password = 'mypassword'
 ){
 
   class { 'postgresql::server':
@@ -16,7 +16,7 @@ class netbox::database (
 
   postgresql::server::db { $database_name:
     user     => $database_user,
-    password => postgresql_password($database_name, $database_user),
+    password => postgresql_password($database_name, $database_password),
   }
   postgresql::server::database_grant { 'user_ALL_on_database':
     privilege => 'ALL',
