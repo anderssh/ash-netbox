@@ -3,4 +3,8 @@
 ---
 fixtures:
   forge_modules:
-#     stdlib: "puppetlabs/stdlib"
+    concat: "puppetlabs/concat"
+    postgresql: "puppetlabs/postgresql"
+    redis: "puppet/redis"
+    stdlib: "puppetlabs/stdlib"
+    augeas_core: "puppetlabs/augeas_core"
