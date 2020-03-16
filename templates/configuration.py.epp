@@ -27,7 +27,7 @@ DATABASE = {
     'PASSWORD': '<%=database_password%>',   # PostgreSQL password
     'HOST': '<%=database_host%>',      # Database server
     'PORT': <%=database_port%>,   # Database port (leave blank for default)
-    'CONN_MAX_AGE': 300,      # Max database connection age
+    'CONN_MAX_AGE': <%=database_conn_max_age%>,      # Max database connection age
 }
 
 # Redis database settings. The Redis database is used for caching and background processing such as webhooks
