@@ -49,13 +49,21 @@ class netbox::install (
     target => $software_directory,
   }
 
-  python::pyvenv { '/opt/netbox/venv' :
-    ensure     => present,
-    version    => 'system',
-    systempkgs => true,
-    owner      => $user,
-    group      => $user,
-}
+  $venv_dir = '/opt/netbox/venv'
+    file { $venv_dir:
+      ensure => directory,
+      owner  => $user,
+      group  => $group,
+    }
+
+    exec { "python_venv_${venv_dir}":
+      command => "python3 -m venv ${venv_dir}",
+      user    => $user,
+      creates => "${venv_dir}/bin/activate",
+      cwd     => '/tmp',
+      unless  => "grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate", #Unless activate exists and VIRTUAL_ENV is correct we re-create the virtualenv
+      require => File[$venv_dir],
+    }
 
   user { $user:
     system => true,
