@@ -66,11 +66,20 @@ class netbox (
   Boolean $handle_database = true,
   Boolean $handle_redis = true,
   Boolean $handle_service = false,
-
+  String $database_name     = 'Netbox',
+  String $database_user     = 'Netbox',
+  String $database_password = 'Netbox',
+  Stdlib::Host $database_host = $trusted['certname'],
+  Integer $database_port = 5432,
+  Integer $database_conn_max_age = 300,
+  Stdlib::Host $allowed_hosts = "Netbox${trusted['domain']}",
 ) {
 
   if $handle_database {
     class { 'netbox::database':
+      database_name     => $database_name,
+      database_user     => $database_user,
+      database_password => $database_password,
     }
   }
 
@@ -93,11 +102,16 @@ class netbox (
   }
   if $should_configure {
     class { 'netbox::config':
-      install_root  => $install_root,
-      user          => $user,
-      group         => $group,
-      var_directory => $var_directory,
-      version       => $version,
+      user                  => $user,
+      group                 => $group,
+      install_root          => $install_root,
+      allowed_hosts         => $allowed_hosts,
+      database_name         => $database_name,
+      database_user         => $database_user,
+      database_password     => $database_password,
+      database_host         => $database_host,
+      database_port         => $database_port,
+      database_conn_max_age => $database_conn_max_age,
     }
   }
   if $handle_service {
