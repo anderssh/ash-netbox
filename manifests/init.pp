@@ -62,7 +62,7 @@ class netbox (
   Stdlib::Absolutepath $install_root = '/opt',
   Stdlib::Absolutepath $var_directory = '/var/opt/netbox',
   Boolean $should_install = true,
-  Boolean $should_configure = false,
+  Boolean $should_configure = true,
   Boolean $handle_database = true,
   Boolean $handle_redis = true,
   Boolean $handle_service = false,
