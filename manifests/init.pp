@@ -72,7 +72,7 @@ class netbox (
   Stdlib::Host $database_host = $trusted['certname'],
   Integer $database_port = 5432,
   Integer $database_conn_max_age = 300,
-  Array[Stdlib::Host] $allowed_hosts = ["netbox${trusted['domain']}"],
+  Array[Stdlib::Host] $allowed_hosts = ['netbox.exmple.com','newbox.example.com'],
 ) {
 
   if $handle_database {
