@@ -1,4 +1,4 @@
-<% | Host $alllowed_hosts,
+<% | Host $allowed_hosts,
      String $database_name,
      String $database_user,
      String $database_password,
