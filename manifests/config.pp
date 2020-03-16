@@ -8,7 +8,7 @@ class netbox::config (
   String $user,
   String $group,
   Stdlib::Absolutepath $install_root,
-  Host $allowed_hosts,
+  Array[Stdlib::Host] $allowed_hosts,
   String $database_name,
   String $database_user,
   String $database_password,
