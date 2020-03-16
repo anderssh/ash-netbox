@@ -7,13 +7,13 @@
 class netbox::install (
   Stdlib::Absolutepath $install_root,
   String $version,
-  Enum['tarball', 'git_clone'] $install_method,
   String $download_url,
   String $download_checksum,
   String $download_checksum_type,
   Stdlib::Absolutepath $download_tmp_dir,
   String $user,
   String $group,
+  Enum['tarball', 'git_clone'] $install_method = 'tarball ',
   Boolean $included = true
 ) {
 
