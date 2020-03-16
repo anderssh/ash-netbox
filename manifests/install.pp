@@ -50,11 +50,11 @@ class netbox::install (
   }
 
   python::pyvenv { '/opt/netbox/venv' :
-  ensure     => present,
-  version    => 'system',
-  systempkgs => true,
-  owner      => $user,
-  group      => $user,
+    ensure     => present,
+    version    => 'system',
+    systempkgs => true,
+    owner      => $user,
+    group      => $user,
 }
 
   user { $user:
