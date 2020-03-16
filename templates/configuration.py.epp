@@ -1,4 +1,4 @@
-<% | Host $allowed_hosts,
+<% | Array[Stdlib::Host] $allowed_hosts,
      String $database_name,
      String $database_user,
      String $database_password,
@@ -17,7 +17,7 @@
 # access to the server via any other hostnames. The first FQDN in the list will be treated as the preferred name.
 #
 # Example: ALLOWED_HOSTS = ['netbox.example.com', 'netbox.internal.local']
-ALLOWED_HOSTS = [<%=$allowed_hosts.join(',')%>]
+ALLOWED_HOSTS = [<%=$allowed_hosts.join(' ,')%>]
 
 # PostgreSQL database configuration. See the Django documentation for a complete list of available parameters:
 #   https://docs.djangoproject.com/en/stable/ref/settings/#databases
