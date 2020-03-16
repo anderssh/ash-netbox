@@ -52,9 +52,9 @@
 #   }
 #
 class netbox (
-  String $version = '',
-  String $download_url = '',
-  String $download_checksum = '',
+  String $version = '2.7.10',
+  String $download_url = 'https://github.com/netbox-community/netbox/archive/v2.7.10.tar.gz',
+  String $download_checksum = '21743eda8f633761fd9a16c28658235e7ee9a79b15353770b4b1fe0d133a26e5',
   Stdlib::Absolutepath $download_tmp_dir = '/var/tmp',
   String $user = 'netbox',
   String $group = 'netbox',
