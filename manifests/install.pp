@@ -7,6 +7,7 @@
 class netbox::install (
   Stdlib::Absolutepath $install_root,
   String $version,
+  Enum['tarball', 'git_clone'] $install_method,
   String $download_url,
   String $download_checksum,
   String $download_checksum_type,
