@@ -8,7 +8,7 @@ class netbox::config (
   String $user,
   String $group,
   Stdlib::Absolutepath $install_root,
-  Host $alllowed_hosts,
+  Host $allowed_hosts,
   String $database_name,
   String $database_user,
   String $database_password,
@@ -22,7 +22,7 @@ class netbox::config (
 
   file { $config_file:
     content => epp('netbox/configuration.py.epp', {
-      'alllowed_hosts'        => $alllowed_hosts,
+      'allowed_hosts'         => $allowed_hosts,
       'database_name'         => $database_name,
       'database_user'         => $database_user,
       'database_password'     => $database_password,
