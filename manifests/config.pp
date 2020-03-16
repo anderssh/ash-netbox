@@ -17,8 +17,8 @@ class netbox::config (
   Integer $database_conn_max_age,
 ) {
 
-  $software_directory = "${install_root}/netbox/"
-  $config_file = "${software_directory}/netbox/configuration.py"
+  $software_directory = "${install_root}/netbox"
+  $config_file = "${software_directory}/netbox/netbox/configuration.py"
 
   file { $config_file:
     content => epp('netbox/configuration.py.epp', {
