@@ -27,41 +27,38 @@ class netbox::install (
     redhat-rpm-config
   ]
 
-  if $included {
-    package { $packages: ensure => 'installed' }
+  package { $packages: ensure => 'installed' }
+
+  $local_tarball = "${download_tmp_dir}/netbox-${version}.tar.gz"
+  $software_directory = "${install_root}/netbox-${version}"
+
+  archive { $local_tarball:
+    source        => $download_url,
+    checksum      => $download_checksum,
+    checksum_type => $download_checksum_type,
+    extract       => true,
+    extract_path  => $install_root,
+    creates       => $software_directory,
+    cleanup       => true,
+    user          => $user,
+    group         => $group,
   }
-  else {
-    $local_tarball = "${download_tmp_dir}/netbox-${version}.tar.gz"
-    $software_directory = "${install_root}/netbox-${version}"
 
-    archive { $local_tarball:
-      source        => $download_url,
-      checksum      => $download_checksum,
-      checksum_type => $download_checksum_type,
-      extract       => true,
-      extract_path  => $install_root,
-      creates       => $software_directory,
-      cleanup       => true,
-      user          => $user,
-      group         => $group,
-    }
+  user { $user:
+    system => true,
+    gid    => $group,
+    home   => $install_root,
+  }
 
-    user { $user:
-      system => true,
-      gid    => $group,
-      home   => $install_root,
-    }
+  group { $group:
+    system => true,
+  }
 
-    group { $group:
-      system => true,
-    }
-
-    file { $install_root:
-      ensure => directory,
-      owner  => 'netbox',
-      group  => 'netbox',
-      mode   => '0750',
-    }
+  file { $install_root:
+    ensure => directory,
+    owner  => 'netbox',
+    group  => 'netbox',
+    mode   => '0750',
   }
 }
 
