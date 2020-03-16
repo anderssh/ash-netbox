@@ -44,6 +44,10 @@ class netbox::install (
     user          => $user,
     group         => $group,
   }
+  file { '/opt/netbox':
+    ensure => 'link',
+    target => $software_directory,
+  }
 
   user { $user:
     system => true,
