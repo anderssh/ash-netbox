@@ -66,13 +66,13 @@ class netbox (
   Boolean $handle_database = true,
   Boolean $handle_redis = true,
   Boolean $handle_service = false,
-  String $database_name     = 'Netbox',
-  String $database_user     = 'Netbox',
-  String $database_password = 'Netbox',
+  String $database_name     = 'netbox',
+  String $database_user     = 'netbox',
+  String $database_password = 'netbox',
   Stdlib::Host $database_host = $trusted['certname'],
   Integer $database_port = 5432,
   Integer $database_conn_max_age = 300,
-  Stdlib::Host $allowed_hosts = "Netbox${trusted['domain']}",
+  Stdlib::Host $allowed_hosts = "netbox${trusted['domain']}",
 ) {
 
   if $handle_database {
