@@ -49,6 +49,14 @@ class netbox::install (
     target => $software_directory,
   }
 
+  python::pyvenv { '/opt/netbox/venv' :
+  ensure     => present,
+  version    => 'system',
+  systempkgs => true,
+  owner      => $user,
+  group      => $user,
+}
+
   user { $user:
     system => true,
     gid    => $group,
