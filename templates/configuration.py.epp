@@ -22,12 +22,12 @@ ALLOWED_HOSTS = [<%=$allowed_hosts.join(', ')%>]
 # PostgreSQL database configuration. See the Django documentation for a complete list of available parameters:
 #   https://docs.djangoproject.com/en/stable/ref/settings/#databases
 DATABASE = {
-    'NAME': '<%=database_name%>',         # Database name
-    'USER': '<%=database_user%>',            # PostgreSQL username
-    'PASSWORD': '<%=database_password%>',   # PostgreSQL password
-    'HOST': '<%=database_host%>',      # Database server
-    'PORT': <%=database_port%>,   # Database port (leave blank for default)
-    'CONN_MAX_AGE': <%=database_conn_max_age%>,      # Max database connection age
+    'NAME': '<%=$database_name%>',         # Database name
+    'USER': '<%=$database_user%>',            # PostgreSQL username
+    'PASSWORD': '<%=$database_password%>',   # PostgreSQL password
+    'HOST': '<%=$database_host%>',      # Database server
+    'PORT': <%=$database_port%>,   # Database port (leave blank for default)
+    'CONN_MAX_AGE': <%=$database_conn_max_age%>,      # Max database connection age
 }
 
 # Redis database settings. The Redis database is used for caching and background processing such as webhooks
