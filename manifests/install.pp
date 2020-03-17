@@ -30,6 +30,23 @@ class netbox::install (
 
   package { $packages: ensure => 'installed' }
 
+  user { $user:
+    system => true,
+    gid    => $group,
+    home   => $install_root,
+  }
+
+  group { $group:
+    system => true,
+  }
+
+  file { $install_root:
+    ensure => directory,
+    owner  => 'netbox',
+    group  => 'netbox',
+    mode   => '0750',
+  }
+
   $local_tarball = "${download_tmp_dir}/netbox-${version}.tar.gz"
   $software_directory = "${install_root}/netbox-${version}"
 
@@ -56,30 +73,22 @@ class netbox::install (
       group  => $group,
     }
 
-    exec { "python_venv_${venv_dir}":
-      command => "/usr/bin/python3 -m venv ${venv_dir}",
-      user    => $user,
-      creates => "${venv_dir}/bin/activate",
-      cwd     => '/tmp',
-      unless  => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate", #Unless activate exists and VIRTUAL_ENV is correct we re-create the virtualenv
-      require => File[$venv_dir],
-    }
-
-  user { $user:
-    system => true,
-    gid    => $group,
-    home   => $install_root,
+  exec { "python_venv_${venv_dir}":
+    command => "/usr/bin/python3 -m venv ${venv_dir}",
+    user    => $user,
+    creates => "${venv_dir}/bin/activate",
+    cwd     => '/tmp',
+    unless  => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate", #Unless activate exists and VIRTUAL_ENV is correct we re-create the virtualenv
+    require => File[$venv_dir],
+  }
+  ~>exec { 'install python requirements':
+    cwd         => "${install_root}/netbox",
+    provider    => shell,
+    user        => $user,
+    command     => '. ../venv/bin/activate && venv/bin/pip3 install -r requirements.txt',
+    refreshonly => true,
   }
 
-  group { $group:
-    system => true,
-  }
 
-  file { $install_root:
-    ensure => directory,
-    owner  => 'netbox',
-    group  => 'netbox',
-    mode   => '0750',
-  }
 }
 
