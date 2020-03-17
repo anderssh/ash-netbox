@@ -30,7 +30,7 @@ class netbox::config (
       'database_host'         => $database_host,
       'database_port'         => $database_port,
       'database_conn_max_age' => $database_conn_max_age,
-      'redis_options'          => $redis_options,
+      'redis_options'         => $redis_options,
     }),
     owner   => $user,
     group   => $group,
