@@ -5,6 +5,7 @@
      Stdlib::Host $database_host,
      Integer $database_port,
      Integer $database_conn_max_age,
+     Hash $redis_options,
    | -%>
 
 #########################
@@ -35,27 +36,27 @@ DATABASE = {
 # Full connection details are required in both sections, even if they are the same.
 REDIS = {
     'webhooks': {
-        'HOST': 'localhost',
-        'PORT': 6379,
+        'HOST': '<%=$redis_options['webhooks']['host']%>',
+        'PORT': <%=$redis_options['webhooks']['port']%>,
         # Comment out `HOST` and `PORT` lines and uncomment the following if using Redis Sentinel
         # 'SENTINELS': [('mysentinel.redis.example.com', 6379)],
         # 'SENTINEL_SERVICE': 'netbox',
-        'PASSWORD': '',
-        'DATABASE': 0,
-        'DEFAULT_TIMEOUT': 300,
-        'SSL': False,
+        'PASSWORD': '<%=$redis_options['webhooks']['password']%>',
+        'DATABASE': <%=$redis_options['webhooks']['database']%>,
+        'DEFAULT_TIMEOUT': <%=$redis_options['webhooks'][default_timeout]%>,
+        'SSL': <%=$redis_options['webhooks']['ssl']%>,
     },
     'caching': {
-        'HOST': 'localhost',
-        'PORT': 6379,
+        'HOST': '<%=$redis_options['caching']['host']%>',
+        'PORT': <%=$redis_options['caching']['port']%>,
         # Comment out `HOST` and `PORT` lines and uncomment the following if using Redis Sentinel
         # 'SENTINELS': [('mysentinel.redis.example.com', 6379)],
         # 'SENTINEL_SERVICE': 'netbox',
-        'PASSWORD': '',
-        'DATABASE': 1,
-        'DEFAULT_TIMEOUT': 300,
-        'SSL': False,
-    }
+        'PASSWORD': '<%=$redis_options['caching']['password']%>',
+        'DATABASE': <%=$redis_options['caching']['database']%>,
+        'DEFAULT_TIMEOUT': <%=$redis_options['caching'][default_timeout]%>,
+        'SSL': <%=$redis_options['caching']['ssl']%>,
+    },
 }
 
 # This key is used for secure generation of random numbers and strings. It must never be exposed outside of this file.

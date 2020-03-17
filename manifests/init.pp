@@ -100,6 +100,26 @@ class netbox (
       download_tmp_dir       => $download_tmp_dir,
     }
   }
+
+  $redis_options = {
+    'webhooks' => {
+      host => 'localhost',
+      port => 6379,
+      password => 'password',
+      database => 0,
+      default_timeout => 300,
+      ssl => False,
+    },
+    'caching' => {
+      host => 'localhost',
+      port => 6379,
+      password => 'password',
+      database => 1,
+      default_timeout => 300,
+      ssl => False,
+    },
+  }
+
   if $should_configure {
     class { 'netbox::config':
       user                  => $user,
@@ -112,6 +132,7 @@ class netbox (
       database_host         => $database_host,
       database_port         => $database_port,
       database_conn_max_age => $database_conn_max_age,
+      redis_options         => $redis_options,
     }
   }
   if $handle_service {
