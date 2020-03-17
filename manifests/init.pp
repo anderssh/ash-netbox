@@ -108,7 +108,7 @@ class netbox (
       password => 'password',
       database => 0,
       default_timeout => 300,
-      ssl => False,
+      ssl => 'False',
     },
     'caching' => {
       host => 'localhost',
@@ -116,7 +116,7 @@ class netbox (
       password => 'password',
       database => 1,
       default_timeout => 300,
-      ssl => False,
+      ssl => 'False',
     },
   }
 
