@@ -15,6 +15,7 @@ class netbox::config (
   Stdlib::Host $database_host,
   Integer $database_port,
   Integer $database_conn_max_age,
+  Hash $redis_config,
 ) {
 
   $software_directory = "${install_root}/netbox"
