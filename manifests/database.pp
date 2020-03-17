@@ -6,9 +6,9 @@
 # @example
 #   include netbox::database
 class netbox::database (
-  String $database_name = 'netbox',
-  String $database_user = 'netbox',
-  String $database_password = 'mypassword'
+  String $database_name,
+  String $database_user,
+  String $database_password,
 ){
 
   class { 'postgresql::server':
