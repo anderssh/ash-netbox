@@ -16,6 +16,7 @@ class netbox::config (
   Integer $database_port,
   Integer $database_conn_max_age,
   Hash $redis_options,
+  String $secret_key,
 ) {
 
   $software_directory = "${install_root}/netbox"
@@ -31,6 +32,7 @@ class netbox::config (
       'database_port'         => $database_port,
       'database_conn_max_age' => $database_conn_max_age,
       'redis_options'         => $redis_options,
+      'secret_key'            => $secret_key,
     }),
     owner   => $user,
     group   => $group,
