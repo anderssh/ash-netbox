@@ -70,14 +70,14 @@ class netbox (
   String $database_name     = 'netbox',
   String $database_user     = 'netbox',
   String $database_password = 'netbox',
-  Stdlib::Host $database_host = $trusted['certname'],
+  Stdlib::Host $database_host = 'localhost',
   Integer $database_port = 5432,
   Integer $database_conn_max_age = 300,
   Array[Stdlib::Host] $allowed_hosts = ['netbox.exmple.com','newbox.example.com'],
   String $banner_top = '',
   String $banner_bottom = '',
   String $banner_login = '',
-  String $base_path = '',
+  String $base_path ='',
 ) {
 
   if $handle_database {
