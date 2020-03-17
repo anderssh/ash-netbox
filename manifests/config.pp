@@ -48,4 +48,11 @@ class netbox::config (
     group   => $group,
     mode    => '0644',
   }
+  ~> exec { 'database_migration':
+    cwd         => "${install_root}/netbox",
+    provider    => shell,
+    user        => $user,
+    command     => '. ../venv/bin/activate && venv/bin/python3 netbox/manage.py migrate',
+    refreshonly => true,
+  }
 }
