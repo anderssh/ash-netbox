@@ -1,13 +1,14 @@
 <% | Array[Stdlib::Host] $allowed_hosts,
-     String $database_name,
-     String $database_user,
-     String $database_password,
-     Stdlib::Host $database_host,
-     Integer $database_port,
-     Integer $database_conn_max_age,
-     Hash $redis_options,
-     String $secret_key
-   | -%>
+  String $database_name,
+  String $database_user,
+  String $database_password,
+  Stdlib::Host $database_host,
+  Integer $database_port,
+  Integer $database_conn_max_age,
+  Hash $redis_options,
+  Hash $email_options,
+  String $secret_key,
+  | -%>
 
 #########################
 #                       #
@@ -115,12 +116,12 @@ DEBUG = False
 
 # Email settings
 EMAIL = {
-    'SERVER': 'localhost',
-    'PORT': 25,
-    'USERNAME': '',
-    'PASSWORD': '',
-    'TIMEOUT': 10,  # seconds
-    'FROM_EMAIL': '',
+    'SERVER': '<%=$email_options['server']%>',
+    'PORT': <%=$email_options['port']%>,
+    'USERNAME': '<%=$email_options['username']%>',
+    'PASSWORD': '<%=$email_options['password']%>',
+    'TIMEOUT': <%=$email_options['timeout']%>,  # seconds
+    'FROM_EMAIL': '<%=$email_options['from_email']%>',
 }
 
 # Enforcement of unique IP space can be toggled on a per-VRF basis. To enforce unique IP space within the global table

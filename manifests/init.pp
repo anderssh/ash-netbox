@@ -121,6 +121,15 @@ class netbox (
     },
   }
 
+  $email_options = {
+    server     => 'localhost',
+    port       => 25,
+    username   => '',
+    password   => '',
+    timeout    => 10,
+    from_email => '',
+  }
+
   if $should_configure {
     class { 'netbox::config':
       user                  => $user,
@@ -134,6 +143,7 @@ class netbox (
       database_port         => $database_port,
       database_conn_max_age => $database_conn_max_age,
       redis_options         => $redis_options,
+      email_options         => $email_options,
       secret_key            => $secret_key,
     }
   }

@@ -16,6 +16,7 @@ class netbox::config (
   Integer $database_port,
   Integer $database_conn_max_age,
   Hash $redis_options,
+  Hash $email_options,
   String $secret_key,
 ) {
 
@@ -32,6 +33,7 @@ class netbox::config (
       'database_port'         => $database_port,
       'database_conn_max_age' => $database_conn_max_age,
       'redis_options'         => $redis_options,
+      'email_options'         => $email_options,
       'secret_key'            => $secret_key,
     }),
     owner   => $user,
