@@ -78,6 +78,8 @@ class netbox (
   String $banner_bottom = '',
   String $banner_login = '',
   String $base_path ='',
+  String $superuser_username = 'admin',
+  String $superuser_email = 'admin@example.com',
 ) {
 
   if $handle_database {
@@ -153,6 +155,8 @@ class netbox (
       banner_bottom         => $banner_bottom,
       banner_login          => $banner_login,
       base_path             => $base_path,
+      superuser_username    => $superuser_username,
+      superuser_email       => $superuser_email,
     }
   }
   if $handle_service {

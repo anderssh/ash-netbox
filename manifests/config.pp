@@ -22,6 +22,8 @@ class netbox::config (
   String $banner_bottom,
   String $banner_login,
   String $base_path,
+  String $superuser_username,
+  String $superuser_email,
 ) {
 
   $software_directory = "${install_root}/netbox"
@@ -48,11 +50,17 @@ class netbox::config (
     group   => $group,
     mode    => '0644',
   }
-  ~> exec { 'database_migration':
+  ~> exec { 'database migration':
     cwd         => "${install_root}/netbox",
     provider    => shell,
     user        => $user,
-    command     => '. ../venv/bin/activate && venv/bin/python3 netbox/manage.py migrate',
+    command     => '. ../venv/bin/activate && venv/bin/python3 netbox/manage.py migrate --no-input',
     refreshonly => true,
   }
+  ~> exec { 'create superuser':
+    cwd         => "${install_root}/netbox",
+    provider    => shell,
+    user        => $user,
+    command     => ". ../venv/bin/activate && venv/bin/python3 netbox/manage.py createsuperuser --username ${superuser_username} --email ${superuser_email}",
+    refreshonly => true,
 }
