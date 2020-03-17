@@ -52,6 +52,7 @@
 #   }
 #
 class netbox (
+  String $secret_key,
   String $version = '2.7.10',
   String $download_url = 'https://github.com/netbox-community/netbox/archive/v2.7.10.tar.gz',
   String $download_checksum = '21743eda8f633761fd9a16c28658235e7ee9a79b15353770b4b1fe0d133a26e5',
@@ -133,6 +134,7 @@ class netbox (
       database_port         => $database_port,
       database_conn_max_age => $database_conn_max_age,
       redis_options         => $redis_options,
+      secret_key            => $secret_key,
     }
   }
   if $handle_service {
