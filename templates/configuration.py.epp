@@ -8,6 +8,10 @@
   Hash $redis_options,
   Hash $email_options,
   String $secret_key,
+  String $banner_top,
+  String $banner_bottom,
+  String $banner_login,
+  String $base_path,
   | -%>
 
 #########################
@@ -82,15 +86,15 @@ ADMINS = [
 
 # Optionally display a persistent banner at the top and/or bottom of every page. HTML is allowed. To display the same
 # content in both banners, define BANNER_TOP and set BANNER_BOTTOM = BANNER_TOP.
-BANNER_TOP = ''
-BANNER_BOTTOM = ''
+BANNER_TOP = '<%= $banner_top %>'
+BANNER_BOTTOM = '<%= $banner_bottom %>'
 
 # Text to include on the login page above the login form. HTML is allowed.
-BANNER_LOGIN = ''
+BANNER_LOGIN = '<%= $banner_login %>'
 
 # Base URL path if accessing NetBox within a directory. For example, if installed at http://example.com/netbox/, set:
 # BASE_PATH = 'netbox/'
-BASE_PATH = ''
+BASE_PATH = '<%= $base_path %>'
 
 # Cache timeout in seconds. Set to 0 to dissable caching. Defaults to 900 (15 minutes)
 CACHE_TIMEOUT = 900

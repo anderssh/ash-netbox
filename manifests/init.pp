@@ -74,6 +74,10 @@ class netbox (
   Integer $database_port = 5432,
   Integer $database_conn_max_age = 300,
   Array[Stdlib::Host] $allowed_hosts = ['netbox.exmple.com','newbox.example.com'],
+  String $banner_top = '',
+  String $banner_bottom = '',
+  String $banner_login = '',
+  String $base_path = '',
 ) {
 
   if $handle_database {
@@ -145,6 +149,10 @@ class netbox (
       redis_options         => $redis_options,
       email_options         => $email_options,
       secret_key            => $secret_key,
+      banner_top            => $banner_top,
+      banner_bottom         => $banner_bottom,
+      banner_login          => $banner_login,
+      base_path             => $base_path,
     }
   }
   if $handle_service {

@@ -18,6 +18,10 @@ class netbox::config (
   Hash $redis_options,
   Hash $email_options,
   String $secret_key,
+  String $banner_top,
+  String $banner_bottom,
+  String $banner_login,
+  String $base_path,
 ) {
 
   $software_directory = "${install_root}/netbox"
@@ -35,6 +39,10 @@ class netbox::config (
       'redis_options'         => $redis_options,
       'email_options'         => $email_options,
       'secret_key'            => $secret_key,
+      'banner_top'            => $banner_top,
+      'banner_bottom'         => $banner_bottom,
+      'banner_login'          => $banner_login,
+      'base_path'             => $base_path,
     }),
     owner   => $user,
     group   => $group,
