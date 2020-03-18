@@ -162,7 +162,6 @@ class netbox (
   if $handle_service {
     class {'netbox::service':
       install_root => $install_root,
-      version      => $version,
       user         => $user,
     }
   }
