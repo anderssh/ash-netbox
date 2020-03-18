@@ -62,4 +62,5 @@ class netbox::config (
     user        => $user,
     command     => ". ${venv_dir}/bin/activate && ${venv_dir}/bin/python3 netbox/manage.py createsuperuser --username ${superuser_username} --no-input",
     refreshonly => true,
+  }
 }
