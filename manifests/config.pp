@@ -27,6 +27,8 @@ class netbox::config (
 ) {
 
   $software_directory = "${install_root}/netbox"
+  $venv_dir = "${software_directory}/venv"
+
   $config_file = "${software_directory}/netbox/netbox/configuration.py"
 
   file { $config_file:
@@ -62,6 +64,13 @@ class netbox::config (
     provider    => shell,
     user        => $user,
     command     => ". ${venv_dir}/bin/activate && ${venv_dir}/bin/python3 netbox/manage.py createsuperuser --username ${superuser_username} --username ${superuser_email} --no-input",
+    refreshonly => true,
+  }
+  ~> exec { 'collect static files':
+    cwd         => "${install_root}/netbox",
+    provider    => shell,
+    user        => $user,
+    command     => ". ${venv_dir}/bin/activate && ${venv_dir}/bin/python3 netbox/manage.py collectstatic --no-input",
     refreshonly => true,
   }
 }
