@@ -23,6 +23,7 @@ class netbox::config (
   String $banner_login,
   String $base_path,
   String $superuser_username,
+  String $superuser_email,
 ) {
 
   $software_directory = "${install_root}/netbox"
@@ -60,7 +61,7 @@ class netbox::config (
     cwd         => "${install_root}/netbox",
     provider    => shell,
     user        => $user,
-    command     => ". ${venv_dir}/bin/activate && ${venv_dir}/bin/python3 netbox/manage.py createsuperuser --username ${superuser_username} --no-input",
+    command     => ". ${venv_dir}/bin/activate && ${venv_dir}/bin/python3 netbox/manage.py createsuperuser --username ${superuser_username} --username ${superuser_email} --no-input",
     refreshonly => true,
   }
 }
