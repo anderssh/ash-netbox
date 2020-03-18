@@ -1,0 +1,29 @@
+<%- |
+  String $user,
+  String $group,
+  Stdlib::Absolutepath $netbox_home,
+  Stdlib::Absolutepath $pidfile,
+  | -%>
+
+[Unit]
+Description=NetBox WSGI Service
+Documentation=https://netbox.readthedocs.io/en/stable/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+
+User=<%= $user %>
+Group=<%= $group %>
+PIDFile=<%= $pidfile %>
+WorkingDirectory=<%= $netbox_home %>
+
+ExecStart=<%= $netbox_home %>/venv/bin/gunicorn --pid <%= $pidfile %> --pythonpath <%= $netbox_home %>/netbox --config <%= $netbox_home %>/gunicorn.py netbox.wsgi
+
+Restart=on-failure
+RestartSec=30
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

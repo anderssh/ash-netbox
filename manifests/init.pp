@@ -159,11 +159,10 @@ class netbox (
       superuser_email       => $superuser_email,
     }
   }
-  if $handle_service {
-    class {'netbox::service':
-      install_root => $install_root,
-      user         => $user,
-    }
+  class {'netbox::service':
+    install_root => $install_root,
+    user         => $user,
+    group         => $group,
   }
 
 #  Class['netbox::install'] -> Class['netbox::config'] ~> Class['netbox::service']

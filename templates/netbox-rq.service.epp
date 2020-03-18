@@ -1,0 +1,25 @@
+<%- |
+  String $user,
+  String $group,
+  Stdlib::Absolutepath $netbox_home,
+  | -%>
+
+[Unit]
+Description=NetBox Request Queue Worker
+Documentation=https://netbox.readthedocs.io/en/stable/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+
+User=<%= $user %>
+Group=<%= $group %>
+WorkingDirectory=<%= $netbox_home %>
+ExecStart=<%= $netbox_home %>/venv/bin/python3 <%= $netbox_home %>/netbox/manage.py rqworker
+Restart=on-failure
+RestartSec=30
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
