@@ -75,11 +75,11 @@ class netbox::install (
   $gunicorn_file = "${software_directory}/gunicorn.py"
 
   $gunicorn_settings = {
-    port => 8001,
-    workers => 5,
-    threads => 3,
-    timeout => 120,
-    max_requests => 5000,
+    port                => 8001,
+    workers             => 5,
+    threads             => 3,
+    timeout             => 120,
+    max_requests        => 5000,
     max_requests_jitter => 500,
   }
   file { $gunicorn_file:
