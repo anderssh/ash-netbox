@@ -85,7 +85,7 @@ class netbox::install (
     cwd         => "${install_root}/netbox",
     provider    => shell,
     user        => $user,
-    command     => '. ../venv/bin/activate && venv/bin/pip3 install -r requirements.txt',
+    command     => ". ${venv_dir}/bin/activate && ${venv_dir}/bin/pip3 install -r requirements.txt",
     refreshonly => true,
   }
 
