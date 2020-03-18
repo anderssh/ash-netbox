@@ -83,7 +83,7 @@ class netbox::install (
     max_requests_jitter => 500,
   }
   file { $gunicorn_file:
-    content => epp('netbox/configuration.py.epp', $gunicorn_settings),
+    content => epp('netbox/gunicorn.py.epp', $gunicorn_settings),
     owner   => $user,
     group   => $group,
     mode    => '0644',
