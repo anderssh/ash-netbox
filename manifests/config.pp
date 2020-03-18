@@ -25,7 +25,7 @@ class netbox::config (
   String $superuser_username,
   String $superuser_email,
 ) {
-
+  $should_create_superuser = false;
   $software_directory = "${install_root}/netbox"
   $venv_dir = "${software_directory}/venv"
 
@@ -63,14 +63,16 @@ class netbox::config (
     cwd         => "${install_root}/netbox",
     provider    => shell,
     user        => $user,
+    onlyif      => $should_create_superuser,
     command     => ". ${venv_dir}/bin/activate && ${venv_dir}/bin/python3 netbox/manage.py createsuperuser --username ${superuser_username} --username ${superuser_email} --no-input",
     refreshonly => true,
   }
-  ~> exec { 'collect static files':
+  exec { 'collect static files':
     cwd         => "${install_root}/netbox",
     provider    => shell,
     user        => $user,
     command     => ". ${venv_dir}/bin/activate && ${venv_dir}/bin/python3 netbox/manage.py collectstatic --no-input",
     refreshonly => true,
+    subscribe   => File[$config_file];
   }
 }
