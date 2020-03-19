@@ -3,8 +3,10 @@
 ---
 fixtures:
   forge_modules:
+    archive: "puppet/archive"
+    augeas_core: "puppetlabs/augeas_core"
     concat: "puppetlabs/concat"
     postgresql: "puppetlabs/postgresql"
     redis: "puppet/redis"
     stdlib: "puppetlabs/stdlib"
-    augeas_core: "puppetlabs/augeas_core"
+    systemd: "camptocamp/systemd"
