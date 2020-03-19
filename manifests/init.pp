@@ -11,9 +11,14 @@
 #   The user owning the Netbox installation files, and running the
 #   service.
 #
-# @param group
+# @param group [String]
 #   The group owning the Netbox installation files, and running the
 #   service.
+#
+# @param secret_key [String]
+#   A random string of letters, numbers and symbols that Netbox needs.
+#   This needs to be supplied, and should be treated as a secret. Should
+#   be at least 50 characters long.
 #
 # @param download_url
 #   Where to download the binary installation tarball from.
