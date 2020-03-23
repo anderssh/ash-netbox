@@ -120,6 +120,7 @@ CORS_ORIGIN_REGEX_WHITELIST = [
 DEBUG = False
 
 # Email settings
+# https://netbox.readthedocs.io/en/stable/configuration/optional-settings/#email
 EMAIL = {
     'SERVER': '<%=$email_options['server']%>',
     'PORT': <%=$email_options['port']%>,
