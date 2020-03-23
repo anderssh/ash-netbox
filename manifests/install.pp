@@ -67,7 +67,7 @@ class netbox::install (
   }
 
   class { 'python':
-    version    => '36',
+    version    => '3',
     pip        => 'present',
     dev        => 'present',
     virtualenv => 'present',
