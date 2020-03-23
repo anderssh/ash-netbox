@@ -19,8 +19,6 @@ class netbox::install (
 
   $packages =[
     gcc,
-    python36,
-    python36-devel,
     libxml2-devel,
     libxslt-devel,
     libffi-devel,
