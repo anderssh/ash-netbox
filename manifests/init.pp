@@ -40,6 +40,30 @@
 # @param handle_database [Boolean]
 #   Should the PostgreSQL database be handled by this module. Defaults to true.
 #
+# @param email_server
+#   Host name or IP address of the email server (use localhost if running locally)
+#   https://netbox.readthedocs.io/en/stable/configuration/optional-settings/#email
+#   
+# @param email_timeout
+#   Amount of time to wait for a connection (seconds)
+#   https://netbox.readthedocs.io/en/stable/configuration/optional-settings/#email
+#
+# @param email_port
+#   TCP port to use for the connection (default: 25)
+#   https://netbox.readthedocs.io/en/stable/configuration/optional-settings/#email
+#
+# @param email_username
+#   Username with which to authenticate
+#   https://netbox.readthedocs.io/en/stable/configuration/optional-settings/#email
+#
+# @param email_password
+#   Password with which to authenticate
+#   https://netbox.readthedocs.io/en/stable/configuration/optional-settings/#email
+#
+# @param email_from_email
+#   Sender address for emails sent by NetBox
+#   https://netbox.readthedocs.io/en/stable/configuration/optional-settings/#email
+#
 # @example Defaults
 #   include netbox
 #
@@ -76,6 +100,12 @@ class netbox (
   String $base_path ='',
   String $superuser_username = 'admin',
   String $superuser_email = 'admin@example.com',
+  String $email_server = 'localhost',
+  Integer $email_timeout = 10,
+  Stdlib::Port $email_port = 25,
+  String $email_username = '',
+  String $email_password = '',
+  String $email_from_email = '',
 ) {
 
   if $handle_database {
@@ -122,12 +152,12 @@ class netbox (
   }
 
   $email_options = {
-    server     => 'localhost',
-    port       => 25,
-    username   => '',
-    password   => '',
-    timeout    => 10,
-    from_email => '',
+    server     => $email_server,
+    port       => $email_port,
+    username   => $email_username,
+    password   => $email_password,
+    timeout    => $email_timeout,
+    from_email => $email_from_email,
   }
 
   class { 'netbox::config':
