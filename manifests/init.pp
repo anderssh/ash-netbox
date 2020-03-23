@@ -60,8 +60,6 @@ class netbox (
   String $group = 'netbox',
   String $download_checksum_type = 'sha256',
   Stdlib::Absolutepath $install_root = '/opt',
-  Boolean $should_install = true,
-  Boolean $should_configure = true,
   Boolean $handle_database = true,
   Boolean $handle_redis = true,
   Boolean $handle_service = false,
@@ -93,17 +91,15 @@ class netbox (
     }
   }
 
-  if $should_install {
-    class { 'netbox::install':
-      install_root           => $install_root,
-      version                => $version,
-      user                   => $user,
-      group                  => $group,
-      download_url           => $download_url,
-      download_checksum      => $download_checksum,
-      download_checksum_type => $download_checksum_type,
-      download_tmp_dir       => $download_tmp_dir,
-    }
+  class { 'netbox::install':
+    install_root           => $install_root,
+    version                => $version,
+    user                   => $user,
+    group                  => $group,
+    download_url           => $download_url,
+    download_checksum      => $download_checksum,
+    download_checksum_type => $download_checksum_type,
+    download_tmp_dir       => $download_tmp_dir,
   }
 
   $redis_options = {
@@ -134,29 +130,28 @@ class netbox (
     from_email => '',
   }
 
-  if $should_configure {
-    class { 'netbox::config':
-      user                  => $user,
-      group                 => $group,
-      install_root          => $install_root,
-      allowed_hosts         => $allowed_hosts,
-      database_name         => $database_name,
-      database_user         => $database_user,
-      database_password     => $database_password,
-      database_host         => $database_host,
-      database_port         => $database_port,
-      database_conn_max_age => $database_conn_max_age,
-      redis_options         => $redis_options,
-      email_options         => $email_options,
-      secret_key            => $secret_key,
-      banner_top            => $banner_top,
-      banner_bottom         => $banner_bottom,
-      banner_login          => $banner_login,
-      base_path             => $base_path,
-      superuser_username    => $superuser_username,
-      superuser_email       => $superuser_email,
-    }
+  class { 'netbox::config':
+    user                  => $user,
+    group                 => $group,
+    install_root          => $install_root,
+    allowed_hosts         => $allowed_hosts,
+    database_name         => $database_name,
+    database_user         => $database_user,
+    database_password     => $database_password,
+    database_host         => $database_host,
+    database_port         => $database_port,
+    database_conn_max_age => $database_conn_max_age,
+    redis_options         => $redis_options,
+    email_options         => $email_options,
+    secret_key            => $secret_key,
+    banner_top            => $banner_top,
+    banner_bottom         => $banner_bottom,
+    banner_login          => $banner_login,
+    base_path             => $base_path,
+    superuser_username    => $superuser_username,
+    superuser_email       => $superuser_email,
   }
+  
   class {'netbox::service':
     install_root => $install_root,
     user         => $user,
