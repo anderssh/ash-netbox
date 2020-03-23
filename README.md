@@ -23,9 +23,11 @@ This module installs and configures Netbox. Netbox needs PostgreSQL and Redis to
 
 ### Setup Requirements 
 
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
+You need to have epel configured. The easiest way to do that is by running:
 
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
+```bash
+yum install -y epel-release
+```
 
 ### Beginning with Netbox
 
@@ -35,6 +37,7 @@ Add dependency modules to your puppet environment:
 * puppet/archive
 * puppetlabs/inifile
 * puppetlabs/stdlib
+* puppet/python
 
 If you ar going to use this module to install PostgreSQL and Redis, then you need these as well:
 
