@@ -48,7 +48,9 @@ class netbox::install (
   }
 
   $local_tarball = "${download_tmp_dir}/netbox-${version}.tar.gz"
-  $software_directory = "${install_root}/netbox-${version}"
+  $software_directory_with_version = "${install_root}/netbox-${version}"
+  $software_directory = "${install_root}/netbox"
+  $venv_dir = "${software_directory}/netbox"
 
   archive { $local_tarball:
     source        => $download_url,
@@ -56,22 +58,35 @@ class netbox::install (
     checksum_type => $download_checksum_type,
     extract       => true,
     extract_path  => $install_root,
-    creates       => $software_directory,
+    creates       => $software_directory_with_version,
     cleanup       => true,
     user          => $user,
     group         => $group,
   }
-  file { '/opt/netbox':
+  file { $software_directory:
     ensure => 'link',
-    target => $software_directory,
+    target => $software_directory_with_version,
   }
 
-  $venv_dir = '/opt/netbox/venv'
-    file { $venv_dir:
-      ensure => directory,
-      owner  => $user,
-      group  => $group,
-    }
+  class { 'python':
+    version    => 'system',
+    pip        => 'present',
+    dev        => 'present',
+    virtualenv => 'present',
+    gunicorn   => 'present',
+    use_epel   => false,
+  }
+
+  python::virtualenv { $venv_dir:
+    ensure       => present,
+    cwd          => $software_directory,
+    version      => 'system',
+    requirements => "${software_directory}/requirements.txt",
+    systempkgs   => true,
+    owner        => $user,
+    group        => $group,
+  }
+
   $gunicorn_file = "${software_directory}/gunicorn.py"
 
   $gunicorn_settings = {
@@ -88,23 +103,4 @@ class netbox::install (
     group   => $group,
     mode    => '0644',
   }
-
-  exec { "python_venv_${venv_dir}":
-    command => "/usr/bin/python3 -m venv ${venv_dir}",
-    user    => $user,
-    creates => "${venv_dir}/bin/activate",
-    cwd     => '/tmp',
-    unless  => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate", #Unless activate exists and VIRTUAL_ENV is correct we re-create the virtualenv
-    require => File[$venv_dir],
-  }
-  ~>exec { 'install python requirements':
-    cwd         => "${install_root}/netbox",
-    provider    => shell,
-    user        => $user,
-    command     => ". ${venv_dir}/bin/activate && ${venv_dir}/bin/pip3 install -r requirements.txt",
-    refreshonly => true,
-  }
-
-
 }
-
