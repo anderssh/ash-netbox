@@ -135,7 +135,6 @@
 #     download_checksum => 'abcde...',
 #   }
 #
-
 class netbox (
   String $secret_key,
   String $version = '2.7.10',
