@@ -64,16 +64,78 @@
 #   Sender address for emails sent by NetBox
 #   https://netbox.readthedocs.io/en/stable/configuration/optional-settings/#email
 #
+#
+# @param handle_redis [Boolean]
+#   Should the Redis installation be handled by this module. Defaults to true.
+#
+# @param database_name [String]
+#   Name of the PostgreSQL database. If handle_database is true, then this database
+#   gets created as well. If not, then it is only used by the application, and needs to exist.
+#   Defaults to 'netbox'
+#
+# @param database_user [String]
+#   Name of the PostgreSQL database user. If handle_database is true, then this database user
+#   gets created as well. If not, then it is only used by the application, and needs to exist.
+#   Defaults to 'netbox'
+#
+# @param database_user [String]
+#   Name of the PostgreSQL database password. If handle_database is true, then this database password
+#   gets created as well. If not, then it is only used by the application, and needs to exist.
+#   Defaults to 'netbox'
+#
+# @param database_host [String]
+#   Name of the PostgreSQL database host. Defaults to 'localhost'
+#
+# @param database_port [Integer]
+#   PostgreSQL database port. NB! The PostgreSQL database that is made when using handle_database
+#   does not support configuring a non-standard port. So change this parameter only if using 
+#   separate PostgreSQL DB with non-standard port. Defaults to 5432.
+#
+# @param database_conn_max_age [Integer]
+#   Database max connection age in seconds. Defaults to 300.
+#
+# @param allowed_hosts [Array[String]]
+#   Array of valid fully-qualified domain names (FQDNs) for the NetBox server. NetBox will not permit write
+#   access to the server via any other hostnames. The first FQDN in the list will be treated as the preferred name.
+#   Defaults to: ['netbox.exmple.com','localhost']
+#
+# @param banner_top [String]
+#   Text for top banner on the Netbox webapp
+#   Defaults to the empty string
+#
+# @param banner_bottom [String]
+#   Text for bottom banner on the Netbox webapp
+#   Defaults to the empty string
+#
+# @param banner_login [String]
+#   Text for login banner on the Netbox webapp
+#   Defaults to the empty string
+#
+# @param base_path [String]
+#   Base URL path if accessing NetBox within a directory.
+#   For example, if installed at http://example.com/netbox/, set: BASE_PATH = 'netbox/'
+#   Defaults to the empty string
+#
+# @param superuser_username [String]
+#   Username for the superuser. This user is created, but without a password. To set the password,
+#   you must run  /opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py changepassword
+#   Defaults to admin
+#
+# @param superuser_email [String]
+#   Email for the superuser
+#   Defaults to 'admin@example.com'
+#
 # @example Defaults
 #   include netbox
 #
 # @example Downloading from a different repository
 #   class { 'netbox':
 #     version           => 'x.y.z',
-#     download_url      => 'https://my.local.repo.example.com/apache/netbox/netbox-x.y.z.tar.gz',
+#     download_url      => 'https://my.local.repo.example.com/netbox/netbox-x.y.z.tar.gz',
 #     download_checksum => 'abcde...',
 #   }
 #
+
 class netbox (
   String $secret_key,
   String $version = '2.7.10',
@@ -86,7 +148,6 @@ class netbox (
   Stdlib::Absolutepath $install_root = '/opt',
   Boolean $handle_database = true,
   Boolean $handle_redis = true,
-  Boolean $handle_service = false,
   String $database_name     = 'netbox',
   String $database_user     = 'netbox',
   String $database_password = 'netbox',
@@ -181,7 +242,7 @@ class netbox (
     superuser_username    => $superuser_username,
     superuser_email       => $superuser_email,
   }
-  
+
   class {'netbox::service':
     install_root => $install_root,
     user         => $user,
