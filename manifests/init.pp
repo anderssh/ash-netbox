@@ -37,12 +37,6 @@
 # @param install_root
 #   The root directory of the netbox installation.
 #
-# @param var_directory
-#   The root of the writable paths used by netbox. netbox will create
-#   directories beneath this path.  This will implicitly add netbox
-#   properties for working directories and repositories.
-#
-#
 # @param handle_database [Boolean]
 #   Should the PostgreSQL database be handled by this module. Defaults to true.
 #
@@ -66,7 +60,6 @@ class netbox (
   String $group = 'netbox',
   String $download_checksum_type = 'sha256',
   Stdlib::Absolutepath $install_root = '/opt',
-  Stdlib::Absolutepath $var_directory = '/var/opt/netbox',
   Boolean $should_install = true,
   Boolean $should_configure = true,
   Boolean $handle_database = true,
