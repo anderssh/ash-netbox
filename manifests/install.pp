@@ -71,7 +71,6 @@ class netbox::install (
     pip        => 'present',
     dev        => 'present',
     virtualenv => 'present',
-    gunicorn   => 'present',
     use_epel   => false,
   }
 
