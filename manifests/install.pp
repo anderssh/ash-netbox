@@ -96,7 +96,7 @@ class netbox::install (
   ~>exec { 'install python requirements':
     cwd         => "${install_root}/netbox",
     path        => [ "${venv_dir}/bin", '/usr/bin', '/usr/sbin' ],
-    environment => { VIRTUAL_ENV => '/opt/netbox/venv' },
+    environment => ['VIRTUAL_ENV=/opt/netbox/venv'],
     provider    => shell,
     user        => $user,
     command     => "${venv_dir}/bin/pip3 install -r requirements.txt",
