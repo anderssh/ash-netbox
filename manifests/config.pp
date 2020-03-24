@@ -71,7 +71,8 @@ class netbox::config (
     command => "${venv_dir}/bin/python3 netbox/manage.py createsuperuser --username ${superuser_username} --email ${superuser_email} --no-input",
   }
   exec { 'collect static files':
-    command   => "${venv_dir}/bin/python3 netbox/manage.py collectstatic --no-input",
-    subscribe => File[$config_file];
+    command     => "${venv_dir}/bin/python3 netbox/manage.py collectstatic --no-input",
+    subscribe   => File[$config_file],
+    refreshonly => true,
   }
 }
