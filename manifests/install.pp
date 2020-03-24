@@ -68,23 +68,6 @@ class netbox::install (
     target => $software_directory_with_version,
   }
 
-  $gunicorn_file = "${software_directory}/gunicorn.py"
-
-  $gunicorn_settings = {
-    port                => 8001,
-    workers             => 5,
-    threads             => 3,
-    timeout             => 120,
-    max_requests        => 5000,
-    max_requests_jitter => 500,
-  }
-  file { $gunicorn_file:
-    content => epp('netbox/gunicorn.py.epp', $gunicorn_settings),
-    owner   => $user,
-    group   => $group,
-    mode    => '0644',
-  }
-
   exec { "python_venv_${venv_dir}":
     command => "/usr/bin/python3 -m venv ${venv_dir}",
     user    => $user,

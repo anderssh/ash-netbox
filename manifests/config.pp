@@ -27,6 +27,24 @@ class netbox::config (
   $software_directory = "${install_root}/netbox"
   $venv_dir = "${software_directory}/venv"
 
+  $gunicorn_file = "${software_directory}/gunicorn.py"
+
+  $gunicorn_settings = {
+    port                => 8001,
+    workers             => 5,
+    threads             => 3,
+    timeout             => 120,
+    max_requests        => 5000,
+    max_requests_jitter => 500,
+  }
+
+  file { $gunicorn_file:
+    content => epp('netbox/gunicorn.py.epp', $gunicorn_settings),
+    owner   => $user,
+    group   => $group,
+    mode    => '0644',
+  }
+
   $config_file = "${software_directory}/netbox/netbox/configuration.py"
 
   file { $config_file:
