@@ -37,7 +37,6 @@ Add dependency modules to your puppet environment:
 * puppet/archive
 * puppetlabs/inifile
 * puppetlabs/stdlib
-* puppet/python
 
 If you ar going to use this module to install PostgreSQL and Redis, then you need these as well:
 
@@ -47,7 +46,22 @@ If you ar going to use this module to install PostgreSQL and Redis, then you nee
 
 ## Usage
 
-Include usage examples for common use cases in the **Usage** section. Show your users how to use your module to solve problems, and be sure to include code examples. Include three to five examples of the most important or common tasks a user can accomplish with your module. Show users how to accomplish more complex tasks that involve different types, classes, and functions working in tandem.
+In its simplest configuration, the module needs only one parameter set. This is the `secret_key`. This is something Netbox will not run without, and is recomended to be an at least 50 character long string of letters, symbols and numbers. This is to be treated as a secret.
+
+The following code shows an example where you have a profile::netbox (because of course you are using the "roles and profiles" design) which takes in the secret key. This could for example be stored in Hiera eyaml
+
+```puppet
+class profile::netbox (
+  String $netbox_secret_key,
+) {
+
+# setsebool  httpd_can_network_connect 1
+# usermod apache -G netbox
+
+  class { 'netbox':
+    secret_key    => $netbox_secret_key,
+  }
+```
 
 ## Reference
 
