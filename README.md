@@ -94,13 +94,13 @@ You probably want to adjust your parameters a little more than the minimal examp
 ```puppet
 
   class { 'netbox':
-    secret_key               => $netbox_secret_key,
-    allowed_hosts            => [$trusted[certname], 'localhost'],
-    banner_top               => 'TOP BANNER TEXT',
-    banner_login             => 'WELCOME TO THE NETBOX LOGIN',
-    banner_bottom            => 'BOTTOM BANNER TEXT',
-    database_password        => $netbox_database_password,
-    String $email_from_email => "netbox@${trusted[domain]},
+    secret_key        => $netbox_secret_key,
+    allowed_hosts     => [$trusted[certname], 'localhost'],
+    banner_top        => 'TOP BANNER TEXT',
+    banner_login      => 'WELCOME TO THE NETBOX LOGIN',
+    banner_bottom     => 'BOTTOM BANNER TEXT',
+    database_password => $netbox_database_password,
+    $email_from_email => "netbox@${trusted[domain]},
   }
 ```
 
