@@ -96,7 +96,6 @@
 # @param allowed_hosts
 #   Array of valid fully-qualified domain names (FQDNs) for the NetBox server. NetBox will not permit write
 #   access to the server via any other hostnames. The first FQDN in the list will be treated as the preferred name.
-#   Defaults to: ['netbox.exmple.com','localhost']
 #
 # @param banner_top
 #   Text for top banner on the Netbox webapp
