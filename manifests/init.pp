@@ -196,7 +196,7 @@ class netbox (
     'webhooks' => {
       host => 'localhost',
       port => 6379,
-      password => 'password',
+      password => '',
       database => 0,
       default_timeout => 300,
       ssl => 'False',
@@ -204,7 +204,7 @@ class netbox (
     'caching' => {
       host => 'localhost',
       port => 6379,
-      password => 'password',
+      password => '',
       database => 1,
       default_timeout => 300,
       ssl => 'False',
