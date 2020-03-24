@@ -52,27 +52,25 @@ class netbox::config (
     group   => $group,
     mode    => '0644',
   }
-  ~> exec { 'database migration':
-    cwd         => "${install_root}/netbox",
+
+  Exec {
+    cwd         => $software_directory,
+    path        => [ "${venv_dir}/bin", '/usr/bin', '/usr/sbin' ],
+    environment => ["VIRTUAL_ENV=${venv_dir}"],
     provider    => shell,
     user        => $user,
-    command     => ". ${venv_dir}/bin/activate && ${venv_dir}/bin/python3 netbox/manage.py migrate --no-input",
-    refreshonly => true,
+  }
+
+  exec { 'database migration':
+    onlyif  => "${venv_dir}/bin/python3 netbox/manage.py showmigrations | grep '\[ \]'",
+    command => "${venv_dir}/bin/python3 netbox/manage.py migrate --no-input",
+    after   => File[$config_file];
   }
   ~> exec { 'create superuser':
-    cwd         => "${install_root}/netbox",
-    provider    => shell,
-    user        => $user,
-    onlyif      => $should_create_superuser,
-    command     => ". ${venv_dir}/bin/activate && ${venv_dir}/bin/python3 netbox/manage.py createsuperuser --username ${superuser_username} --username ${superuser_email} --no-input",
-    refreshonly => true,
+    command => "${venv_dir}/bin/python3 netbox/manage.py createsuperuser --username ${superuser_username} --username ${superuser_email} --no-input",
   }
   exec { 'collect static files':
-    cwd         => "${install_root}/netbox",
-    provider    => shell,
-    user        => $user,
-    command     => ". ${venv_dir}/bin/activate && ${venv_dir}/bin/python3 netbox/manage.py collectstatic --no-input",
-    refreshonly => true,
-    subscribe   => File[$config_file];
+    command   => "${venv_dir}/bin/python3 netbox/manage.py collectstatic --no-input",
+    subscribe => File[$config_file];
   }
 }
