@@ -64,7 +64,6 @@
 #   Sender address for emails sent by NetBox
 #   https://netbox.readthedocs.io/en/stable/configuration/optional-settings/#email
 #
-#
 # @param handle_redis [Boolean]
 #   Should the Redis installation be handled by this module. Defaults to true.
 #
