@@ -3,6 +3,15 @@
 # This class sets up PostgreSQL database. This is optional, 
 # you can choose to handle that yourself.
 #
+# @param database_name
+#   Name of the PostgreSQL database.
+#
+# @param database_user
+#   Name of the PostgreSQL database user.
+#
+# @param database_password
+#   Name of the PostgreSQL database password.
+#
 # @example
 #   include netbox::database
 class netbox::database (
