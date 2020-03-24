@@ -14,7 +14,6 @@ class netbox::install (
   String $user,
   String $group,
   Enum['tarball', 'git_clone'] $install_method = 'tarball',
-  Boolean $included = true
 ) {
 
   $packages =[
