@@ -19,6 +19,8 @@ class netbox::install (
 
   $packages =[
     gcc,
+    python36,
+    python36-devel,
     libxml2-devel,
     libxslt-devel,
     libffi-devel,
@@ -66,24 +68,6 @@ class netbox::install (
     target => $software_directory_with_version,
   }
 
-  class { 'python':
-    version    => '3',
-    pip        => 'present',
-    dev        => 'present',
-    virtualenv => 'present',
-    use_epel   => false,
-  }
-
-  python::virtualenv { $venv_dir:
-    ensure       => present,
-    cwd          => $software_directory,
-    version      => 'system',
-    requirements => "${software_directory}/requirements.txt",
-    systempkgs   => true,
-    owner        => $user,
-    group        => $group,
-  }
-
   $gunicorn_file = "${software_directory}/gunicorn.py"
 
   $gunicorn_settings = {
@@ -99,5 +83,23 @@ class netbox::install (
     owner   => $user,
     group   => $group,
     mode    => '0644',
+  }
+
+  exec { "python_venv_${venv_dir}":
+    command => "/usr/bin/python3 -m venv ${venv_dir}",
+    user    => $user,
+    creates => "${venv_dir}/bin/activate",
+    cwd     => '/tmp',
+    unless  => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate", #Unless activate exists and VIRTUAL_ENV is correct we re-create the virtualenv
+    require => File[$venv_dir],
+  }
+  ~>exec { 'install python requirements':
+    cwd         => "${install_root}/netbox",
+    path        => [ "${venv_dir}/bin", '/usr/bin', '/usr/sbin' ],
+    environment => { VIRTUAL_ENV => '/opt/netbox/venv' },
+    provider    => shell,
+    user        => $user,
+    command     => "${venv_dir}/bin/pip3 install -r requirements.txt",
+    refreshonly => true,
   }
 }
