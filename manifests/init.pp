@@ -168,6 +168,8 @@ class netbox (
   String $email_from_email = '',
 ) {
 
+  Class['netbox::database'] -> Class['netbox::redis'] -> Class['netbox::install'] -> Class['netbox::config'] ~> Class['netbox::service']
+
   if $handle_database {
     class { 'netbox::database':
       database_name     => $database_name,
@@ -248,5 +250,4 @@ class netbox (
     group        => $group,
   }
 
-#  Class['netbox::install'] -> Class['netbox::config'] ~> Class['netbox::service']
 }
