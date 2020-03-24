@@ -21,11 +21,12 @@
 #   Name of the PostgreSQL database user. If handle_database is true, then this database user
 #   gets created as well. If not, then it is only used by the application, and needs to exist.
 #
-# @param database_user
+# @param database_password
 #   Name of the PostgreSQL database password. If handle_database is true, then this database password
 #   gets created as well. If not, then it is only used by the application, and needs to exist.
 #
 # @param database_host
+#   Hostname where the PostgreSQL database resides.
 #
 # @param database_port
 #   PostgreSQL database port. NB! The PostgreSQL database that is made when using handle_database

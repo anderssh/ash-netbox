@@ -77,7 +77,7 @@
 #   gets created as well. If not, then it is only used by the application, and needs to exist.
 #   Defaults to 'netbox'
 #
-# @param database_user
+# @param database_password
 #   Name of the PostgreSQL database password. If handle_database is true, then this database password
 #   gets created as well. If not, then it is only used by the application, and needs to exist.
 #   Defaults to 'netbox'
