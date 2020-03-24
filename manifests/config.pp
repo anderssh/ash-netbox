@@ -1,6 +1,64 @@
-# @summary A short summary of the purpose of this class
+# @summary Configures Netbox and gunicorn
 #
-# A description of what this class does
+# Configures Netbox and gunicorn, and load the database schema.
+#
+# @param user
+#   The user owning the Netbox installation files, and running the
+#   service.
+#
+# @param group
+#   The group owning the Netbox installation files, and running the
+#   service.
+#
+# @param install_root
+#   The root directory of the netbox installation.
+#
+# @param database_name
+#   Name of the PostgreSQL database. If handle_database is true, then this database
+#   gets created as well. If not, then it is only used by the application, and needs to exist.
+#
+# @param database_user
+#   Name of the PostgreSQL database user. If handle_database is true, then this database user
+#   gets created as well. If not, then it is only used by the application, and needs to exist.
+#
+# @param database_user
+#   Name of the PostgreSQL database password. If handle_database is true, then this database password
+#   gets created as well. If not, then it is only used by the application, and needs to exist.
+#
+# @param database_host
+#
+# @param database_port
+#   PostgreSQL database port. NB! The PostgreSQL database that is made when using handle_database
+#   does not support configuring a non-standard port. So change this parameter only if using 
+#   separate PostgreSQL DB with non-standard port. Defaults to 5432.
+#
+# @param database_conn_max_age
+#   Database max connection age in seconds. Defaults to 300.
+#
+# @param redis_options
+#   Options used against redis. Customize to fit your redis installation. Use default values
+#   if using the redis bundled with this module.
+#
+# @param email_options
+#   Options used for sending email.
+#
+# @param secret_key
+#   A random string of letters, numbers and symbols that Netbox needs.
+#   This needs to be supplied, and should be treated as a secret. Should
+#   be at least 50 characters long.
+#   
+# @param banner_top
+#   Text for top banner on the Netbox webapp
+#
+# @param banner_bottom
+#   Text for bottom banner on the Netbox webapp
+#
+# @param banner_login
+#   Text for login banner on the Netbox webapp
+#
+# @param base_path
+#   Base URL path if accessing NetBox within a directory.
+#   For example, if installed at http://example.com/netbox/, set: BASE_PATH = 'netbox/'
 #
 # @example
 #   include netbox::config
