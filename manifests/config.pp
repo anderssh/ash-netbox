@@ -22,8 +22,6 @@ class netbox::config (
   String $banner_bottom,
   String $banner_login,
   String $base_path,
-  String $superuser_username,
-  String $superuser_email,
 ) {
   $should_create_superuser = false;
   $software_directory = "${install_root}/netbox"
@@ -65,10 +63,6 @@ class netbox::config (
     onlyif  => "${venv_dir}/bin/python3 netbox/manage.py showmigrations | grep '\[ \]'",
     command => "${venv_dir}/bin/python3 netbox/manage.py migrate --no-input",
     require => File[$config_file];
-  }
-  ~> exec { 'create superuser':
-    onlyif  => $should_create_superuser,
-    command => "${venv_dir}/bin/python3 netbox/manage.py createsuperuser --username ${superuser_username} --email ${superuser_email} --no-input",
   }
   exec { 'collect static files':
     command     => "${venv_dir}/bin/python3 netbox/manage.py collectstatic --no-input",
