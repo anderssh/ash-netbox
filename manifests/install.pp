@@ -1,6 +1,39 @@
-# @summary Install Netbox
+# @summary Installs Netbox
 #
-# A class for installing Netbox
+# Installs Netbox
+#
+# @param install_root
+#   The root directory of the netbox installation.
+#
+# @param version
+#   The version of Netbox. This must match the version in the
+#   tarball. This is used for managing files, directories and paths in
+#   the service.
+#
+# @param download_url
+#   Where to download the binary installation tarball from.
+#
+# @param download_checksum
+#   The expected checksum of the downloaded tarball. This is used for
+#   verifying the integrity of the downloaded tarball.
+#
+# @param download_checksum_type
+#   The checksum type of the downloaded tarball. This is used for
+#   verifying the integrity of the downloaded tarball.
+#
+# @param download_tmp_dir
+#   Temporary directory for downloading the tarball.
+#
+# @param user
+#   The user owning the Netbox installation files, and running the
+#   service.
+#
+# @param group [String]
+#   The group owning the Netbox installation files, and running the
+#   service.
+#
+# @param install_method
+#   Method for getting the Netbox software
 #
 # @example
 #   include netbox::install
