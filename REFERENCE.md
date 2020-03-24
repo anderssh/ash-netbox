@@ -210,7 +210,9 @@ Defaults to 'netbox'
 
 Default value: 'netbox'
 
-##### `database_user`
+##### `database_password`
+
+Data type: `String`
 
 Name of the PostgreSQL database password. If handle_database is true, then this database password
 gets created as well. If not, then it is only used by the application, and needs to exist.
@@ -250,7 +252,6 @@ Data type: `Array[Stdlib::Host]`
 
 Array of valid fully-qualified domain names (FQDNs) for the NetBox server. NetBox will not permit write
 access to the server via any other hostnames. The first FQDN in the list will be treated as the preferred name.
-Defaults to: ['netbox.exmple.com','localhost']
 
 Default value: ['netbox.exmple.com','localhost']
 
@@ -307,14 +308,6 @@ Email for the superuser
 
 Default value: 'admin@example.com'
 
-##### `database_password`
-
-Data type: `String`
-
-
-
-Default value: 'netbox'
-
 ### netbox::config
 
 Configures Netbox and gunicorn, and load the database schema.
@@ -351,6 +344,13 @@ Data type: `Stdlib::Absolutepath`
 
 The root directory of the netbox installation.
 
+##### `allowed_hosts`
+
+Data type: `Array[Stdlib::Host]`
+
+Array of valid fully-qualified domain names (FQDNs) for the NetBox server. NetBox will not permit write
+access to the server via any other hostnames. The first FQDN in the list will be treated as the preferred name.
+
 ##### `database_name`
 
 Data type: `String`
@@ -365,7 +365,9 @@ Data type: `String`
 Name of the PostgreSQL database user. If handle_database is true, then this database user
 gets created as well. If not, then it is only used by the application, and needs to exist.
 
-##### `database_user`
+##### `database_password`
+
+Data type: `String`
 
 Name of the PostgreSQL database password. If handle_database is true, then this database password
 gets created as well. If not, then it is only used by the application, and needs to exist.
@@ -374,7 +376,7 @@ gets created as well. If not, then it is only used by the application, and needs
 
 Data type: `Stdlib::Host`
 
-
+Hostname where the PostgreSQL database resides.
 
 ##### `database_port`
 
@@ -436,18 +438,6 @@ Data type: `String`
 Base URL path if accessing NetBox within a directory.
 For example, if installed at http://example.com/netbox/, set: BASE_PATH = 'netbox/'
 
-##### `allowed_hosts`
-
-Data type: `Array[Stdlib::Host]`
-
-
-
-##### `database_password`
-
-Data type: `String`
-
-
-
 ### netbox::database
 
 This class sets up PostgreSQL database. This is optional,
@@ -469,19 +459,19 @@ The following parameters are available in the `netbox::database` class.
 
 Data type: `String`
 
-
+Name of the PostgreSQL database.
 
 ##### `database_user`
 
 Data type: `String`
 
-
+Name of the PostgreSQL database user.
 
 ##### `database_password`
 
 Data type: `String`
 
-
+Name of the PostgreSQL database password.
 
 ### netbox::install
 
@@ -581,21 +571,23 @@ A class for running Netbox as a Systemd service
 
 The following parameters are available in the `netbox::service` class.
 
-##### `install_root`
-
-Data type: `Stdlib::Absolutepath`
-
-
-
 ##### `user`
 
 Data type: `String`
 
-
+The user running the
+service.
 
 ##### `group`
 
 Data type: `String`
+
+The group running the
+service.
+
+##### `install_root`
+
+Data type: `Stdlib::Absolutepath`
 
 
 
