@@ -1,5 +1,13 @@
 # @summary Manage the Netbox and Netvox-rq Systemd services
 #
+# @param user
+#   The user running the
+#   service.
+#
+# @param group
+#   The group running the
+#   service.
+#
 # A class for running Netbox as a Systemd service
 #
 class netbox::service (

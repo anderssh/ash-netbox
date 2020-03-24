@@ -13,6 +13,10 @@
 # @param install_root
 #   The root directory of the netbox installation.
 #
+# @param allowed_hosts
+#   Array of valid fully-qualified domain names (FQDNs) for the NetBox server. NetBox will not permit write
+#   access to the server via any other hostnames. The first FQDN in the list will be treated as the preferred name.
+#
 # @param database_name
 #   Name of the PostgreSQL database. If handle_database is true, then this database
 #   gets created as well. If not, then it is only used by the application, and needs to exist.
