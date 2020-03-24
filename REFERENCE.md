@@ -6,9 +6,9 @@
 **Classes**
 
 * [`netbox`](#netbox): Manage Netbox
-* [`netbox::config`](#netboxconfig): A short summary of the purpose of this class
+* [`netbox::config`](#netboxconfig): Configures Netbox and gunicorn
 * [`netbox::database`](#netboxdatabase): Sets up the PostgreSQL database for netbox
-* [`netbox::install`](#netboxinstall): Install Netbox
+* [`netbox::install`](#netboxinstall): Installs Netbox
 * [`netbox::redis`](#netboxredis): Class that handles the installation of Redis
 * [`netbox::service`](#netboxservice): Manage the Netbox and Netvox-rq Systemd services
 
@@ -23,7 +23,9 @@ Install, configure and run Netbox
 ##### Defaults
 
 ```puppet
-include netbox
+class { 'netbox':
+  secret_key => $my_secret_variable
+}
 ```
 
 ##### Downloading from a different repository
@@ -210,8 +212,6 @@ Default value: 'netbox'
 
 ##### `database_user`
 
-Data type: `String`
-
 Name of the PostgreSQL database password. If handle_database is true, then this database password
 gets created as well. If not, then it is only used by the application, and needs to exist.
 Defaults to 'netbox'
@@ -287,7 +287,6 @@ Data type: `String`
 
 Base URL path if accessing NetBox within a directory.
 For example, if installed at http://example.com/netbox/, set: BASE_PATH = 'netbox/'
-Defaults to the empty string
 
 Default value: ''
 
@@ -297,7 +296,6 @@ Data type: `String`
 
 Username for the superuser. This user is created, but without a password. To set the password,
 you must run  /opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py changepassword
-Defaults to admin
 
 Default value: 'admin'
 
@@ -306,7 +304,6 @@ Default value: 'admin'
 Data type: `String`
 
 Email for the superuser
-Defaults to 'admin@example.com'
 
 Default value: 'admin@example.com'
 
@@ -320,7 +317,7 @@ Default value: 'netbox'
 
 ### netbox::config
 
-A description of what this class does
+Configures Netbox and gunicorn, and load the database schema.
 
 #### Examples
 
@@ -338,43 +335,40 @@ The following parameters are available in the `netbox::config` class.
 
 Data type: `String`
 
-
+The user owning the Netbox installation files, and running the
+service.
 
 ##### `group`
 
 Data type: `String`
 
-
+The group owning the Netbox installation files, and running the
+service.
 
 ##### `install_root`
 
 Data type: `Stdlib::Absolutepath`
 
-
-
-##### `allowed_hosts`
-
-Data type: `Array[Stdlib::Host]`
-
-
+The root directory of the netbox installation.
 
 ##### `database_name`
 
 Data type: `String`
 
-
+Name of the PostgreSQL database. If handle_database is true, then this database
+gets created as well. If not, then it is only used by the application, and needs to exist.
 
 ##### `database_user`
 
 Data type: `String`
 
+Name of the PostgreSQL database user. If handle_database is true, then this database user
+gets created as well. If not, then it is only used by the application, and needs to exist.
 
+##### `database_user`
 
-##### `database_password`
-
-Data type: `String`
-
-
+Name of the PostgreSQL database password. If handle_database is true, then this database password
+gets created as well. If not, then it is only used by the application, and needs to exist.
 
 ##### `database_host`
 
@@ -386,63 +380,69 @@ Data type: `Stdlib::Host`
 
 Data type: `Integer`
 
-
+PostgreSQL database port. NB! The PostgreSQL database that is made when using handle_database
+does not support configuring a non-standard port. So change this parameter only if using
+separate PostgreSQL DB with non-standard port. Defaults to 5432.
 
 ##### `database_conn_max_age`
 
 Data type: `Integer`
 
-
+Database max connection age in seconds. Defaults to 300.
 
 ##### `redis_options`
 
 Data type: `Hash`
 
-
+Options used against redis. Customize to fit your redis installation. Use default values
+if using the redis bundled with this module.
 
 ##### `email_options`
 
 Data type: `Hash`
 
-
+Options used for sending email.
 
 ##### `secret_key`
 
 Data type: `String`
 
-
+A random string of letters, numbers and symbols that Netbox needs.
+This needs to be supplied, and should be treated as a secret. Should
+be at least 50 characters long.
 
 ##### `banner_top`
 
 Data type: `String`
 
-
+Text for top banner on the Netbox webapp
 
 ##### `banner_bottom`
 
 Data type: `String`
 
-
+Text for bottom banner on the Netbox webapp
 
 ##### `banner_login`
 
 Data type: `String`
 
-
+Text for login banner on the Netbox webapp
 
 ##### `base_path`
 
 Data type: `String`
 
+Base URL path if accessing NetBox within a directory.
+For example, if installed at http://example.com/netbox/, set: BASE_PATH = 'netbox/'
+
+##### `allowed_hosts`
+
+Data type: `Array[Stdlib::Host]`
 
 
-##### `superuser_username`
 
-Data type: `String`
-
-
-
-##### `superuser_email`
+##### `database_password`
 
 Data type: `String`
 
@@ -485,7 +485,7 @@ Data type: `String`
 
 ### netbox::install
 
-A class for installing Netbox
+Installs Netbox
 
 #### Examples
 
@@ -503,65 +503,63 @@ The following parameters are available in the `netbox::install` class.
 
 Data type: `Stdlib::Absolutepath`
 
-
+The root directory of the netbox installation.
 
 ##### `version`
 
 Data type: `String`
 
-
+The version of Netbox. This must match the version in the
+tarball. This is used for managing files, directories and paths in
+the service.
 
 ##### `download_url`
 
 Data type: `String`
 
-
+Where to download the binary installation tarball from.
 
 ##### `download_checksum`
 
 Data type: `String`
 
-
+The expected checksum of the downloaded tarball. This is used for
+verifying the integrity of the downloaded tarball.
 
 ##### `download_checksum_type`
 
 Data type: `String`
 
-
+The checksum type of the downloaded tarball. This is used for
+verifying the integrity of the downloaded tarball.
 
 ##### `download_tmp_dir`
 
 Data type: `Stdlib::Absolutepath`
 
-
+Temporary directory for downloading the tarball.
 
 ##### `user`
 
 Data type: `String`
 
-
+The user owning the Netbox installation files, and running the
+service.
 
 ##### `group`
 
 Data type: `String`
 
-
+The group owning the Netbox installation files, and running the
+service.
 
 ##### `install_method`
 
 Data type: `Enum['tarball', 'git_clone']`
 
-
+Method for getting the Netbox software
 
 Default value: 'tarball'
-
-##### `included`
-
-Data type: `Boolean`
-
-
-
-Default value: `true`
 
 ### netbox::redis
 
