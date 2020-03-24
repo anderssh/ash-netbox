@@ -67,7 +67,7 @@ class netbox::config (
     require => File[$config_file];
   }
   ~> exec { 'create superuser':
-    command => "${venv_dir}/bin/python3 netbox/manage.py createsuperuser --username ${superuser_username} --username ${superuser_email} --no-input",
+    command => "${venv_dir}/bin/python3 netbox/manage.py createsuperuser --username ${superuser_username} --email ${superuser_email} --no-input",
   }
   exec { 'collect static files':
     command   => "${venv_dir}/bin/python3 netbox/manage.py collectstatic --no-input",
