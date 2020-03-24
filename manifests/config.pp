@@ -64,7 +64,7 @@ class netbox::config (
   exec { 'database migration':
     onlyif  => "${venv_dir}/bin/python3 netbox/manage.py showmigrations | grep '\[ \]'",
     command => "${venv_dir}/bin/python3 netbox/manage.py migrate --no-input",
-    after   => File[$config_file];
+    require => File[$config_file];
   }
   ~> exec { 'create superuser':
     command => "${venv_dir}/bin/python3 netbox/manage.py createsuperuser --username ${superuser_username} --username ${superuser_email} --no-input",
