@@ -106,7 +106,6 @@ class netbox::install (
     creates => "${venv_dir}/bin/activate",
     cwd     => '/tmp',
     unless  => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate", #Unless activate exists and VIRTUAL_ENV is correct we re-create the virtualenv
-    require => File[$venv_dir],
   }
   ~>exec { 'install python requirements':
     cwd         => "${install_root}/netbox",
