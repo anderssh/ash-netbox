@@ -2,7 +2,7 @@
   "name": "ash-netbox",
   "version": "0.1.0",
   "author": "ash",
-  "summary": "Installs and configures Netbox and optionally its dependencies, lik PostgreSQL and redis",
+  "summary": "Installs and configures Netbox and optionally its dependencies, like PostgreSQL and redis",
   "license": "Apache-2.0",
   "source": "https://github.com/anderssh/ash-netbox",
   "project_page": "https://github.com/anderssh/ash-netbox",
