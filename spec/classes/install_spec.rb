@@ -6,7 +6,7 @@ describe 'netbox::install' do
       let(:facts) { os_facts }
       let(:params) do
         {
-          install_root: '/nonexistant',
+          install_root: '/opt',
           version: '1.0.0',
           download_url: 'https://example.com/netbox-1.0.0.tar.gz',
           download_checksum: 'abcde',

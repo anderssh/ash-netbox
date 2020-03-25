@@ -6,7 +6,7 @@ describe 'netbox::service' do
       let(:facts) { os_facts }
       let(:params) do
         {
-          install_root: '/nonexistant',
+          install_root: '/opt',
           user: 'testuser',
           group: 'testpass',
         }

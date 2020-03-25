@@ -8,7 +8,7 @@ describe 'netbox::config' do
         {
           user: 'testuser',
           group: 'testgroup',
-          install_root: '/nonexistant',
+          install_root: '/opt',
           allowed_hosts: ['0.0.0.0/0'],
           database_name: 'testdb',
           database_user: 'testdbuser',
