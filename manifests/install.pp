@@ -82,7 +82,7 @@ class netbox::install (
   $local_tarball = "${download_tmp_dir}/netbox-${version}.tar.gz"
   $software_directory_with_version = "${install_root}/netbox-${version}"
   $software_directory = "${install_root}/netbox"
-  $venv_dir = "${software_directory}/netbox"
+  $venv_dir = "${software_directory}/venv"
 
   archive { $local_tarball:
     source        => $download_url,
@@ -98,12 +98,6 @@ class netbox::install (
   file { $software_directory:
     ensure => 'link',
     target => $software_directory_with_version,
-  }
-
-  file { $venv_dir:
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
   }
 
   exec { "python_venv_${venv_dir}":
