@@ -100,6 +100,12 @@ class netbox::install (
     target => $software_directory_with_version,
   }
 
+  file { $venv_dir:
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
+  }
+
   exec { "python_venv_${venv_dir}":
     command => "/usr/bin/python3 -m venv ${venv_dir}",
     user    => $user,
