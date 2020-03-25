@@ -49,7 +49,6 @@ describe 'netbox::config' do
           base_path: '/',
         }
       end
-
       it { is_expected.to compile }
     end
   end

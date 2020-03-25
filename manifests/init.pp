@@ -235,5 +235,4 @@ class netbox (
     user         => $user,
     group        => $group,
   }
-
 }
