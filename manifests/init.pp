@@ -113,13 +113,6 @@
 #   Base URL path if accessing NetBox within a directory.
 #   For example, if installed at http://example.com/netbox/, set: BASE_PATH = 'netbox/'
 #
-# @param superuser_username
-#   Username for the superuser. This user is created, but without a password. To set the password,
-#   you must run  /opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py changepassword
-#
-# @param superuser_email
-#   Email for the superuser
-#
 # @example Defaults
 #   class { 'netbox':
 #     secret_key => $my_secret_variable
@@ -235,8 +228,6 @@ class netbox (
     banner_bottom         => $banner_bottom,
     banner_login          => $banner_login,
     base_path             => $base_path,
-    superuser_username    => $superuser_username,
-    superuser_email       => $superuser_email,
   }
 
   class {'netbox::service':
