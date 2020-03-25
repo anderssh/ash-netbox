@@ -47,8 +47,6 @@ describe 'netbox::config' do
           banner_bottom: '',
           banner_login: '',
           base_path: '/',
-          superuser_username: 'testsuperuser',
-          superuser_email: 'super@localhost',
         }
       end
 

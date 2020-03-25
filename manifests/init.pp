@@ -155,8 +155,6 @@ class netbox (
   String $banner_bottom = '',
   String $banner_login = '',
   String $base_path ='',
-  String $superuser_username = 'admin',
-  String $superuser_email = 'admin@example.com',
   String $email_server = 'localhost',
   Integer $email_timeout = 10,
   Stdlib::Port $email_port = 25,
