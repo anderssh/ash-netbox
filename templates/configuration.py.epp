@@ -16,6 +16,7 @@
   Array $admins,
   Boolean $debug,
   Boolean $enforce_global_unique,
+  Array $exempt_view_permissions,
   | -%>
 
 #########################
@@ -148,10 +149,9 @@ ENFORCE_GLOBAL_UNIQUE = False
 <% } -%>
 # Exempt certain models from the enforcement of view permissions. Models listed here will be viewable by all users and
 # by anonymous users. List models in the form `<app>.<model>`. Add '*' to this list to exempt all models.
+
 EXEMPT_VIEW_PERMISSIONS = [
-    # 'dcim.site',
-    # 'dcim.region',
-    # 'ipam.prefix',
+    <%= String($exempt_view_permissions).join(",\n    ") %>
 ]
 
 # Enable custom logging. Please see the Django documentation for detailed guidance on configuring custom logs:
