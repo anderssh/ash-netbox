@@ -47,6 +47,22 @@ describe 'netbox::config' do
           banner_bottom: '',
           banner_login: '',
           base_path: '/',
+          admins: [
+            {
+              name: 'Name Nameson',
+              email: 'nameson@example.com'
+            },
+            {
+              name: 'Another Guy',
+              email: 'guy@example.com'
+            },
+          ],
+          debug: false,
+          enforce_global_unique: false,
+          login_required: false,
+          metrics_enabled: false,
+          prefer_ipv4: false,
+          exempt_view_permissions: [],
         }
       end
       it { is_expected.to compile }
