@@ -65,6 +65,15 @@
 #   Base URL path if accessing NetBox within a directory.
 #   For example, if installed at http://example.com/netbox/, set: BASE_PATH = 'netbox/'
 #
+# @param debug
+#   Set to True to enable server debugging. WARNING: Debugging introduces a substantial performance penalty and may reveal
+#   sensitive information about your installation. Only enable debugging while performing testing. Never enable debugging
+#   on a production system.
+#
+# @param enforce_global_unique
+#   Enforcement of unique IP space can be toggled on a per-VRF basis. To enforce unique IP space within the global table
+#   (all prefixes and IP addresses not assigned to a VRF), set ENFORCE_GLOBAL_UNIQUE to True.
+#
 # @example
 #   include netbox::config
 class netbox::config (
@@ -86,6 +95,8 @@ class netbox::config (
   String $banner_bottom,
   String $banner_login,
   String $base_path,
+  Boolean $debug,
+  Boolean $enforce_global_unique,
 ) {
   $should_create_superuser = false;
   $software_directory = "${install_root}/netbox"
@@ -127,6 +138,8 @@ class netbox::config (
       'banner_bottom'         => $banner_bottom,
       'banner_login'          => $banner_login,
       'base_path'             => $base_path,
+      'debug'                 => $debug,
+      'enforce_global_unique' => $enforce_global_unique,
     }),
     owner        => $user,
     group        => $group,

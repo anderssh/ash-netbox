@@ -13,7 +13,9 @@
   String $banner_bottom,
   String $banner_login,
   String $base_path,
-  Array $admins
+  Array $admins,
+  Boolean $debug,
+  Boolean $enforce_global_unique,
   | -%>
 
 #########################
@@ -119,7 +121,11 @@ CORS_ORIGIN_REGEX_WHITELIST = [
 # Set to True to enable server debugging. WARNING: Debugging introduces a substantial performance penalty and may reveal
 # sensitive information about your installation. Only enable debugging while performing testing. Never enable debugging
 # on a production system.
+<% if $debug { -%>
+DEBUG = True
+<% }else { -%>
 DEBUG = False
+} %>
 
 # Email settings
 # https://netbox.readthedocs.io/en/stable/configuration/optional-settings/#email
@@ -135,7 +141,11 @@ EMAIL = {
 # Enforcement of unique IP space can be toggled on a per-VRF basis. To enforce unique IP space within the global table
 # (all prefixes and IP addresses not assigned to a VRF), set ENFORCE_GLOBAL_UNIQUE to True.
 ENFORCE_GLOBAL_UNIQUE = False
-
+<% if $enforce_global_unique { -%>
+ENFORCE_GLOBAL_UNIQUE = True
+<% }else { -%>
+ENFORCE_GLOBAL_UNIQUE = False
+} %>
 # Exempt certain models from the enforcement of view permissions. Models listed here will be viewable by all users and
 # by anonymous users. List models in the form `<app>.<model>`. Add '*' to this list to exempt all models.
 EXEMPT_VIEW_PERMISSIONS = [
