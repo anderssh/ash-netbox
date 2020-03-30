@@ -82,11 +82,9 @@ SECRET_KEY = '<%= $secret_key %>'
 
 # Specify one or more name and email address tuples representing NetBox administrators. These people will be notified of
 # application errors (assuming correct email settings are provided).
-<%$count = $admins.count-%>
+
 ADMINS = [
-   <% admins.each |$index, $admin| {-%>
-    ['<%= "${admin['name']}" %>','<%= "${admin['email']}" %>']
-    <% } -%>
+    <%= $admins.map |$v| { String([$v['name'], $v['email']])}.join(",\n    ") %>
 ]
 
 # Optionally display a persistent banner at the top and/or bottom of every page. HTML is allowed. To display the same
