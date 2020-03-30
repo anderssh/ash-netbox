@@ -74,6 +74,14 @@
 #   Enforcement of unique IP space can be toggled on a per-VRF basis. To enforce unique IP space within the global table
 #   (all prefixes and IP addresses not assigned to a VRF), set ENFORCE_GLOBAL_UNIQUE to True.
 #
+# @param login_required
+#   Setting this to True will permit only authenticated users to access any part of NetBox. By default, anonymous users
+#   are permitted to access most data in NetBox (excluding secrets) but not make any changes.
+#
+# @param metrics_enabled
+#   Setting this to true will permit only authenticated users to access any part of NetBox. By default, anonymous users
+#   are permitted to access most data in NetBox (excluding secrets) but not make any changes.
+#
 # @example
 #   include netbox::config
 class netbox::config (
@@ -98,6 +106,7 @@ class netbox::config (
   Boolean $debug,
   Boolean $enforce_global_unique,
   Boolean $login_required,
+  Boolean $metrics_enabled,
   Array $exempt_view_permissions,
 ) {
   $should_create_superuser = false;
@@ -144,6 +153,7 @@ class netbox::config (
       'enforce_global_unique'   => $enforce_global_unique,
       'exempt_view_permissions' => $exempt_view_permissions,
       'login_required'          => $login_required,
+      'metrics_enabled'         => $metrics_enabled,
 
     }),
     owner        => $user,

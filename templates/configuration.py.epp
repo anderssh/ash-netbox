@@ -17,6 +17,7 @@
   Boolean $debug,
   Boolean $enforce_global_unique,
   Boolean $login_required,
+  Boolean $metrics_enabled,
   Array $exempt_view_permissions,
   | -%>
 
@@ -193,7 +194,11 @@ MAX_PAGE_SIZE = 1000
 # }
 
 # Expose Prometheus monitoring metrics at the HTTP endpoint '/metrics'
+<% if $metrics_enabled { -%>
+METRICS_ENABLED = True
+<% }else { -%>
 METRICS_ENABLED = False
+<% } -%>
 
 # Credentials that NetBox will uses to authenticate to devices when connecting via NAPALM.
 NAPALM_USERNAME = ''
