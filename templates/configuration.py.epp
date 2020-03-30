@@ -125,7 +125,7 @@ CORS_ORIGIN_REGEX_WHITELIST = [
 DEBUG = True
 <% }else { -%>
 DEBUG = False
-} %>
+<% } -%>
 
 # Email settings
 # https://netbox.readthedocs.io/en/stable/configuration/optional-settings/#email
@@ -145,7 +145,7 @@ ENFORCE_GLOBAL_UNIQUE = False
 ENFORCE_GLOBAL_UNIQUE = True
 <% }else { -%>
 ENFORCE_GLOBAL_UNIQUE = False
-} %>
+<% } -%>
 # Exempt certain models from the enforcement of view permissions. Models listed here will be viewable by all users and
 # by anonymous users. List models in the form `<app>.<model>`. Add '*' to this list to exempt all models.
 EXEMPT_VIEW_PERMISSIONS = [
