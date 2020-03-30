@@ -13,6 +13,7 @@
   String $banner_bottom,
   String $banner_login,
   String $base_path,
+  Hash $admins
   | -%>
 
 #########################
@@ -82,8 +83,16 @@ SECRET_KEY = '<%= $secret_key %>'
 # Specify one or more name and email address tuples representing NetBox administrators. These people will be notified of
 # application errors (assuming correct email settings are provided).
 ADMINS = [
-    # ['John Doe', 'jdoe@example.com'],
+   <% admins.each |$admin| {-%>
+        <% if $admin['name'] == $admins[-1]['name'] { -%>
+            <%=$admin['name']%><%=$admin['email']%>]
+        <% } -%>
+        <% else { -%>
+            [<%=$admin['name']%><%=$admin['email']%>],
+        <% } -%>
+    <% } -%>
 ]
+
 
 # Optionally display a persistent banner at the top and/or bottom of every page. HTML is allowed. To display the same
 # content in both banners, define BANNER_TOP and set BANNER_BOTTOM = BANNER_TOP.
