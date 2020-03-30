@@ -85,7 +85,7 @@ SECRET_KEY = '<%= $secret_key %>'
 <%$count = $admins.count-%>
 ADMINS = [
    <% admins.each |$index, $admin| {-%>
-        ['<%= ${admin['name']} %>','<%= ${admin['email']} %>']
+    ['<%= $admin['name'] %>','<%= $admin['email'] %>']
     <% } -%>
 ]
 
