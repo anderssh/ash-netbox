@@ -10,8 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Handle `ADMINS` in the config with the the `admins` array of hashes
 * Handle debug option
 * Handle enforce_global_unique option
-* 
-* Add validate command to validata python
+* Handle exempt_view_permissions option
+* Add validate command to validate python
 ## [0.1.0] 2020-03-25
 
 * Initial release.
