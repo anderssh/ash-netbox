@@ -82,6 +82,9 @@
 #   Setting this to true will permit only authenticated users to access any part of NetBox. By default, anonymous users
 #   are permitted to access most data in NetBox (excluding secrets) but not make any changes.
 #
+# @param prefer_ipv4
+# When determining the primary IP address for a device, IPv6 is preferred over IPv4 by default. Set this to True to
+# prefer IPv4 instead.
 # @example
 #   include netbox::config
 class netbox::config (
@@ -107,6 +110,7 @@ class netbox::config (
   Boolean $enforce_global_unique,
   Boolean $login_required,
   Boolean $metrics_enabled,
+  Boolean $prefer_ipv4,
   Array $exempt_view_permissions,
 ) {
   $should_create_superuser = false;
@@ -154,6 +158,7 @@ class netbox::config (
       'exempt_view_permissions' => $exempt_view_permissions,
       'login_required'          => $login_required,
       'metrics_enabled'         => $metrics_enabled,
+      'prefer_ipv4'             => $prefer_ipv4,
 
     }),
     owner        => $user,

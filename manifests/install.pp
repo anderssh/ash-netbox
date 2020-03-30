@@ -28,7 +28,7 @@
 #   The user owning the Netbox installation files, and running the
 #   service.
 #
-# @param group [String]
+# @param group
 #   The group owning the Netbox installation files, and running the
 #   service.
 #

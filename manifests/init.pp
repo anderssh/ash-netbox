@@ -130,6 +130,10 @@
 #   Enforcement of unique IP space can be toggled on a per-VRF basis. To enforce unique IP space within the global table
 #   (all prefixes and IP addresses not assigned to a VRF), set ENFORCE_GLOBAL_UNIQUE to True.
 #
+# @param prefer_ipv4
+#   When determining the primary IP address for a device, IPv6 is preferred over IPv4 by default. Set this to True to
+#   prefer IPv4 instead.
+#
 # @example Defaults
 #   class { 'netbox':
 #     secret_key => $my_secret_variable
@@ -170,6 +174,7 @@ class netbox (
   Boolean $enforce_global_unique = false,
   Boolean $login_required = false,
   Boolean $metrics_enabled = false,
+  Boolean $prefer_ipv4 = false,
   Array $exempt_view_permissions = [],
   String $email_server = 'localhost',
   Integer $email_timeout = 10,
@@ -256,6 +261,7 @@ class netbox (
     enforce_global_unique   => $enforce_global_unique,
     login_required          => $login_required,
     metrics_enabled         => $metrics_enabled,
+    prefer_ipv4             => $prefer_ipv4,
     exempt_view_permissions => $exempt_view_permissions,
   }
 

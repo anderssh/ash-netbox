@@ -18,6 +18,7 @@
   Boolean $enforce_global_unique,
   Boolean $login_required,
   Boolean $metrics_enabled,
+  Boolean $prefer_ipv4,
   Array $exempt_view_permissions,
   | -%>
 
@@ -216,7 +217,11 @@ PAGINATE_COUNT = 50
 
 # When determining the primary IP address for a device, IPv6 is preferred over IPv4 by default. Set this to True to
 # prefer IPv4 instead.
+<% if $prefer_ipv4 { -%>
+PREFER_IPV4 = True
+<% }else { -%>
 PREFER_IPV4 = False
+<% } -%>
 
 # The file path where custom reports will be stored. A trailing slash is not needed. Note that the default value of
 # this setting is derived from the installed location.
