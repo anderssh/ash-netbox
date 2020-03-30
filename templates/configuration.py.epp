@@ -13,7 +13,7 @@
   String $banner_bottom,
   String $banner_login,
   String $base_path,
-  Hash $admins
+  Array $admins
   | -%>
 
 #########################
@@ -82,13 +82,10 @@ SECRET_KEY = '<%= $secret_key %>'
 
 # Specify one or more name and email address tuples representing NetBox administrators. These people will be notified of
 # application errors (assuming correct email settings are provided).
+<%$count = $admins.count-%>
 ADMINS = [
-   <% admins.each |$admin| {-%>
-        <% if $admin['name'] == $admins[-1]['name'] { -%>
-            <%=$admin['name']%><%=$admin['email']%>]
-        <% } else { -%>
-            [<%=$admin['name']%><%=$admin['email']%>],
-        <% } -%>
+   <% admins.each |$index, $admin| {-%>
+        ['<%= ${admin['name']} %>','<%= ${admin['email']} %>']
     <% } -%>
 ]
 

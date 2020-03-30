@@ -144,7 +144,7 @@ class netbox (
   Integer $database_port = 5432,
   Integer $database_conn_max_age = 300,
   Array[Stdlib::Host] $allowed_hosts = ['netbox.exmple.com','localhost'],
-  Hash $admins = {},
+  Array $admins = {},
   String $banner_top = '',
   String $banner_bottom = '',
   String $banner_login = '',

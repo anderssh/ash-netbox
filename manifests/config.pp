@@ -81,7 +81,7 @@ class netbox::config (
   Hash $redis_options,
   Hash $email_options,
   String $secret_key,
-  Hash $admins,
+  Array $admins,
   String $banner_top,
   String $banner_bottom,
   String $banner_login,
