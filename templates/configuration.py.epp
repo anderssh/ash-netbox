@@ -16,6 +16,7 @@
   Array $admins,
   Boolean $debug,
   Boolean $enforce_global_unique,
+  Boolean $login_required,
   Array $exempt_view_permissions,
   | -%>
 
@@ -141,7 +142,6 @@ EMAIL = {
 
 # Enforcement of unique IP space can be toggled on a per-VRF basis. To enforce unique IP space within the global table
 # (all prefixes and IP addresses not assigned to a VRF), set ENFORCE_GLOBAL_UNIQUE to True.
-ENFORCE_GLOBAL_UNIQUE = False
 <% if $enforce_global_unique { -%>
 ENFORCE_GLOBAL_UNIQUE = True
 <% }else { -%>
@@ -160,7 +160,11 @@ LOGGING = {}
 
 # Setting this to True will permit only authenticated users to access any part of NetBox. By default, anonymous users
 # are permitted to access most data in NetBox (excluding secrets) but not make any changes.
+<% if $login_required { -%>
+LOGIN_REQUIRED = True
+<% }else { -%>
 LOGIN_REQUIRED = False
+<% } -%>
 
 # The length of time (in seconds) for which a user will remain logged into the web UI before being prompted to
 # re-authenticate. (Default: 1209600 [14 days])

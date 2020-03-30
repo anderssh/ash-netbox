@@ -97,6 +97,7 @@ class netbox::config (
   String $base_path,
   Boolean $debug,
   Boolean $enforce_global_unique,
+  Boolean $login_required,
   Array $exempt_view_permissions,
 ) {
   $should_create_superuser = false;
@@ -142,6 +143,7 @@ class netbox::config (
       'debug'                   => $debug,
       'enforce_global_unique'   => $enforce_global_unique,
       'exempt_view_permissions' => $exempt_view_permissions,
+      'login_required'          => $login_required,
 
     }),
     owner        => $user,

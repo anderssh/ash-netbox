@@ -118,6 +118,10 @@
 #   sensitive information about your installation. Only enable debugging while performing testing. Never enable debugging
 #   on a production system.
 #
+# @param login_required
+#   Setting this to True will permit only authenticated users to access any part of NetBox. By default, anonymous users
+#   are permitted to access most data in NetBox (excluding secrets) but not make any changes.
+#
 # @param enforce_global_unique
 #   Enforcement of unique IP space can be toggled on a per-VRF basis. To enforce unique IP space within the global table
 #   (all prefixes and IP addresses not assigned to a VRF), set ENFORCE_GLOBAL_UNIQUE to True.
@@ -160,6 +164,7 @@ class netbox (
   Array $admins = [],
   Boolean $debug = false,
   Boolean $enforce_global_unique = false,
+  Boolean $login_required = false,
   Array $exempt_view_permissions = [],
   String $email_server = 'localhost',
   Integer $email_timeout = 10,
@@ -244,6 +249,7 @@ class netbox (
     base_path               => $base_path,
     debug                   => $debug,
     enforce_global_unique   => $enforce_global_unique,
+    login_required          => $login_required,
     exempt_view_permissions => $exempt_view_permissions,
   }
 
