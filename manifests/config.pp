@@ -90,7 +90,6 @@ class netbox::config (
   $should_create_superuser = false;
   $software_directory = "${install_root}/netbox"
   $venv_dir = "${software_directory}/venv"
-
   $gunicorn_file = "${software_directory}/gunicorn.py"
 
   $gunicorn_settings = {
@@ -112,7 +111,7 @@ class netbox::config (
   $config_file = "${software_directory}/netbox/netbox/configuration.py"
 
   file { $config_file:
-    content => epp('netbox/configuration.py.epp', {
+    content      => epp('netbox/configuration.py.epp', {
       'allowed_hosts'         => $allowed_hosts,
       'database_name'         => $database_name,
       'database_user'         => $database_user,
@@ -129,9 +128,10 @@ class netbox::config (
       'banner_login'          => $banner_login,
       'base_path'             => $base_path,
     }),
-    owner   => $user,
-    group   => $group,
-    mode    => '0644',
+    owner        => $user,
+    group        => $group,
+    mode         => '0644',
+    validate_cmd => "${venv_dir}/bin/python -m py_compile %",
   }
 
   Exec {
