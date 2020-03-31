@@ -81,6 +81,17 @@
 # @param handle_redis
 #   Should the Redis installation be handled by this module. Defaults to true.
 #
+# @param install_dependencies_from_filesystem
+#   Used if your machine can't reach the place pip would normally go to fetch dependencies
+#   as it would when running "pip install -r requirements.txt". Then you would have to 
+#   fetch those dependencies beforehand and put them somewhere your machine can reach.
+#   This can be done by running (on a machine that can reach pip's normal sources) the following:
+#   pip download -r <requirements.txt>  -d <destination>
+#   Remember to do this on local_requirements.txt also if you have one. 
+#
+# @param python_dependency_path
+#   Path to where pip can find packages when the variable $install_dependencies_from_filesystem is true
+#
 # @param database_name
 #   Name of the PostgreSQL database. If handle_database is true, then this database
 #   gets created as well. If not, then it is only used by the application, and needs to exist.
@@ -181,6 +192,8 @@ class netbox (
   Stdlib::Absolutepath $install_root = '/opt',
   Boolean $handle_database = true,
   Boolean $handle_redis = true,
+  Boolean $install_dependencies_from_filesystem = false,
+  Stdlib::Absolutepath $python_dependency_path = '/srv/python_dependencies',
   Boolean $include_napalm = true,
   Boolean $include_django_storages = true,
   Boolean $include_ldap = true,
@@ -229,17 +242,19 @@ class netbox (
   }
 
   class { 'netbox::install':
-    install_root            => $install_root,
-    version                 => $version,
-    user                    => $user,
-    group                   => $group,
-    download_url            => $download_url,
-    download_checksum       => $download_checksum,
-    download_checksum_type  => $download_checksum_type,
-    download_tmp_dir        => $download_tmp_dir,
-    include_napalm          => $include_napalm,
-    include_django_storages => $include_django_storages,
-    include_ldap            => $include_ldap,
+    install_root                         => $install_root,
+    version                              => $version,
+    user                                 => $user,
+    group                                => $group,
+    download_url                         => $download_url,
+    download_checksum                    => $download_checksum,
+    download_checksum_type               => $download_checksum_type,
+    download_tmp_dir                     => $download_tmp_dir,
+    include_napalm                       => $include_napalm,
+    include_django_storages              => $include_django_storages,
+    include_ldap                         => $include_ldap,
+    install_dependencies_from_filesystem => $install_dependencies_from_filesystem,
+    python_dependency_path               => $python_dependency_path,
   }
 
   $redis_options = {

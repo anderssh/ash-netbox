@@ -17,6 +17,8 @@ describe 'netbox::install' do
           include_napalm: true,
           include_django_storages: true,
           include_ldap: true,
+          install_dependencies_from_filesystem: true,
+          python_dependency_path: '/srv/python_dependencies',
         }
       end
 

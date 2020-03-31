@@ -49,6 +49,17 @@
 #   Use the documentation found here: https://netbox.readthedocs.io/en/stable/installation/5-ldap/ for information about
 #   the config file.
 #
+# @param install_dependencies_from_filesystem
+#   Used if your machine can't reach the place pip would normally go to fetch dependencies
+#   as it would when running "pip install -r requirements.txt". Then you would have to 
+#   fetch those dependencies beforehand and put them somewhere your machine can reach.
+#   This can be done by running (on a machine that can reach pip's normal sources) the following:
+#   pip download -r <requirements.txt>  -d <destination>
+#   Remember to do this on local_requirements.txt also if you have one. 
+#
+# @param python_dependency_path
+#   Path to where pip can find packages when the variable $install_dependencies_from_filesystem is true
+#
 # @example
 #   include netbox::install
 class netbox::install (
@@ -63,6 +74,8 @@ class netbox::install (
   Boolean $include_napalm,
   Boolean $include_django_storages,
   Boolean $include_ldap,
+  Boolean $install_dependencies_from_filesystem,
+  Stdlib::Absolutepath $python_dependency_path,
   Enum['tarball', 'git_clone'] $install_method = 'tarball',
 ) {
 
@@ -105,6 +118,14 @@ class netbox::install (
   $software_directory_with_version = "${install_root}/netbox-${version}"
   $software_directory = "${install_root}/netbox"
   $venv_dir = "${software_directory}/venv"
+
+  if $install_dependencies_from_filesystem {
+    $install_requirements_command       = "${venv_dir}/bin/pip3 install -r requirements.txt --no-index --find-links ${python_dependency_path}"
+    $install_local_requirements_command = "${venv_dir}/bin/pip3 install -r local_requirements.txt --no-index --find-links ${python_dependency_path}"
+  } else {
+    $install_requirements_command       = "${venv_dir}/bin/pip3 install -r requirements.txt"
+    $install_local_requirements_command = "${venv_dir}/bin/pip3 install -r local_requirements.txt"
+  }
 
   archive { $local_tarball:
     source        => $download_url,
@@ -158,7 +179,7 @@ class netbox::install (
     environment => ['VIRTUAL_ENV=/opt/netbox/venv'],
     provider    => shell,
     user        => $user,
-    command     => "${venv_dir}/bin/pip3 install -r local_requirements.txt",
+    command     => $install_local_requirements_command,
     onlyif      => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
     refreshonly => true,
   }
@@ -176,7 +197,7 @@ class netbox::install (
     environment => ['VIRTUAL_ENV=/opt/netbox/venv'],
     provider    => shell,
     user        => $user,
-    command     => "${venv_dir}/bin/pip3 install -r requirements.txt",
+    command     => $install_requirements_command,
     onlyif      => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
     refreshonly => true,
   }
