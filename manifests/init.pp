@@ -142,6 +142,15 @@
 #   When determining the primary IP address for a device, IPv6 is preferred over IPv4 by default. Set this to True to
 #   prefer IPv4 instead.
 #
+# @param napalm_username
+#   Username that NetBox will uses to authenticate to devices when connecting via NAPALM.
+#
+# @param napalm_password
+#   Password that NetBox will uses to authenticate to devices when connecting via NAPALM.
+#
+# @param napalm_timeout 
+#   NAPALM timeout (in seconds).
+#
 # @example Defaults
 #   class { 'netbox':
 #     secret_key => $my_secret_variable
@@ -186,6 +195,9 @@ class netbox (
   Boolean $metrics_enabled = false,
   Boolean $prefer_ipv4 = false,
   Array $exempt_view_permissions = [],
+  String $napalm_username = '',
+  String $napalm_password = '',
+  Integer $napalm_timeout = 30,
   String $email_server = 'localhost',
   Integer $email_timeout = 10,
   Stdlib::Port $email_port = 25,
@@ -275,6 +287,9 @@ class netbox (
     metrics_enabled         => $metrics_enabled,
     prefer_ipv4             => $prefer_ipv4,
     exempt_view_permissions => $exempt_view_permissions,
+    napalm_username         => $napalm_username,
+    napalm_password         => $napalm_password,
+    napalm_timeout          => $napalm_timeout,
   }
 
   class {'netbox::service':

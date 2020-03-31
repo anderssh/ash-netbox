@@ -20,6 +20,9 @@
   Boolean $metrics_enabled,
   Boolean $prefer_ipv4,
   Array $exempt_view_permissions,
+  String $napalm_username,
+  String $napalm_password,
+  Integer $napalm_timeout,
   | -%>
 
 #########################
@@ -202,11 +205,11 @@ METRICS_ENABLED = False
 <% } -%>
 
 # Credentials that NetBox will uses to authenticate to devices when connecting via NAPALM.
-NAPALM_USERNAME = ''
-NAPALM_PASSWORD = ''
+NAPALM_USERNAME: '<%=$napalm_username%>',
+NAPALM_PASSWORD: '<%=$napalm_password%>',
 
 # NAPALM timeout (in seconds). (Default: 30)
-NAPALM_TIMEOUT = 30
+NAPALM_TIMEOUT: <%=$napalm_timeout%>,
 
 # NAPALM optional arguments (see http://napalm.readthedocs.io/en/latest/support/#optional-arguments). Arguments must
 # be provided as a dictionary.

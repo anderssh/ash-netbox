@@ -83,8 +83,17 @@
 #   are permitted to access most data in NetBox (excluding secrets) but not make any changes.
 #
 # @param prefer_ipv4
-# When determining the primary IP address for a device, IPv6 is preferred over IPv4 by default. Set this to True to
-# prefer IPv4 instead.
+#   When determining the primary IP address for a device, IPv6 is preferred over IPv4 by default. Set this to True to
+#   prefer IPv4 instead.
+# @param napalm_username
+#   Username that NetBox will uses to authenticate to devices when connecting via NAPALM.
+#
+# @param napalm_password
+#   Password that NetBox will uses to authenticate to devices when connecting via NAPALM.
+#
+# @param napalm_timeout 
+#   NAPALM timeout (in seconds).
+#
 # @example
 #   include netbox::config
 class netbox::config (
@@ -112,6 +121,9 @@ class netbox::config (
   Boolean $metrics_enabled,
   Boolean $prefer_ipv4,
   Array $exempt_view_permissions,
+  String $napalm_username,
+  String $napalm_password,
+  Integer $napalm_timeout,
 ) {
   $should_create_superuser = false;
   $software_directory = "${install_root}/netbox"
@@ -159,7 +171,9 @@ class netbox::config (
       'login_required'          => $login_required,
       'metrics_enabled'         => $metrics_enabled,
       'prefer_ipv4'             => $prefer_ipv4,
-
+      'napalm_username'         => $napalm_username,
+      'napalm_password'         => $napalm_password,
+      'napalm_timeout'          => $napalm_timeout,
     }),
     owner        => $user,
     group        => $group,

@@ -63,6 +63,9 @@ describe 'netbox::config' do
           metrics_enabled: false,
           prefer_ipv4: false,
           exempt_view_permissions: [],
+          napalm_username: 'some_username',
+          napalm_password: 'some_secret_password',
+          napalm_timeout: 30,
         }
       end
       it { is_expected.to compile }

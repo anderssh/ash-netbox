@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Handle the metrics_enabled option
 * Handle the prefer_ipv4 option
 * Add validate command to validate python
+
 ## [0.1.0] 2020-03-25
 
 * Initial release.
