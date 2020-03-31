@@ -120,7 +120,7 @@ class netbox::install (
     file_line { 'napalm':
       path   => "${install_root}/netbox/local_requirements.txt",
       line   => 'napalm',
-      notify => Exec['install python requirements'],
+      notify => Exec['install local python requirements'],
     }
   }
 
@@ -128,7 +128,7 @@ class netbox::install (
     file_line { 'django_storages':
       path   => "${install_root}/netbox/local_requirements.txt",
       line   => 'django-storages',
-      notify => Exec['install python requirements'],
+      notify => Exec['install local python requirements'],
     }
   }
 
