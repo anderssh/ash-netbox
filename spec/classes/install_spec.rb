@@ -16,6 +16,7 @@ describe 'netbox::install' do
           group: 'test',
           include_napalm: true,
           include_django_storages: true,
+          include_ldap: true,
         }
       end
 
