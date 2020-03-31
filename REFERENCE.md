@@ -124,7 +124,36 @@ Default value: '/opt'
 
 Data type: `Boolean`
 
-Should the PostgreSQL database be handled by this module. Defaults to true.
+Should the PostgreSQL database be handled by this module.
+
+Default value: `true`
+
+##### `include_napalm`
+
+Data type: `Boolean`
+
+NAPALM allows NetBox to fetch live data from devices and return it to a requester via its REST API.
+Installation of NAPALM is optional. To enable it, set $include_napalm to true
+
+Default value: `true`
+
+##### `include_django_storages`
+
+Data type: `Boolean`
+
+By default, NetBox will use the local filesystem to storage uploaded files.
+To use a remote filesystem, install the django-storages library and configure your desired backend in configuration.py.
+
+Default value: `true`
+
+##### `include_ldap`
+
+Data type: `Boolean`
+
+Makes sure the packages and the python modules needed for LDAP-authentication are installed and loaded.
+The LDAP-config itself is not handled by this Puppet module at present.
+Use the documentation found here: https://netbox.readthedocs.io/en/stable/installation/5-ldap/ for information about
+the config file.
 
 Default value: `true`
 
@@ -189,6 +218,27 @@ Data type: `Boolean`
 Should the Redis installation be handled by this module. Defaults to true.
 
 Default value: `true`
+
+##### `install_dependencies_from_filesystem`
+
+Data type: `Boolean`
+
+Used if your machine can't reach the place pip would normally go to fetch dependencies
+as it would when running "pip install -r requirements.txt". Then you would have to
+fetch those dependencies beforehand and put them somewhere your machine can reach.
+This can be done by running (on a machine that can reach pip's normal sources) the following:
+pip download -r <requirements.txt>  -d <destination>
+Remember to do this on local_requirements.txt also if you have one.
+
+Default value: `false`
+
+##### `python_dependency_path`
+
+Data type: `Stdlib::Absolutepath`
+
+Path to where pip can find packages when the variable $install_dependencies_from_filesystem is true
+
+Default value: '/srv/python_dependencies'
 
 ##### `database_name`
 
@@ -291,22 +341,93 @@ For example, if installed at http://example.com/netbox/, set: BASE_PATH = 'netbo
 
 Default value: ''
 
-##### `superuser_username`
+##### `admins`
+
+Data type: `Array`
+
+Array of hashes with two keys, 'name' and 'email'. This is where the email goes if something goes wrong
+This feature (in the Puppet module) is not well tested.
+
+Default value: []
+
+##### `debug`
+
+Data type: `Boolean`
+
+Set to True to enable server debugging. WARNING: Debugging introduces a substantial performance penalty and may reveal
+sensitive information about your installation. Only enable debugging while performing testing. Never enable debugging
+on a production system.
+
+Default value: `false`
+
+##### `login_required`
+
+Data type: `Boolean`
+
+Setting this to True will permit only authenticated users to access any part of NetBox. By default, anonymous users
+are permitted to access most data in NetBox (excluding secrets) but not make any changes.
+
+Default value: `false`
+
+##### `metrics_enabled`
+
+Data type: `Boolean`
+
+Setting this to true will permit only authenticated users to access any part of NetBox. By default, anonymous users
+are permitted to access most data in NetBox (excluding secrets) but not make any changes.
+
+Default value: `false`
+
+##### `enforce_global_unique`
+
+Data type: `Boolean`
+
+Enforcement of unique IP space can be toggled on a per-VRF basis. To enforce unique IP space within the global table
+(all prefixes and IP addresses not assigned to a VRF), set ENFORCE_GLOBAL_UNIQUE to True.
+
+Default value: `false`
+
+##### `prefer_ipv4`
+
+Data type: `Boolean`
+
+When determining the primary IP address for a device, IPv6 is preferred over IPv4 by default. Set this to True to
+prefer IPv4 instead.
+
+Default value: `false`
+
+##### `exempt_view_permissions`
+
+Data type: `Array`
+
+Exempt certain models from the enforcement of view permissions. Models listed here will be viewable by all users and
+by anonymous users. List models in the form `<app>.<model>`. Add '*' to this list to exempt all models.
+
+Default value: []
+
+##### `napalm_username`
 
 Data type: `String`
 
-Username for the superuser. This user is created, but without a password. To set the password,
-you must run  /opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py changepassword
+Username that NetBox will uses to authenticate to devices when connecting via NAPALM.
 
-Default value: 'admin'
+Default value: ''
 
-##### `superuser_email`
+##### `napalm_password`
 
 Data type: `String`
 
-Email for the superuser
+Password that NetBox will uses to authenticate to devices when connecting via NAPALM.
 
-Default value: 'admin@example.com'
+Default value: ''
+
+##### `napalm_timeout`
+
+Data type: `Integer`
+
+NAPALM timeout (in seconds).
+
+Default value: 30
 
 ### netbox::config
 
@@ -371,6 +492,13 @@ Data type: `String`
 
 Name of the PostgreSQL database password. If handle_database is true, then this database password
 gets created as well. If not, then it is only used by the application, and needs to exist.
+
+##### `admins`
+
+Data type: `Array`
+
+Array of hashes with two keys, 'name' and 'email'. This is where the email goes if something goes wrong
+This feature (in the Puppet module) is not well tested.
 
 ##### `database_host`
 
@@ -437,6 +565,67 @@ Data type: `String`
 
 Base URL path if accessing NetBox within a directory.
 For example, if installed at http://example.com/netbox/, set: BASE_PATH = 'netbox/'
+
+##### `debug`
+
+Data type: `Boolean`
+
+Set to True to enable server debugging. WARNING: Debugging introduces a substantial performance penalty and may reveal
+sensitive information about your installation. Only enable debugging while performing testing. Never enable debugging
+on a production system.
+
+##### `enforce_global_unique`
+
+Data type: `Boolean`
+
+Enforcement of unique IP space can be toggled on a per-VRF basis. To enforce unique IP space within the global table
+(all prefixes and IP addresses not assigned to a VRF), set ENFORCE_GLOBAL_UNIQUE to True.
+
+##### `login_required`
+
+Data type: `Boolean`
+
+Setting this to True will permit only authenticated users to access any part of NetBox. By default, anonymous users
+are permitted to access most data in NetBox (excluding secrets) but not make any changes.
+
+##### `metrics_enabled`
+
+Data type: `Boolean`
+
+Setting this to true will permit only authenticated users to access any part of NetBox. By default, anonymous users
+are permitted to access most data in NetBox (excluding secrets) but not make any changes.
+
+##### `prefer_ipv4`
+
+Data type: `Boolean`
+
+When determining the primary IP address for a device, IPv6 is preferred over IPv4 by default. Set this to True to
+prefer IPv4 instead.
+
+##### `exempt_view_permissions`
+
+Data type: `Array`
+
+Exempt certain models from the enforcement of view permissions. Models listed here will be viewable by all users and
+by anonymous users. List models in the form `<app>.<model>`. Add '*' to this list to exempt all models.
+
+##### `napalm_username`
+
+Data type: `String`
+
+Username that NetBox will uses to authenticate to devices when connecting via NAPALM.
+
+##### `napalm_password`
+
+Data type: `String`
+
+Password that NetBox will uses to authenticate to devices when connecting via NAPALM.
+
+##### `napalm_timeout`
+
+Data type: `Integer`
+
+NAPALM timeout (in seconds).
 
 ### netbox::database
 
@@ -551,6 +740,46 @@ Method for getting the Netbox software
 
 Default value: 'tarball'
 
+##### `include_napalm`
+
+Data type: `Boolean`
+
+NAPALM allows NetBox to fetch live data from devices and return it to a requester via its REST API.
+Installation of NAPALM is optional. To enable it, set $include_napalm to true
+
+##### `include_django_storages`
+
+Data type: `Boolean`
+
+By default, NetBox will use the local filesystem to storage uploaded files.
+To use a remote filesystem, install the django-storages library and configure your desired backend in configuration.py.
+
+##### `include_ldap`
+
+Data type: `Boolean`
+
+Makes sure the packages and the python modules needed for LDAP-authentication are installed and loaded.
+The LDAP-config itself is not handled by this Puppet module at present.
+Use the documentation found here: https://netbox.readthedocs.io/en/stable/installation/5-ldap/ for information about
+the config file.
+
+##### `install_dependencies_from_filesystem`
+
+Data type: `Boolean`
+
+Used if your machine can't reach the place pip would normally go to fetch dependencies
+as it would when running "pip install -r requirements.txt". Then you would have to
+fetch those dependencies beforehand and put them somewhere your machine can reach.
+This can be done by running (on a machine that can reach pip's normal sources) the following:
+pip download -r <requirements.txt>  -d <destination>
+Remember to do this on local_requirements.txt also if you have one.
+
+##### `python_dependency_path`
+
+Data type: `Stdlib::Absolutepath`
+
+Path to where pip can find packages when the variable $install_dependencies_from_filesystem is true
+
 ### netbox::redis
 
 Class that handles the installation of Redis
@@ -571,6 +800,12 @@ A class for running Netbox as a Systemd service
 
 The following parameters are available in the `netbox::service` class.
 
+##### `install_root`
+
+Data type: `Stdlib::Absolutepath`
+
+The root directory of the netbox installation.
+
 ##### `user`
 
 Data type: `String`
@@ -584,10 +819,4 @@ Data type: `String`
 
 The group running the
 service.
-
-##### `install_root`
-
-Data type: `Stdlib::Absolutepath`
-
-
 
