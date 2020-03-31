@@ -138,6 +138,10 @@
 #   Base URL path if accessing NetBox within a directory.
 #   For example, if installed at http://example.com/netbox/, set: BASE_PATH = 'netbox/'
 #
+# @param admins
+#   Array of hashes with two keys, 'name' and 'email'. This is where the email goes if something goes wrong
+#   This feature (in the Puppet module) is not well tested.
+#
 # @param debug
 #   Set to True to enable server debugging. WARNING: Debugging introduces a substantial performance penalty and may reveal
 #   sensitive information about your installation. Only enable debugging while performing testing. Never enable debugging
@@ -158,6 +162,10 @@
 # @param prefer_ipv4
 #   When determining the primary IP address for a device, IPv6 is preferred over IPv4 by default. Set this to True to
 #   prefer IPv4 instead.
+#
+#  @param exempt_view_permissions
+#   Exempt certain models from the enforcement of view permissions. Models listed here will be viewable by all users and
+#   by anonymous users. List models in the form `<app>.<model>`. Add '*' to this list to exempt all models.
 #
 # @param napalm_username
 #   Username that NetBox will uses to authenticate to devices when connecting via NAPALM.
