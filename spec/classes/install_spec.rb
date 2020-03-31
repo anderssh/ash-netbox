@@ -14,6 +14,8 @@ describe 'netbox::install' do
           download_tmp_dir: '/tmp',
           user: 'test',
           group: 'test',
+          include_napalm: true,
+          include_django_storages: true,
         }
       end
 
