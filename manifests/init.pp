@@ -48,6 +48,12 @@
 #   By default, NetBox will use the local filesystem to storage uploaded files.
 #   To use a remote filesystem, install the django-storages library and configure your desired backend in configuration.py.
 #
+# @param include_ldap
+#   Makes sure the packages and the python modules needed for LDAP-authentication are installed and loaded.
+#   The LDAP-config itself is not handled by this Puppet module at present.
+#   Use the documentation found here: https://netbox.readthedocs.io/en/stable/installation/5-ldap/ for information about
+#   the config file.
+#
 # @param email_server
 #   Host name or IP address of the email server (use localhost if running locally)
 #   https://netbox.readthedocs.io/en/stable/configuration/optional-settings/#email
@@ -177,6 +183,7 @@ class netbox (
   Boolean $handle_redis = true,
   Boolean $include_napalm = true,
   Boolean $include_django_storages = true,
+  Boolean $include_ldap = true,
   String $database_name     = 'netbox',
   String $database_user     = 'netbox',
   String $database_password = 'netbox',
@@ -232,6 +239,7 @@ class netbox (
     download_tmp_dir        => $download_tmp_dir,
     include_napalm          => $include_napalm,
     include_django_storages => $include_django_storages,
+    include_ldap            => $include_ldap,
   }
 
   $redis_options = {

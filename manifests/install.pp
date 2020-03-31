@@ -43,6 +43,12 @@
 #   By default, NetBox will use the local filesystem to storage uploaded files.
 #   To use a remote filesystem, install the django-storages library and configure your desired backend in configuration.py.
 #
+# @param include_ldap
+#   Makes sure the packages and the python modules needed for LDAP-authentication are installed and loaded.
+#   The LDAP-config itself is not handled by this Puppet module at present.
+#   Use the documentation found here: https://netbox.readthedocs.io/en/stable/installation/5-ldap/ for information about
+#   the config file.
+#
 # @example
 #   include netbox::install
 class netbox::install (
@@ -56,6 +62,7 @@ class netbox::install (
   String $group,
   Boolean $include_napalm,
   Boolean $include_django_storages,
+  Boolean $include_ldap
   Enum['tarball', 'git_clone'] $install_method = 'tarball',
 ) {
 
@@ -69,8 +76,13 @@ class netbox::install (
     openssl-devel,
     redhat-rpm-config
   ]
+  $ldap_packages = [openldap-devel]
 
   package { $packages: ensure => 'installed' }
+
+  if $include_ldap {
+    package { $ldap_packages: ensure => 'installed' }
+  }
 
   user { $user:
     system => true,
@@ -128,6 +140,14 @@ class netbox::install (
     file_line { 'django_storages':
       path   => "${install_root}/netbox/local_requirements.txt",
       line   => 'django-storages',
+      notify => Exec['install local python requirements'],
+    }
+  }
+
+  if $include_ldap {
+    file_line { 'ldap':
+      path   => "${install_root}/netbox/local_requirements.txt",
+      line   => 'django-auth-ldap',
       notify => Exec['install local python requirements'],
     }
   }
