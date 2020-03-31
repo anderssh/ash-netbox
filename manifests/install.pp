@@ -109,15 +109,23 @@ class netbox::install (
     ensure => 'link',
     target => $software_directory_with_version,
   }
+  file { 'local_requirements':
+    ensure => 'present',
+    path   => "${install_root}/netbox/local_requirements.txt",
+    owner  => $user,
+    group  => $group,
+  }
 
   file_line { 'napalm':
-    path => "${install_root}/netbox/local_requirements.txt",
-    line => 'napalm',
+    path   => "${install_root}/netbox/local_requirements.txt",
+    line   => 'napalm',
+    before => Exec["python_venv_${venv_dir}"],
   }
 
   file_line { 'django_storages':
-    path => "${install_root}/netbox/local_requirements.txt",
-    line => 'django-storages',
+    path   => "${install_root}/netbox/local_requirements.txt",
+    line   => 'django-storages',
+    before => Exec["python_venv_${venv_dir}"],
   }
 
   exec { "python_venv_${venv_dir}":
@@ -125,7 +133,7 @@ class netbox::install (
     user    => $user,
     creates => "${venv_dir}/bin/activate",
     cwd     => '/tmp',
-    unless  => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate", #Unless activate exists and VIRTUAL_ENV is correct we re-create the virtualenv
+    unless  => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
   }
   ~>exec { 'install python requirements':
     cwd         => "${install_root}/netbox",
@@ -134,6 +142,7 @@ class netbox::install (
     provider    => shell,
     user        => $user,
     command     => "${venv_dir}/bin/pip3 install -r requirements.txt",
+    unless      => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
     refreshonly => true,
   }
 }
