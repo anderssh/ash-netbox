@@ -205,11 +205,11 @@ METRICS_ENABLED = False
 <% } -%>
 
 # Credentials that NetBox will uses to authenticate to devices when connecting via NAPALM.
-NAPALM_USERNAME: '<%=$napalm_username%>',
-NAPALM_PASSWORD: '<%=$napalm_password%>',
+NAPALM_USERNAME = '<%=$napalm_username%>',
+NAPALM_PASSWORD = '<%=$napalm_password%>',
 
 # NAPALM timeout (in seconds). (Default: 30)
-NAPALM_TIMEOUT: <%=$napalm_timeout%>,
+NAPALM_TIMEOUT = <%=$napalm_timeout%>,
 
 # NAPALM optional arguments (see http://napalm.readthedocs.io/en/latest/support/#optional-arguments). Arguments must
 # be provided as a dictionary.
