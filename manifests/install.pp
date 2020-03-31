@@ -35,6 +35,14 @@
 # @param install_method
 #   Method for getting the Netbox software
 #
+# @param include_napalm
+#   NAPALM allows NetBox to fetch live data from devices and return it to a requester via its REST API.
+#   Installation of NAPALM is optional. To enable it, set $include_napalm to true
+#
+# @param include_django_storages
+#   By default, NetBox will use the local filesystem to storage uploaded files.
+#   To use a remote filesystem, install the django-storages library and configure your desired backend in configuration.py.
+#
 # @example
 #   include netbox::install
 class netbox::install (
@@ -47,6 +55,8 @@ class netbox::install (
   String $user,
   String $group,
   Enum['tarball', 'git_clone'] $install_method = 'tarball',
+  Boolean $include_napalm,
+  Boolean $include_django_storages,
 ) {
 
   $packages =[
@@ -98,6 +108,16 @@ class netbox::install (
   file { $software_directory:
     ensure => 'link',
     target => $software_directory_with_version,
+  }
+
+  file_line { 'napalm':
+    path => "${install_root}/netbox/local_requirements.txt",
+    line => 'napalm',
+  }
+
+  file_line { 'django_storages':
+    path => "${install_root}/netbox/local_requirements.txt",
+    line => 'django-storages',
   }
 
   exec { "python_venv_${venv_dir}":

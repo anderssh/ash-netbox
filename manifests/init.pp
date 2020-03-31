@@ -38,7 +38,15 @@
 #   The root directory of the netbox installation.
 #
 # @param handle_database
-#   Should the PostgreSQL database be handled by this module. Defaults to true.
+#   Should the PostgreSQL database be handled by this module.
+#
+# @param include_napalm
+#   NAPALM allows NetBox to fetch live data from devices and return it to a requester via its REST API.
+#   Installation of NAPALM is optional. To enable it, set $include_napalm to true
+#
+# @param include_django_storages
+#   By default, NetBox will use the local filesystem to storage uploaded files.
+#   To use a remote filesystem, install the django-storages library and configure your desired backend in configuration.py.
 #
 # @param email_server
 #   Host name or IP address of the email server (use localhost if running locally)
@@ -158,6 +166,8 @@ class netbox (
   Stdlib::Absolutepath $install_root = '/opt',
   Boolean $handle_database = true,
   Boolean $handle_redis = true,
+  Boolean $include_napalm = true,
+  Boolean $include_django_storages = true,
   String $database_name     = 'netbox',
   String $database_user     = 'netbox',
   String $database_password = 'netbox',
@@ -200,14 +210,16 @@ class netbox (
   }
 
   class { 'netbox::install':
-    install_root           => $install_root,
-    version                => $version,
-    user                   => $user,
-    group                  => $group,
-    download_url           => $download_url,
-    download_checksum      => $download_checksum,
-    download_checksum_type => $download_checksum_type,
-    download_tmp_dir       => $download_tmp_dir,
+    install_root            => $install_root,
+    version                 => $version,
+    user                    => $user,
+    group                   => $group,
+    download_url            => $download_url,
+    download_checksum       => $download_checksum,
+    download_checksum_type  => $download_checksum_type,
+    download_tmp_dir        => $download_tmp_dir,
+    include_napalm          => $include_napalm,
+    include_django_storages => $include_django_storages,
   }
 
   $redis_options = {

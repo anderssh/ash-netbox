@@ -63,6 +63,8 @@ describe 'netbox::config' do
           metrics_enabled: false,
           prefer_ipv4: false,
           exempt_view_permissions: [],
+          include_napalm: true
+          include_django_storages: true
         }
       end
       it { is_expected.to compile }
