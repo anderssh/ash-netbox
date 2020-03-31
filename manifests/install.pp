@@ -120,12 +120,14 @@ class netbox::install (
     path   => "${install_root}/netbox/local_requirements.txt",
     line   => 'napalm',
     before => Exec["python_venv_${venv_dir}"],
+    notify => Exec['install python requirements'],
   }
 
   file_line { 'django_storages':
     path   => "${install_root}/netbox/local_requirements.txt",
     line   => 'django-storages',
     before => Exec["python_venv_${venv_dir}"],
+    notify => Exec['install python requirements'],
   }
 
   exec { "python_venv_${venv_dir}":
@@ -142,7 +144,7 @@ class netbox::install (
     provider    => shell,
     user        => $user,
     command     => "${venv_dir}/bin/pip3 install -r requirements.txt",
-    unless      => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
+    onlyif      => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
     refreshonly => true,
   }
 }
