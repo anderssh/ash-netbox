@@ -62,7 +62,7 @@ class netbox::install (
   String $group,
   Boolean $include_napalm,
   Boolean $include_django_storages,
-  Boolean $include_ldap
+  Boolean $include_ldap,
   Enum['tarball', 'git_clone'] $install_method = 'tarball',
 ) {
 
