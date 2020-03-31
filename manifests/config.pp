@@ -29,6 +29,10 @@
 #   Name of the PostgreSQL database password. If handle_database is true, then this database password
 #   gets created as well. If not, then it is only used by the application, and needs to exist.
 #
+# @param admins
+#   Array of hashes with two keys, 'name' and 'email'. This is where the email goes if something goes wrong
+#   This feature (in the Puppet module) is not well tested.
+#
 # @param database_host
 #   Hostname where the PostgreSQL database resides.
 #
@@ -86,7 +90,7 @@
 #   When determining the primary IP address for a device, IPv6 is preferred over IPv4 by default. Set this to True to
 #   prefer IPv4 instead.
 #
-#  @param exempt_view_permissions
+# @param exempt_view_permissions
 #   Exempt certain models from the enforcement of view permissions. Models listed here will be viewable by all users and
 #   by anonymous users. List models in the form `<app>.<model>`. Add '*' to this list to exempt all models.
 #
