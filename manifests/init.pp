@@ -179,6 +179,30 @@
 # @param time_zone 
 #   Time zone
 #
+# @param date_format 
+# Date/time formatting. See the following link for supported formats:
+# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#
+# @param short_date_format 
+# Date/time formatting. See the following link for supported formats:
+# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#
+# @param time_format 
+# Date/time formatting. See the following link for supported formats:
+# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#
+# @param short_time_format 
+# Date/time formatting. See the following link for supported formats:
+# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#
+# @param datetime_format 
+# Date/time formatting. See the following link for supported formats:
+# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#
+# @param short_datetime_format 
+# Date/time formatting. See the following link for supported formats:
+# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#
 # @example Defaults
 #   class { 'netbox':
 #     secret_key => $my_secret_variable
@@ -236,6 +260,12 @@ class netbox (
   String $email_password = '',
   String $email_from_email = '',
   String $time_zone = 'UTC',
+  String $date_format = 'N j, Y',
+  String $short_date_format = 'Y-m-d',
+  String $time_format = 'g:i a',
+  String $short_time_format = 'H:i:s',
+  String $datetime_format = 'N j, Y g:i a',
+  String $short_datetime_format = 'Y-m-d H:i',
 ) {
 
   Class['netbox::database'] -> Class['netbox::redis'] -> Class['netbox::install'] -> Class['netbox::config'] ~> Class['netbox::service']
@@ -325,7 +355,7 @@ class netbox (
     napalm_username         => $napalm_username,
     napalm_password         => $napalm_password,
     napalm_timeout          => $napalm_timeout,
-    time_zone               => $time_zone
+    time_zone               => $time_zone,
   }
 
   class {'netbox::service':

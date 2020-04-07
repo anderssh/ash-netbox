@@ -23,7 +23,13 @@
   String $napalm_username,
   String $napalm_password,
   Integer $napalm_timeout,
-  String $time_zone
+  String $time_zone,
+  String $date_format,
+  String $short_date_format, 
+  String $time_format,
+  String $short_time_format, 
+  String $datetime_format,
+  String $short_datetime_format,
   | -%>
 
 #########################
@@ -245,9 +251,9 @@ TIME_ZONE = '<%= $time_zone %>'
 
 # Date/time formatting. See the following link for supported formats:
 # https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
-DATE_FORMAT = 'N j, Y'
-SHORT_DATE_FORMAT = 'Y-m-d'
-TIME_FORMAT = 'g:i a'
-SHORT_TIME_FORMAT = 'H:i:s'
-DATETIME_FORMAT = 'N j, Y g:i a'
-SHORT_DATETIME_FORMAT = 'Y-m-d H:i'
+DATE_FORMAT = '<%= $date_format %>'
+SHORT_DATE_FORMAT = '<%= $short_date_format %>'
+TIME_FORMAT = '<%= $time_format %>'
+SHORT_TIME_FORMAT = '<%= $short_time_format %>'
+DATETIME_FORMAT = '<%= $datetime_format %>'
+SHORT_DATETIME_FORMAT = '<%= $short_datetime_format %>'

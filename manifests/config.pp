@@ -104,7 +104,32 @@
 #   NAPALM timeout (in seconds).
 #
 # @param time_zone 
-#   Time zone
+# Date/time formatting. See the following link for supported formats:
+# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#
+# @param date_format 
+# Date/time formatting. See the following link for supported formats:
+# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#
+# @param short_date_format 
+# Date/time formatting. See the following link for supported formats:
+# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#
+# @param time_format 
+# Date/time formatting. See the following link for supported formats:
+# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#
+# @param short_time_format 
+# Date/time formatting. See the following link for supported formats:
+# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#
+# @param datetime_format 
+# Date/time formatting. See the following link for supported formats:
+# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#
+# @param short_datetime_format 
+# Date/time formatting. See the following link for supported formats:
+# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
 # @example
 #   include netbox::config
@@ -137,6 +162,12 @@ class netbox::config (
   String $napalm_password,
   Integer $napalm_timeout,
   String $time_zone,
+  String $date_format,
+  String $short_date_format,
+  String $time_format,
+  String $short_time_format,
+  String $datetime_format,
+  String $short_datetime_format,
 ) {
   $should_create_superuser = false;
   $software_directory = "${install_root}/netbox"
@@ -188,6 +219,12 @@ class netbox::config (
       'napalm_password'         => $napalm_password,
       'napalm_timeout'          => $napalm_timeout,
       'time_zone'               => $time_zone,
+      'date_format'             => $date_format,
+      'short_date_format'       => $short_date_format,
+      'time_format'             => $time_format,
+      'short_time_format'       => $short_time_format,
+      'datetime_format'         => $datetime_format,
+      'short_datetime_format'   => $short_datetime_format,
     }),
     owner        => $user,
     group        => $group,

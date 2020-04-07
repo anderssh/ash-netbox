@@ -50,11 +50,11 @@ describe 'netbox::config' do
           admins: [
             {
               name: 'Name Nameson',
-              email: 'nameson@example.com'
+              email: 'nameson@example.com',
             },
             {
               name: 'Another Guy',
-              email: 'guy@example.com'
+              email: 'guy@example.com',
             },
           ],
           debug: false,
@@ -66,7 +66,13 @@ describe 'netbox::config' do
           napalm_username: 'some_username',
           napalm_password: 'some_secret_password',
           napalm_timeout: 30,
-          time_zone: 'UTC+01:00'
+          time_zone: 'UTC+01:00',
+          date_format: 'N j, Y',
+          short_date_format: 'Y-m-d',
+          time_format: 'g:i a',
+          short_time_format: 'H:i:s',
+          datetime_format: 'N j, Y g:i a',
+          short_datetime_format: 'Y-m-d H:i',
         }
       end
       it { is_expected.to compile }
