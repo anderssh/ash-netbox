@@ -66,6 +66,7 @@ describe 'netbox::config' do
           napalm_username: 'some_username',
           napalm_password: 'some_secret_password',
           napalm_timeout: 30,
+          time_zone: 'UTC+01:00'
         }
       end
       it { is_expected.to compile }

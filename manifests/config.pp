@@ -103,6 +103,9 @@
 # @param napalm_timeout 
 #   NAPALM timeout (in seconds).
 #
+# @param time_zone 
+#   Time zone
+#
 # @example
 #   include netbox::config
 class netbox::config (
@@ -133,6 +136,7 @@ class netbox::config (
   String $napalm_username,
   String $napalm_password,
   Integer $napalm_timeout,
+  String $time_zone,
 ) {
   $should_create_superuser = false;
   $software_directory = "${install_root}/netbox"
@@ -183,6 +187,7 @@ class netbox::config (
       'napalm_username'         => $napalm_username,
       'napalm_password'         => $napalm_password,
       'napalm_timeout'          => $napalm_timeout,
+      'time_zone'               => $time_zone,
     }),
     owner        => $user,
     group        => $group,

@@ -176,6 +176,9 @@
 # @param napalm_timeout 
 #   NAPALM timeout (in seconds).
 #
+# @param time_zone 
+#   Time zone
+#
 # @example Defaults
 #   class { 'netbox':
 #     secret_key => $my_secret_variable
@@ -232,6 +235,7 @@ class netbox (
   String $email_username = '',
   String $email_password = '',
   String $email_from_email = '',
+  String $time_zone = 'UTC',
 ) {
 
   Class['netbox::database'] -> Class['netbox::redis'] -> Class['netbox::install'] -> Class['netbox::config'] ~> Class['netbox::service']
@@ -321,6 +325,7 @@ class netbox (
     napalm_username         => $napalm_username,
     napalm_password         => $napalm_password,
     napalm_timeout          => $napalm_timeout,
+    time_zone               => $time_zone
   }
 
   class {'netbox::service':

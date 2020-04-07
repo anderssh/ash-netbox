@@ -23,6 +23,7 @@
   String $napalm_username,
   String $napalm_password,
   Integer $napalm_timeout,
+  String $time_zone
   | -%>
 
 #########################
@@ -240,7 +241,7 @@ PREFER_IPV4 = False
 SESSION_FILE_PATH = None
 
 # Time zone (default: UTC)
-TIME_ZONE = 'UTC'
+TIME_ZONE = '<%= $time_zone %>'
 
 # Date/time formatting. See the following link for supported formats:
 # https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
