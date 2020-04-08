@@ -230,6 +230,7 @@ class netbox::config (
     group        => $group,
     mode         => '0644',
     validate_cmd => "${venv_dir}/bin/python -m py_compile %",
+    notify       => Exec['collect static files'],
   }
 
   Exec {
@@ -243,11 +244,12 @@ class netbox::config (
   exec { 'database migration':
     onlyif  => "${venv_dir}/bin/python3 netbox/manage.py showmigrations | grep '\[ \]'",
     command => "${venv_dir}/bin/python3 netbox/manage.py migrate --no-input",
-    require => File[$config_file];
+    require => File[$config_file],
+    notify  => Exec['collect static files'],
   }
   exec { 'collect static files':
     command     => "${venv_dir}/bin/python3 netbox/manage.py collectstatic --no-input",
-    subscribe   => File[$config_file],
+    require     => File[$config_file],
     refreshonly => true,
   }
 }
