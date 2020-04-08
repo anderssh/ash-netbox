@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 * Add support for all the date and time parameters
+* Use version 2.7.11 as default. 
+* Add more in the limitations section
+* First major version
 
 
 ## [0.2.1] 2020-03-31
