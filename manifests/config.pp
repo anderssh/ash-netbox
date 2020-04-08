@@ -38,7 +38,7 @@
 #
 # @param database_port
 #   PostgreSQL database port. NB! The PostgreSQL database that is made when using handle_database
-#   does not support configuring a non-standard port. So change this parameter only if using 
+#   does not support configuring a non-standard port. So change this parameter only if using
 #   separate PostgreSQL DB with non-standard port. Defaults to 5432.
 #
 # @param database_conn_max_age
@@ -55,7 +55,7 @@
 #   A random string of letters, numbers and symbols that Netbox needs.
 #   This needs to be supplied, and should be treated as a secret. Should
 #   be at least 50 characters long.
-#   
+#
 # @param banner_top
 #   Text for top banner on the Netbox webapp
 #
@@ -100,34 +100,34 @@
 # @param napalm_password
 #   Password that NetBox will uses to authenticate to devices when connecting via NAPALM.
 #
-# @param napalm_timeout 
+# @param napalm_timeout
 #   NAPALM timeout (in seconds).
 #
-# @param time_zone 
+# @param time_zone
 # Date/time formatting. See the following link for supported formats:
 # https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
-# @param date_format 
+# @param date_format
 # Date/time formatting. See the following link for supported formats:
 # https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
-# @param short_date_format 
+# @param short_date_format
 # Date/time formatting. See the following link for supported formats:
 # https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
-# @param time_format 
+# @param time_format
 # Date/time formatting. See the following link for supported formats:
 # https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
-# @param short_time_format 
+# @param short_time_format
 # Date/time formatting. See the following link for supported formats:
 # https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
-# @param datetime_format 
+# @param datetime_format
 # Date/time formatting. See the following link for supported formats:
 # https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
-# @param short_datetime_format 
+# @param short_datetime_format
 # Date/time formatting. See the following link for supported formats:
 # https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
