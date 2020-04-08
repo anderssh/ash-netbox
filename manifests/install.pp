@@ -151,25 +151,28 @@ class netbox::install (
 
   if $include_napalm {
     file_line { 'napalm':
-      path   => "${install_root}/netbox/local_requirements.txt",
-      line   => 'napalm',
-      notify => Exec['install local python requirements'],
+      path    => "${install_root}/netbox/local_requirements.txt",
+      line    => 'napalm',
+      before  => Exec['install local python requirements'],
+      require => File['local_requirements']
     }
   }
 
   if $include_django_storages {
     file_line { 'django_storages':
-      path   => "${install_root}/netbox/local_requirements.txt",
-      line   => 'django-storages',
-      notify => Exec['install local python requirements'],
+      path    => "${install_root}/netbox/local_requirements.txt",
+      line    => 'django-storages',
+      before  => Exec['install local python requirements'],
+      require => File['local_requirements']
     }
   }
 
   if $include_ldap {
     file_line { 'ldap':
-      path   => "${install_root}/netbox/local_requirements.txt",
-      line   => 'django-auth-ldap',
-      notify => Exec['install local python requirements'],
+      path    => "${install_root}/netbox/local_requirements.txt",
+      line    => 'django-auth-ldap',
+      before  => Exec['install local python requirements'],
+      require => File['local_requirements']
     }
   }
 
@@ -181,7 +184,6 @@ class netbox::install (
     user        => $user,
     command     => $install_local_requirements_command,
     onlyif      => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
-    refreshonly => true,
   }
 
   exec { "python_venv_${venv_dir}":
@@ -199,6 +201,5 @@ class netbox::install (
     user        => $user,
     command     => $install_requirements_command,
     onlyif      => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
-    refreshonly => true,
   }
 }
