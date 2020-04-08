@@ -180,28 +180,28 @@
 #   Time zone
 #
 # @param date_format 
-# Date/time formatting. See the following link for supported formats:
-# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#   Date/time formatting. See the following link for supported formats:
+#   https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
 # @param short_date_format 
-# Date/time formatting. See the following link for supported formats:
-# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#   Date/time formatting. See the following link for supported formats:
+#   https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
 # @param time_format 
-# Date/time formatting. See the following link for supported formats:
-# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#   Date/time formatting. See the following link for supported formats:
+#   https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
 # @param short_time_format 
-# Date/time formatting. See the following link for supported formats:
-# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#   Date/time formatting. See the following link for supported formats:
+#   https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
 # @param datetime_format 
-# Date/time formatting. See the following link for supported formats:
-# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#   Date/time formatting. See the following link for supported formats:
+#   https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
 # @param short_datetime_format 
-# Date/time formatting. See the following link for supported formats:
-# https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
+#   Date/time formatting. See the following link for supported formats:
+#   https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
 # @example Defaults
 #   class { 'netbox':
