@@ -185,7 +185,9 @@ This module is only tested on RHEL/Centos8 at the moment, and will not work for 
 
 Upgrading from one version of Netbox to the next is not well tested, so you might need to do some manual steps that are explained in the Netbox documentation. 
 
-This module rests too heavily on execs that are ordered and grouped together with different `notify` `refreshonly`s and it's a bit fragile. So if you make a mistake by for example specifying some parameters wrong in your initial setup, and the Puppet run fails, you might have to do some manual steps. Depending on where the mistake lies, you might have to run `pip install -r requirements.txt`, `python manage.py migrate` or some other routine. These are explained in the Netbox documentation, and it's usually pretty clear from the error messages what you need to do. 
+This module rests too heavily on execs that are ordered and grouped together with different `notify` `refreshonly`s and it's a bit fragile. So if you make a mistake by for example specifying some parameters wrong in your initial setup, and the Puppet run fails, you might have to do some manual steps. Depending on where the mistake lies, you might have to run `pip install -r requirements.txt`, `python manage.py migrate` or some other routine. These are explained in the Netbox documentation, and it's usually pretty clear from the error messages what you need to do.
+
+There is only support for the tarball-way of getting Netbox as of now. This should not pose a problem as they are available through the Github repo as releases.
 
 There are several optional integrations and configuration options found in the Netbox documentation that is not supported by this module yet. Including but not limited to:
 
