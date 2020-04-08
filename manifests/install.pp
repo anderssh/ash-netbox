@@ -137,6 +137,7 @@ class netbox::install (
     cleanup       => true,
     user          => $user,
     group         => $group,
+    notify        => Exec['install python requirements'],
   }
   file { $software_directory:
     ensure => 'link',
@@ -153,7 +154,7 @@ class netbox::install (
     file_line { 'napalm':
       path    => "${install_root}/netbox/local_requirements.txt",
       line    => 'napalm',
-      before  => Exec['install local python requirements'],
+      notify  => Exec['install local python requirements'],
       require => File['local_requirements']
     }
   }
@@ -162,7 +163,7 @@ class netbox::install (
     file_line { 'django_storages':
       path    => "${install_root}/netbox/local_requirements.txt",
       line    => 'django-storages',
-      before  => Exec['install local python requirements'],
+      notify  => Exec['install local python requirements'],
       require => File['local_requirements']
     }
   }
@@ -171,7 +172,7 @@ class netbox::install (
     file_line { 'ldap':
       path    => "${install_root}/netbox/local_requirements.txt",
       line    => 'django-auth-ldap',
-      before  => Exec['install local python requirements'],
+      notify  => Exec['install local python requirements'],
       require => File['local_requirements']
     }
   }
@@ -184,6 +185,7 @@ class netbox::install (
     user        => $user,
     command     => $install_local_requirements_command,
     onlyif      => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
+    refreshonly => true,
   }
 
   exec { "python_venv_${venv_dir}":
@@ -201,5 +203,6 @@ class netbox::install (
     user        => $user,
     command     => $install_requirements_command,
     onlyif      => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
+    refreshonly => true,
   }
 }
