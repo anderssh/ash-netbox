@@ -102,7 +102,7 @@ You probably want to adjust your parameters a little more than the minimal examp
     banner_login      => 'WELCOME TO THE NETBOX LOGIN',
     banner_bottom     => 'BOTTOM BANNER TEXT',
     database_password => $netbox_database_password,
-    $email_from_email => "netbox@${trusted[domain]},
+    email_from_email => "netbox@${trusted[domain]}",
   }
 ```
 
