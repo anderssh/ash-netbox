@@ -51,11 +51,11 @@
 #
 # @param install_dependencies_from_filesystem
 #   Used if your machine can't reach the place pip would normally go to fetch dependencies
-#   as it would when running "pip install -r requirements.txt". Then you would have to 
+#   as it would when running "pip install -r requirements.txt". Then you would have to
 #   fetch those dependencies beforehand and put them somewhere your machine can reach.
 #   This can be done by running (on a machine that can reach pip's normal sources) the following:
 #   pip download -r <requirements.txt>  -d <destination>
-#   Remember to do this on local_requirements.txt also if you have one. 
+#   Remember to do this on local_requirements.txt also if you have one.
 #
 # @param python_dependency_path
 #   Path to where pip can find packages when the variable $install_dependencies_from_filesystem is true
