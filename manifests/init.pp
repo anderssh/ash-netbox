@@ -356,6 +356,12 @@ class netbox (
     napalm_password         => $napalm_password,
     napalm_timeout          => $napalm_timeout,
     time_zone               => $time_zone,
+    date_format             => $date_format,
+    short_date_format       => $short_date_format,
+    time_format             => $time_format,
+    short_time_format       => $short_time_format,
+    datetime_format         => $datetime_format,
+    short_datetime_format   => $short_datetime_format,
   }
 
   class {'netbox::service':
