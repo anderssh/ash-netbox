@@ -57,7 +57,7 @@
 # @param email_server
 #   Host name or IP address of the email server (use localhost if running locally)
 #   https://netbox.readthedocs.io/en/stable/configuration/optional-settings/#email
-#   
+#
 # @param email_timeout
 #   Amount of time to wait for a connection (seconds)
 #   https://netbox.readthedocs.io/en/stable/configuration/optional-settings/#email
@@ -83,11 +83,11 @@
 #
 # @param install_dependencies_from_filesystem
 #   Used if your machine can't reach the place pip would normally go to fetch dependencies
-#   as it would when running "pip install -r requirements.txt". Then you would have to 
+#   as it would when running "pip install -r requirements.txt". Then you would have to
 #   fetch those dependencies beforehand and put them somewhere your machine can reach.
 #   This can be done by running (on a machine that can reach pip's normal sources) the following:
 #   pip download -r <requirements.txt>  -d <destination>
-#   Remember to do this on local_requirements.txt also if you have one. 
+#   Remember to do this on local_requirements.txt also if you have one.
 #
 # @param python_dependency_path
 #   Path to where pip can find packages when the variable $install_dependencies_from_filesystem is true
@@ -112,7 +112,7 @@
 #
 # @param database_port
 #   PostgreSQL database port. NB! The PostgreSQL database that is made when using handle_database
-#   does not support configuring a non-standard port. So change this parameter only if using 
+#   does not support configuring a non-standard port. So change this parameter only if using
 #   separate PostgreSQL DB with non-standard port. Defaults to 5432.
 #
 # @param database_conn_max_age
@@ -173,33 +173,33 @@
 # @param napalm_password
 #   Password that NetBox will uses to authenticate to devices when connecting via NAPALM.
 #
-# @param napalm_timeout 
+# @param napalm_timeout
 #   NAPALM timeout (in seconds).
 #
-# @param time_zone 
+# @param time_zone
 #   Time zone
 #
-# @param date_format 
+# @param date_format
 #   Date/time formatting. See the following link for supported formats:
 #   https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
-# @param short_date_format 
+# @param short_date_format
 #   Date/time formatting. See the following link for supported formats:
 #   https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
-# @param time_format 
+# @param time_format
 #   Date/time formatting. See the following link for supported formats:
 #   https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
-# @param short_time_format 
+# @param short_time_format
 #   Date/time formatting. See the following link for supported formats:
 #   https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
-# @param datetime_format 
+# @param datetime_format
 #   Date/time formatting. See the following link for supported formats:
 #   https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
-# @param short_datetime_format 
+# @param short_datetime_format
 #   Date/time formatting. See the following link for supported formats:
 #   https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
