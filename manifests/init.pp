@@ -35,7 +35,7 @@
 #   Temporary directory for downloading the tarball.
 #
 # @param install_root
-#   The root directory of the netbox installation.
+#   The directory where the netbox installation is unpacked
 #
 # @param handle_database
 #   Should the PostgreSQL database be handled by this module.

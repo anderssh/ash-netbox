@@ -1,7 +1,7 @@
 # @summary Manage the Netbox and Netvox-rq Systemd services
 #
 # @param install_root
-#   The root directory of the netbox installation.
+#   The directory where the netbox installation is unpacked
 #
 # @param user
 #   The user running the

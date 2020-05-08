@@ -3,7 +3,7 @@
 # Installs Netbox
 #
 # @param install_root
-#   The root directory of the netbox installation.
+#   The directory where the netbox installation is unpacked
 #
 # @param version
 #   The version of Netbox. This must match the version in the
@@ -106,18 +106,6 @@ class netbox::install (
   group { $group:
     system => true,
   }
-
-  file { $install_root:
-    ensure => directory,
-    owner  => 'netbox',
-    group  => 'netbox',
-    mode   => '0750',
-  }
-
-  $local_tarball = "${download_tmp_dir}/netbox-${version}.tar.gz"
-  $software_directory_with_version = "${install_root}/netbox-${version}"
-  $software_directory = "${install_root}/netbox"
-  $venv_dir = "${software_directory}/venv"
 
   if $install_dependencies_from_filesystem {
     $install_requirements_command       = "${venv_dir}/bin/pip3 install -r requirements.txt --no-index --find-links ${python_dependency_path}"

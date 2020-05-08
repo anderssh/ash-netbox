@@ -11,7 +11,7 @@
 #   service.
 #
 # @param install_root
-#   The root directory of the netbox installation.
+#   The directory where the netbox installation is unpacked
 #
 # @param allowed_hosts
 #   Array of valid fully-qualified domain names (FQDNs) for the NetBox server. NetBox will not permit write
