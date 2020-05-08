@@ -100,7 +100,7 @@ class netbox::install (
   user { $user:
     system => true,
     gid    => $group,
-    home   => $install_root,
+    home   => $software_directory,
   }
 
   group { $group:
