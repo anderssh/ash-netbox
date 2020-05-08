@@ -83,8 +83,9 @@
 #   are permitted to access most data in NetBox (excluding secrets) but not make any changes.
 #
 # @param metrics_enabled
-#   Setting this to true will permit only authenticated users to access any part of NetBox. By default, anonymous users
-#   are permitted to access most data in NetBox (excluding secrets) but not make any changes.
+#   Setting this to true exposes Prometheus metrics at /metrics. 
+#   See the Promethues Metrics documentation for more details:
+#   https://netbox.readthedocs.io/en/stable/additional-features/prometheus-metrics/)
 #
 # @param prefer_ipv4
 #   When determining the primary IP address for a device, IPv6 is preferred over IPv4 by default. Set this to True to

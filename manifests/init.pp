@@ -152,8 +152,9 @@
 #   are permitted to access most data in NetBox (excluding secrets) but not make any changes.
 #
 # @param metrics_enabled
-#   Setting this to true will permit only authenticated users to access any part of NetBox. By default, anonymous users
-#   are permitted to access most data in NetBox (excluding secrets) but not make any changes.
+#   Setting this to true exposes Prometheus metrics at /metrics. 
+#   See the Promethues Metrics documentation for more details:
+#   https://netbox.readthedocs.io/en/stable/additional-features/prometheus-metrics/)
 #
 # @param enforce_global_unique
 #   Enforcement of unique IP space can be toggled on a per-VRF basis. To enforce unique IP space within the global table
