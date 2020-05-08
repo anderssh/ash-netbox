@@ -139,14 +139,14 @@ class netbox::install (
   }
   file { 'local_requirements':
     ensure => 'present',
-    path   => "${install_root}/netbox/local_requirements.txt",
+    path   => "${software_directory}/local_requirements.txt",
     owner  => $user,
     group  => $group,
   }
 
   if $include_napalm {
     file_line { 'napalm':
-      path    => "${install_root}/netbox/local_requirements.txt",
+      path    => "${software_directory}/local_requirements.txt",
       line    => 'napalm',
       notify  => Exec['install local python requirements'],
       require => File['local_requirements']
