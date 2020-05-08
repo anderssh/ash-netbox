@@ -1,6 +1,6 @@
 {
   "name": "ash-netbox",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "ash",
   "summary": "Installs and configures Netbox and optionally its dependencies, like PostgreSQL and redis",
   "license": "Apache-2.0",

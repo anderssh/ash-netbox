@@ -5,9 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] 2020-05-07
+
+* Don't enforce creation and letting netbox own `$install_root`
+* Change description of `$install_root`
+* Clean up code
+* Add correct documentation of the `$metrics_enabled` parameter
+
 ## [1.0.1] 2020-04-29
 
-* Bugfix, there was a rouge space `allowed_hosts` in the config template.
+* Bugfix, there was a rouge space in `allowed_hosts` in the config template.
 
 ## [1.0.0] 2020-04-08
 
