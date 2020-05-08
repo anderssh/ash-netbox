@@ -149,7 +149,7 @@ class netbox::install (
 
   if $include_django_storages {
     file_line { 'django_storages':
-      path    => "${install_root}/netbox/local_requirements.txt",
+      path    => "${software_directory}/local_requirements.txt",
       line    => 'django-storages',
       notify  => Exec['install local python requirements'],
       require => File['local_requirements']
@@ -158,7 +158,7 @@ class netbox::install (
 
   if $include_ldap {
     file_line { 'ldap':
-      path    => "${install_root}/netbox/local_requirements.txt",
+      path    => "${software_directory}/local_requirements.txt",
       line    => 'django-auth-ldap',
       notify  => Exec['install local python requirements'],
       require => File['local_requirements']
@@ -166,7 +166,7 @@ class netbox::install (
   }
 
   exec { 'install local python requirements':
-    cwd         => "${install_root}/netbox",
+    cwd         => $software_directory,
     path        => [ "${venv_dir}/bin", '/usr/bin', '/usr/sbin' ],
     environment => ['VIRTUAL_ENV=/opt/netbox/venv'],
     provider    => shell,
@@ -184,7 +184,7 @@ class netbox::install (
     unless  => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
   }
   ~>exec { 'install python requirements':
-    cwd         => "${install_root}/netbox",
+    cwd         => $software_directory,
     path        => [ "${venv_dir}/bin", '/usr/bin', '/usr/sbin' ],
     environment => ['VIRTUAL_ENV=/opt/netbox/venv'],
     provider    => shell,
