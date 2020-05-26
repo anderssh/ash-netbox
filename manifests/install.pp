@@ -174,7 +174,7 @@ class netbox::install (
   exec { 'install local python requirements':
     cwd         => $software_directory,
     path        => [ "${venv_dir}/bin", '/usr/bin', '/usr/sbin' ],
-    environment => ['VIRTUAL_ENV=/opt/netbox/venv'],
+    environment => ["VIRTUAL_ENV=${venv_dir}"],
     provider    => shell,
     user        => $user,
     command     => $install_local_requirements_command,
@@ -192,7 +192,7 @@ class netbox::install (
   ~>exec { 'install python requirements':
     cwd         => $software_directory,
     path        => [ "${venv_dir}/bin", '/usr/bin', '/usr/sbin' ],
-    environment => ['VIRTUAL_ENV=/opt/netbox/venv'],
+    environment => ["VIRTUAL_ENV=${venv_dir}"],
     provider    => shell,
     user        => $user,
     command     => $install_requirements_command,
