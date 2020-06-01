@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unpublished
+## [2.0.0] 2020-06-01
 * Add notify arrow and move "install local requirements"
 * Use root to unarchive, so you can put the netbox application a place where the netbox user doesn't have wright access.
 * Use version 2.8.5 as default.
