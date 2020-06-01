@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unpublished
 * Add notify arrow and move "install local requirements"
+* Use root to unarchive, so you can put the netbox application a place where the netbox user doesn't have wright access.
+* Use version 2.8.5 as default.
 
 ## [1.1.1] 2020-05-26
 * Bugfix, some `VIRTUAL_ENV`s were hard coded. Use the `$venv_dir` variable instead

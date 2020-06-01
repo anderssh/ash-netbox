@@ -218,9 +218,9 @@
 #
 class netbox (
   String $secret_key,
-  String $version = '2.7.11',
-  String $download_url = 'https://github.com/netbox-community/netbox/archive/v2.7.11.tar.gz',
-  String $download_checksum = 'a910d6d32dd8912718cba228a7bbc1ef7d0ab3a6397a5a6a8089ab86603ed260',
+  String $version = '2.8.5',
+  String $download_url = 'https://github.com/netbox-community/netbox/archive/v2.8.5.tar.gz',
+  String $download_checksum = '6fdefcd6e339125679f23eb48164a4ed690f7fcf3f21f87a9e9d64894c22510a',
   Stdlib::Absolutepath $download_tmp_dir = '/var/tmp',
   String $user = 'netbox',
   String $group = 'netbox',
