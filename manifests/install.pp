@@ -133,10 +133,11 @@ class netbox::install (
     }
 
     exec { 'netbox permission':
-      command   => "chown -R ${user}:${group} ${software_directory_with_version}",
-      path      => ['/usr/bin'],
-      subscribe => Archive[$local_tarball],
-  }
+      command     => "chown -R ${user}:${group} ${software_directory_with_version}",
+      path        => ['/usr/bin'],
+      subscribe   => Archive[$local_tarball],
+      refreshonly => true,
+    }
 
   file { $software_directory:
     ensure => 'link',
