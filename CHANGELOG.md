@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unpublished
 * Feature, add possibility to configure encoding and locale on postgreSQL database
 * Fix, The 'webhooks' REDIS configuration section has been renamed to 'tasks'
+* Bump default version to 2.10.1
 
 ## [2.0.1] 2020-06-09
 * Bugfix, add `refresh_only` to the exec that changes owner on archive, fixes that corrective change is applied at every puppet run
