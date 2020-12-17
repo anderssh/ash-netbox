@@ -59,16 +59,16 @@ DATABASE = {
 # Seperate sections for webhooks and caching allow for connecting to seperate Redis instances/datbases if desired.
 # Full connection details are required in both sections, even if they are the same.
 REDIS = {
-    'webhooks': {
-        'HOST': '<%=$redis_options['webhooks']['host']%>',
-        'PORT': <%=$redis_options['webhooks']['port']%>,
+    'tasks': {
+        'HOST': '<%=$redis_options['tasks']['host']%>',
+        'PORT': <%=$redis_options['tasks']['port']%>,
         # Comment out `HOST` and `PORT` lines and uncomment the following if using Redis Sentinel
         # 'SENTINELS': [('mysentinel.redis.example.com', 6379)],
         # 'SENTINEL_SERVICE': 'netbox',
-        'PASSWORD': '<%=$redis_options['webhooks']['password']%>',
-        'DATABASE': <%=$redis_options['webhooks']['database']%>,
-        'DEFAULT_TIMEOUT': <%=$redis_options['webhooks'][default_timeout]%>,
-        'SSL': <%=$redis_options['webhooks']['ssl']%>,
+        'PASSWORD': '<%=$redis_options['tasks']['password']%>',
+        'DATABASE': <%=$redis_options['tasks']['database']%>,
+        'DEFAULT_TIMEOUT': <%=$redis_options['tasks'][default_timeout]%>,
+        'SSL': <%=$redis_options['tasks']['ssl']%>,
     },
     'caching': {
         'HOST': '<%=$redis_options['caching']['host']%>',

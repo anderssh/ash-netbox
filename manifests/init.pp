@@ -313,7 +313,7 @@ class netbox (
   }
 
   $redis_options = {
-    'webhooks' => {
+    'tasks' => {
       host => 'localhost',
       port => 6379,
       password => '',
