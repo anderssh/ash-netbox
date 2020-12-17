@@ -28,11 +28,11 @@ class netbox::database (
   String $database_locale,
 ){
 
-  class { 'postgresql::server':
-}
   class { 'postgresql::globals':
     encoding => $database_encoding,
     locale   => $database_locale,
+  }
+  class { 'postgresql::server':
   }
 
   postgresql::server::db { $database_name:
