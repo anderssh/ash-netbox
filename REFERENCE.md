@@ -760,7 +760,7 @@ Data type: `Boolean`
 
 Makes sure the packages and the python modules needed for LDAP-authentication are installed and loaded.
 The LDAP-config itself is not handled by this Puppet module at present.
-Use the documentation found here: https://netbox.readthedocs.io/en/stable/installation/5-ldap/ for information about
+Use the documentation found here: https://netbox.readthedocs.io/en/stable/installation/6-ldap/ for information about
 the config file.
 
 ##### `install_dependencies_from_filesystem`

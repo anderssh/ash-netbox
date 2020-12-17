@@ -59,7 +59,7 @@ In its simplest configuration, the module needs only one parameter set. This is 
 
 By default, PostgreSQL and Redis is set up as part of the installation. If you have your own PostgreSQL or Redis installation you want to use, you simply set `$handle_database` and `$handle_redis` to `false`. Some configuration is offered, but if you need to tweek any of those two softwares, I would recommend handling them outside of this module.
 
-If you want to use LDAP, activate the correct parameters (which is easy to find in the [REFERENCE](https://github.com/anderssh/ash-netbox/blob/master/REFERENCE.md)). But you must handle the LDAP-config file yourself It is still not implemented due to some complicated template work, and it's almost as easy to handle the file yourself. [The Netbox documentation is pretty clear](https://netbox.readthedocs.io/en/stable/installation/5-ldap/).
+If you want to use LDAP, activate the correct parameters (which is easy to find in the [REFERENCE](https://github.com/anderssh/ash-netbox/blob/master/REFERENCE.md)). But you must handle the LDAP-config file yourself It is still not implemented due to some complicated template work, and it's almost as easy to handle the file yourself. [The Netbox documentation is pretty clear](https://netbox.readthedocs.io/en/stable/installation/6-ldap/).
 
 The following code shows an example where you have a `profile::netbox` ([because of course you are using the "roles and profiles" design pattern](https://puppet.com/docs/pe/latest/the_roles_and_profiles_method.html)) which takes in the secret key. This could for example be stored in Hiera eyaml.
 

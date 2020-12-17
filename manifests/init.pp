@@ -107,6 +107,14 @@
 #   gets created as well. If not, then it is only used by the application, and needs to exist.
 #   Defaults to 'netbox'
 #
+# @param database_encoding
+#   Encoding of the PostgreSQL database. If handle_database is false, this does nothing.
+#   Defaults to 'UTF-8'
+#
+# @param database_locale
+#   Locale of the PostgreSQL database. If handle_database is false, this does nothing.
+#   Defaults to 'en_US.UTF-8''
+#
 # @param database_host
 #   Name of the PostgreSQL database host. Defaults to 'localhost'
 #
@@ -233,9 +241,11 @@ class netbox (
   Boolean $include_napalm = true,
   Boolean $include_django_storages = true,
   Boolean $include_ldap = true,
-  String $database_name     = 'netbox',
-  String $database_user     = 'netbox',
-  String $database_password = 'netbox',
+  String $database_name       = 'netbox',
+  String $database_user       = 'netbox',
+  String $database_password   = 'netbox',
+  String $database_encoding   = 'UTF-8',
+  String $database_locale     = 'en_US.UTF-8',
   Stdlib::Host $database_host = 'localhost',
   Integer $database_port = 5432,
   Integer $database_conn_max_age = 300,
@@ -276,6 +286,8 @@ class netbox (
       database_name     => $database_name,
       database_user     => $database_user,
       database_password => $database_password,
+      database_encoding => $database_encoding,
+      database_locale   => $database_locale,
     }
   }
 
