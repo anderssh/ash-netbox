@@ -32,7 +32,7 @@ class netbox::database (
     encoding => $database_encoding,
     locale   => $database_locale,
   }
-  class { 'postgresql::server':
+  ->class { 'postgresql::server':
   }
 
   postgresql::server::db { $database_name:
