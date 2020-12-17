@@ -5,9 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unpublished
-* Feature, add possibility to configure encoding and locale on postgreSQL database
-* Fix, The 'webhooks' REDIS configuration section has been renamed to 'tasks'
+## [2.1.0] 2020-12-17
+* Feature, add possibility to configure encoding and locale on postgreSQL database, [as proposed here](https://github.com/anderssh/ash-netbox/issues/8)
+* Fix, The 'webhooks' REDIS configuration section has been renamed to 'tasks', [Fixes #9](https://github.com/anderssh/ash-netbox/issues/9)
 * Bump default version to 2.10.1
 
 ## [2.0.1] 2020-06-09
