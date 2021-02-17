@@ -172,6 +172,10 @@
 #   When determining the primary IP address for a device, IPv6 is preferred over IPv4 by default. Set this to True to
 #   prefer IPv4 instead.
 #
+# @param session_file_path
+#   By default, NetBox will store session data in the database. Alternatively, a file path can be specified here to use
+#   local file storage instead
+#
 # @param exempt_view_permissions
 #   Exempt certain models from the enforcement of view permissions. Models listed here will be viewable by all users and
 #   by anonymous users. List models in the form `<app>.<model>`. Add '*' to this list to exempt all models.
@@ -260,6 +264,7 @@ class netbox (
   Boolean $login_required = false,
   Boolean $metrics_enabled = false,
   Boolean $prefer_ipv4 = false,
+  String $session_file_path = '',
   Array $exempt_view_permissions = [],
   String $napalm_username = '',
   String $napalm_password = '',
@@ -370,6 +375,7 @@ class netbox (
     login_required          => $login_required,
     metrics_enabled         => $metrics_enabled,
     prefer_ipv4             => $prefer_ipv4,
+    session_file_path       => $session_file_path,
     exempt_view_permissions => $exempt_view_permissions,
     napalm_username         => $napalm_username,
     napalm_password         => $napalm_password,

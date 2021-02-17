@@ -396,6 +396,15 @@ prefer IPv4 instead.
 
 Default value: `false`
 
+##### `session_file_path`
+
+Data type: `String`
+
+By default, NetBox will store session data in the database. Alternatively, a file path can be specified here to use
+local file storage instead.
+
+Default value: ''
+
 ##### `exempt_view_permissions`
 
 Data type: `Array`

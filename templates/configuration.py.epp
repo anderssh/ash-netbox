@@ -19,6 +19,7 @@
   Boolean $login_required,
   Boolean $metrics_enabled,
   Boolean $prefer_ipv4,
+  String $session_file_path,
   Array $exempt_view_permissions,
   String $napalm_username,
   String $napalm_password,
@@ -244,7 +245,11 @@ PREFER_IPV4 = False
 # By default, NetBox will store session data in the database. Alternatively, a file path can be specified here to use
 # local file storage instead. (This can be useful for enabling authentication on a standby instance with read-only
 # database access.) Note that the user as which NetBox runs must have read and write permissions to this path.
+<% if $session_file_path { -%>
+SESSION_FILE_PATH = '<%= $session_file_path %>'
+<% }else { -%>
 SESSION_FILE_PATH = None
+<% } -%>
 
 # Time zone (default: UTC)
 TIME_ZONE = '<%= $time_zone %>'
