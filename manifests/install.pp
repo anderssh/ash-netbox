@@ -113,6 +113,7 @@ class netbox::install (
     system => true,
   }
 
+  $upgrade_pip_command = "${venv_dir}/bin/pip3 install --upgrade pip"
   if $install_dependencies_from_filesystem {
     $install_requirements_command       = "${venv_dir}/bin/pip3 install -r requirements.txt --no-index --find-links ${python_dependency_path}"
     $install_local_requirements_command = "${venv_dir}/bin/pip3 install -r local_requirements.txt --no-index --find-links ${python_dependency_path}"
@@ -129,7 +130,7 @@ class netbox::install (
       extract_path  => $install_root,
       creates       => $software_directory_with_version,
       cleanup       => true,
-      notify        => Exec['install python requirements'],
+      notify        => Exec['upgrade pip'],
     }
 
     exec { 'netbox permission':
@@ -183,6 +184,16 @@ class netbox::install (
     creates => "${venv_dir}/bin/activate",
     cwd     => '/tmp',
     unless  => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
+  }
+  ~>exec { 'upgrade pip':
+    cwd         => $software_directory,
+    path        => [ "${venv_dir}/bin", '/usr/bin', '/usr/sbin' ],
+    environment => ["VIRTUAL_ENV=${venv_dir}"],
+    provider    => shell,
+    user        => $user,
+    command     => $upgrade_pip_command,
+    onlyif      => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
+    refreshonly => true,
   }
   ~>exec { 'install python requirements':
     cwd         => $software_directory,
