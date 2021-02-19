@@ -115,11 +115,9 @@ class netbox::install (
 
   $upgrade_pip_command = "${venv_dir}/bin/pip3 install --upgrade pip"
   if $install_dependencies_from_filesystem {
-    $install_requirements_command       = "${venv_dir}/bin/pip3 install -r requirements.txt --no-index --find-links ${python_dependency_path}"
-    $install_local_requirements_command = "${venv_dir}/bin/pip3 install -r local_requirements.txt --no-index --find-links ${python_dependency_path}"
+    $install_requirements_command       = "${venv_dir}/bin/pip3 install -r requirements.txt -r local_requirements.txt --no-index --find-links ${python_dependency_path}"
   } else {
-    $install_requirements_command       = "${venv_dir}/bin/pip3 install -r requirements.txt"
-    $install_local_requirements_command = "${venv_dir}/bin/pip3 install -r local_requirements.txt"
+    $install_requirements_command       = "${venv_dir}/bin/pip3 install -r requirements.txt -r local_requirements.txt"
   }
 
   archive { $local_tarball:
@@ -155,7 +153,7 @@ class netbox::install (
     file_line { 'napalm':
       path    => "${software_directory}/local_requirements.txt",
       line    => 'napalm',
-      notify  => Exec['install local python requirements'],
+      notify  => Exec['install python requirements'],
       require => File['local_requirements']
     }
   }
@@ -164,7 +162,7 @@ class netbox::install (
     file_line { 'django_storages':
       path    => "${software_directory}/local_requirements.txt",
       line    => 'django-storages',
-      notify  => Exec['install local python requirements'],
+      notify  => Exec['install python requirements'],
       require => File['local_requirements']
     }
   }
@@ -173,7 +171,7 @@ class netbox::install (
     file_line { 'ldap':
       path    => "${software_directory}/local_requirements.txt",
       line    => 'django-auth-ldap',
-      notify  => Exec['install local python requirements'],
+      notify  => Exec['install python requirements'],
       require => File['local_requirements']
     }
   }
@@ -202,16 +200,6 @@ class netbox::install (
     provider    => shell,
     user        => $user,
     command     => $install_requirements_command,
-    onlyif      => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
-    refreshonly => true,
-  }
-  ~>exec { 'install local python requirements':
-    cwd         => $software_directory,
-    path        => [ "${venv_dir}/bin", '/usr/bin', '/usr/sbin' ],
-    environment => ["VIRTUAL_ENV=${venv_dir}"],
-    provider    => shell,
-    user        => $user,
-    command     => $install_local_requirements_command,
     onlyif      => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
     refreshonly => true,
   }
