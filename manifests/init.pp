@@ -367,6 +367,7 @@ class netbox (
     base_path               => $base_path,
     debug                   => $debug,
     enforce_global_unique   => $enforce_global_unique,
+    include_ldap            => $include_ldap,
     login_required          => $login_required,
     metrics_enabled         => $metrics_enabled,
     prefer_ipv4             => $prefer_ipv4,
