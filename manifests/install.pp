@@ -97,10 +97,10 @@ class netbox::install (
 
   $ldap_packages = [openldap-devel]
 
-  package { $packages: ensure => 'installed' }
+  ensure_packages($packages)
 
   if $include_ldap {
-    package { $ldap_packages: ensure => 'installed' }
+    ensure_packages($ldap_packages)
   }
 
   user { $user:

@@ -33,6 +33,14 @@ describe 'netbox::config' do
               default_timeout: 300,
               ssl: false,
             },
+            tasks: {
+              host: 'localhost',
+              port: 6379,
+              password: '',
+              database: 0,
+              default_timeout: 300,
+              ssl: 'False',
+            },
           },
           email_options: {
             server: 'smtp.example.com',
