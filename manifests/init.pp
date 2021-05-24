@@ -160,7 +160,7 @@
 #   are permitted to access most data in NetBox (excluding secrets) but not make any changes.
 #
 # @param metrics_enabled
-#   Setting this to true exposes Prometheus metrics at /metrics. 
+#   Setting this to true exposes Prometheus metrics at /metrics.
 #   See the Promethues Metrics documentation for more details:
 #   https://netbox.readthedocs.io/en/stable/additional-features/prometheus-metrics/)
 #
@@ -279,7 +279,7 @@ class netbox (
   String $short_datetime_format = 'Y-m-d H:i',
 ) {
 
-  Class['netbox::database'] -> Class['netbox::redis'] -> Class['netbox::install'] -> Class['netbox::config'] ~> Class['netbox::service']
+  Class['netbox::install'] -> Class['netbox::config'] ~> Class['netbox::service']
 
   if $handle_database {
     class { 'netbox::database':
@@ -289,11 +289,17 @@ class netbox (
       database_encoding => $database_encoding,
       database_locale   => $database_locale,
     }
+    if $handle_redis {
+      Class['netbox::database'] -> Class['netbox::redis']
+    } else {
+      Class['netbox::database'] -> Class['netbox::install']
+    }
   }
 
   if $handle_redis {
     class { 'netbox::redis':
     }
+    Class['netbox::redis'] -> Class['netbox::install']
   }
 
   class { 'netbox::install':
