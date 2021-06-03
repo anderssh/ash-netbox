@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] 2021-06-03
+* Fix, change package installs to ensure_packages(), so class can work with other manifests without resource dupes. [Fixes #11](https://github.com/anderssh/ash-netbox/issues/11)
+* Also fixed several tests that were failing.
+* Also fixed some dependency issues where if you manage redis or database elsewhere, the catalog will not compile. [Fixes #10](https://github.com/anderssh/ash-netbox/issues/10)   
+Thank you to github user [```lukebigum```](https://github.com/lukebigum) for submitting PRs
+
 ## [2.1.0] 2020-12-17
 * Feature, add possibility to configure encoding and locale on postgreSQL database, [as proposed here](https://github.com/anderssh/ash-netbox/issues/8)
 * Fix, The 'webhooks' REDIS configuration section has been renamed to 'tasks', [Fixes #9](https://github.com/anderssh/ash-netbox/issues/9)
