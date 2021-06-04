@@ -37,6 +37,10 @@
 # @param install_root
 #   The directory where the netbox installation is unpacked
 #
+# @param reports_root
+#   The directory where custom reports will be kept.
+#   By default, this is the netbox/reports/ directory within the base NetBox installation path.
+#
 # @param handle_database
 #   Should the PostgreSQL database be handled by this module.
 #
@@ -229,6 +233,7 @@ class netbox (
   String $version = '2.10.1',
   String $download_url = 'https://github.com/netbox-community/netbox/archive/v2.10.1.tar.gz',
   String $download_checksum = 'b827c520e4c82842e426a5f9ad2d914d1728a3671e304d5f25eb06392c24866c',
+  Optional[Stdlib::Absolutepath] $reports_root = undef,
   Stdlib::Absolutepath $download_tmp_dir = '/var/tmp',
   String $user = 'netbox',
   String $group = 'netbox',
@@ -350,6 +355,7 @@ class netbox (
     user                    => $user,
     group                   => $group,
     install_root            => $install_root,
+    reports_root            => $reports_root,
     allowed_hosts           => $allowed_hosts,
     database_name           => $database_name,
     database_user           => $database_user,
