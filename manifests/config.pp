@@ -2,6 +2,11 @@
 #
 # Configures Netbox and gunicorn, and load the database schema.
 #
+# @param version
+#   The version of Netbox. This must match the version in the
+#   tarball. This is used for managing files, directories and paths in
+#   the service.
+#
 # @param user
 #   The user owning the Netbox installation files, and running the
 #   service.
@@ -135,6 +140,7 @@
 # @example
 #   include netbox::config
 class netbox::config (
+  String $version,
   String $user,
   String $group,
   Stdlib::Absolutepath $install_root,
@@ -195,6 +201,7 @@ class netbox::config (
 
   file { $config_file:
     content      => epp('netbox/configuration.py.epp', {
+      'version'                 => $version,
       'allowed_hosts'           => $allowed_hosts,
       'database_name'           => $database_name,
       'database_user'           => $database_user,

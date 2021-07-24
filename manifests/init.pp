@@ -347,6 +347,7 @@ class netbox (
   }
 
   class { 'netbox::config':
+    version                 => $version,
     user                    => $user,
     group                   => $group,
     install_root            => $install_root,
