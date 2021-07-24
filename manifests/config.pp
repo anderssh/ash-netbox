@@ -248,9 +248,16 @@ class netbox::config (
     require => File[$config_file],
     notify  => Exec['collect static files'],
   }
+  file { 'static_folder':
+    ensure => 'directory',
+    path   => "${software_directory}/netbox/static",
+    owner  => $user,
+    group  => $group,
+    mode   => '0644',
+  }
   exec { 'collect static files':
     command     => "${venv_dir}/bin/python3 netbox/manage.py collectstatic --no-input",
-    require     => File[$config_file],
+    require     => [ File[$config_file], File['static_folder'] ],
     refreshonly => true,
   }
 }
