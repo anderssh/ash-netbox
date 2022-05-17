@@ -150,6 +150,8 @@ EMAIL = {
     'PASSWORD': '<%=$email_options['password']%>',
     'TIMEOUT': <%=$email_options['timeout']%>,  # seconds
     'FROM_EMAIL': '<%=$email_options['from_email']%>',
+    'USE_TLS': '<%=$email_options['use_tls']%>',
+    'USE_SSL': '<%=$email_options['use_ssl']%>',
 }
 
 # Enforcement of unique IP space can be toggled on a per-VRF basis. To enforce unique IP space within the global table

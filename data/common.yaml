@@ -1,1 +1,26 @@
 ---
+
+netbox::redis_options:
+  tasks:
+    host: 'localhost'
+    port: 6379
+    password: ''
+    database: 0
+    default_timeout: 300
+    ssl: 'False'
+  caching:
+    host: 'localhost'
+    port: 6379
+    password: ''
+    database: 0
+    default_timeout: 300
+    ssl: 'False'
+
+netbox::email_options:
+  server: 'localhost'
+  port: 25
+  username: ''
+  password: ''
+  from: ''
+  use_tls: false
+  use_ssl: false

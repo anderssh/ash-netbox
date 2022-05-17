@@ -81,17 +81,6 @@
 # @param handle_redis
 #   Should the Redis installation be handled by this module. Defaults to true.
 #
-# @param install_dependencies_from_filesystem
-#   Used if your machine can't reach the place pip would normally go to fetch dependencies
-#   as it would when running "pip install -r requirements.txt". Then you would have to
-#   fetch those dependencies beforehand and put them somewhere your machine can reach.
-#   This can be done by running (on a machine that can reach pip's normal sources) the following:
-#   pip download -r <requirements.txt>  -d <destination>
-#   Remember to do this on local_requirements.txt also if you have one.
-#
-# @param python_dependency_path
-#   Path to where pip can find packages when the variable $install_dependencies_from_filesystem is true
-#
 # @param database_name
 #   Name of the PostgreSQL database. If handle_database is true, then this database
 #   gets created as well. If not, then it is only used by the application, and needs to exist.
@@ -212,6 +201,18 @@
 #   Date/time formatting. See the following link for supported formats:
 #   https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
+# @param install_method
+#   Method for getting the Netbox software
+#
+# @param manage_packages
+#   Boolean for wether packages should be installed by the module or not
+#
+# @param redis_options
+#   Redis configurarion to be used
+#
+# @param email_options
+#   Email options 
+#
 # @example Defaults
 #   class { 'netbox':
 #     secret_key => $my_secret_variable
@@ -226,57 +227,60 @@
 #
 class netbox (
   String $secret_key,
-  String $version = '2.10.1',
-  String $download_url = 'https://github.com/netbox-community/netbox/archive/v2.10.1.tar.gz',
-  String $download_checksum = 'b827c520e4c82842e426a5f9ad2d914d1728a3671e304d5f25eb06392c24866c',
-  Stdlib::Absolutepath $download_tmp_dir = '/var/tmp',
-  String $user = 'netbox',
-  String $group = 'netbox',
-  String $download_checksum_type = 'sha256',
-  Stdlib::Absolutepath $install_root = '/opt',
-  Boolean $handle_database = true,
-  Boolean $handle_redis = true,
-  Boolean $install_dependencies_from_filesystem = false,
-  Stdlib::Absolutepath $python_dependency_path = '/srv/python_dependencies',
-  Boolean $include_napalm = true,
-  Boolean $include_django_storages = true,
-  Boolean $include_ldap = true,
-  String $database_name       = 'netbox',
-  String $database_user       = 'netbox',
-  String $database_password   = 'netbox',
-  String $database_encoding   = 'UTF-8',
-  String $database_locale     = 'en_US.UTF-8',
-  Stdlib::Host $database_host = 'localhost',
-  Integer $database_port = 5432,
-  Integer $database_conn_max_age = 300,
-  Array[Stdlib::Host] $allowed_hosts = ['netbox.exmple.com','localhost'],
-  String $banner_top = '',
-  String $banner_bottom = '',
-  String $banner_login = '',
-  String $base_path ='',
-  Array $admins = [],
-  Boolean $debug = false,
-  Boolean $enforce_global_unique = false,
-  Boolean $login_required = false,
-  Boolean $metrics_enabled = false,
-  Boolean $prefer_ipv4 = false,
-  Array $exempt_view_permissions = [],
-  String $napalm_username = '',
-  String $napalm_password = '',
-  Integer $napalm_timeout = 30,
-  String $email_server = 'localhost',
-  Integer $email_timeout = 10,
-  Stdlib::Port $email_port = 25,
-  String $email_username = '',
-  String $email_password = '',
-  String $email_from_email = '',
-  String $time_zone = 'UTC',
-  String $date_format = 'N j, Y',
-  String $short_date_format = 'Y-m-d',
-  String $time_format = 'g:i a',
-  String $short_time_format = 'H:i:s',
-  String $datetime_format = 'N j, Y g:i a',
-  String $short_datetime_format = 'Y-m-d H:i',
+  String $version                               = '2.10.1',
+  String $download_url                          = 'https://github.com/netbox-community/netbox/archive/v2.10.1.tar.gz',
+  String $download_checksum                     = 'b827c520e4c82842e426a5f9ad2d914d1728a3671e304d5f25eb06392c24866c',
+  Stdlib::Absolutepath $download_tmp_dir        = '/var/tmp',
+  String $user                                  = 'netbox',
+  String $group                                 = 'netbox',
+  String $download_checksum_type                = 'sha256',
+  Stdlib::Absolutepath $install_root            = '/opt',
+  Boolean $handle_database                      = true,
+  Boolean $handle_redis                         = true,
+  Boolean $include_napalm                       = true,
+  Boolean $include_django_storages              = true,
+  Boolean $include_ldap                         = true,
+  String $database_name                         = 'netbox',
+  String $database_user                         = 'netbox',
+  String $database_password                     = 'netbox',
+  String $database_encoding                     = 'UTF-8',
+  String $database_locale                       = 'en_US.UTF-8',
+  Stdlib::Host $database_host                   = 'localhost',
+  Integer $database_port                        = 5432,
+  Integer $database_conn_max_age                = 300,
+  Array[Stdlib::Host] $allowed_hosts            = ['netbox.exmple.com','localhost'],
+  String $banner_top                            = '',
+  String $banner_bottom                         = '',
+  String $banner_login                          = '',
+  String $base_path                             ='',
+  Array $admins                                 = [],
+  Boolean $debug                                = false,
+  Boolean $enforce_global_unique                = false,
+  Boolean $login_required                       = false,
+  Boolean $metrics_enabled                      = false,
+  Boolean $prefer_ipv4                          = false,
+  Array $exempt_view_permissions                = [],
+  String $napalm_username                       = '',
+  String $napalm_password                       = '',
+  Integer $napalm_timeout                       = 30,
+  String $email_server                          = 'localhost',
+  Integer $email_timeout                        = 10,
+  Stdlib::Port $email_port                      = 25,
+  String $email_username                        = '',
+  String $email_password                        = '',
+  String $email_from_email                      = '',
+  String $time_zone                             = 'UTC',
+  String $date_format                           = 'N j, Y',
+  String $short_date_format                     = 'Y-m-d',
+  String $time_format                           = 'g:i a',
+  String $short_time_format                     = 'H:i:s',
+  String $datetime_format                       = 'N j, Y g:i a',
+  String $short_datetime_format                 = 'Y-m-d H:i',
+  # Added fauzi@uchicago.edu
+  Enum['tarball', 'git_clone'] $install_method  = 'git_clone',
+  Boolean $manage_packages                      = false,
+  Hash $redis_options                           = {},
+  Hash $email_options                           = {},
 ) {
 
   Class['netbox::install'] -> Class['netbox::config'] ~> Class['netbox::service']
@@ -314,36 +318,8 @@ class netbox (
     include_napalm                       => $include_napalm,
     include_django_storages              => $include_django_storages,
     include_ldap                         => $include_ldap,
-    install_dependencies_from_filesystem => $install_dependencies_from_filesystem,
-    python_dependency_path               => $python_dependency_path,
-  }
-
-  $redis_options = {
-    'tasks' => {
-      host => 'localhost',
-      port => 6379,
-      password => '',
-      database => 0,
-      default_timeout => 300,
-      ssl => 'False',
-    },
-    'caching' => {
-      host => 'localhost',
-      port => 6379,
-      password => '',
-      database => 1,
-      default_timeout => 300,
-      ssl => 'False',
-    },
-  }
-
-  $email_options = {
-    server     => $email_server,
-    port       => $email_port,
-    username   => $email_username,
-    password   => $email_password,
-    timeout    => $email_timeout,
-    from_email => $email_from_email,
+    install_method                       => $install_method,
+    manage_packages                      => $manage_packages,
   }
 
   class { 'netbox::config':

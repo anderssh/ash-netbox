@@ -1,5 +1,6 @@
 <% | 
-  Integer $port,
+  #Integer $port,
+  String  $bind,
   Integer $workers,
   Integer $threads,
   Integer $timeout,
@@ -7,7 +8,8 @@
   Integer $max_requests_jitter,
   | -%>
 # The IP address (typically localhost) and port that the Netbox WSGI process should listen on
-bind = '127.0.0.1:<%= $port %>'
+#bind = '127.0.0.1:< % = $port % >'
+bind = '<%= $bind %>'
 
 # Number of gunicorn workers to spawn. This should typically be 2n+1, where
 # n is the number of CPU cores present.

@@ -49,16 +49,21 @@
 #   Use the documentation found here: https://netbox.readthedocs.io/en/stable/installation/5-ldap/ for information about
 #   the config file.
 #
-# @param install_dependencies_from_filesystem
-#   Used if your machine can't reach the place pip would normally go to fetch dependencies
-#   as it would when running "pip install -r requirements.txt". Then you would have to
-#   fetch those dependencies beforehand and put them somewhere your machine can reach.
-#   This can be done by running (on a machine that can reach pip's normal sources) the following:
-#   pip download -r <requirements.txt>  -d <destination>
-#   Remember to do this on local_requirements.txt also if you have one.
+# @param repo_url
+#   URL for the git repo to perform the clone.
 #
-# @param python_dependency_path
-#   Path to where pip can find packages when the variable $install_dependencies_from_filesystem is true
+# @param repo_branch
+#   Which branch to clone.
+#   Defaults to master.
+#
+# @param manage_packages
+#   Boolean for wether packages should be installed by the module or not.
+#
+# @param packages
+#   List of packages to be installed.
+#
+# @param ldap_packages
+#   List of ldap pacakges to install should ldap be enabled.
 #
 # @example
 #   include netbox::install
@@ -74,30 +79,23 @@ class netbox::install (
   Boolean $include_napalm,
   Boolean $include_django_storages,
   Boolean $include_ldap,
-  Boolean $install_dependencies_from_filesystem,
-  Stdlib::Absolutepath $python_dependency_path,
   Enum['tarball', 'git_clone'] $install_method = 'tarball',
+  # added fauzi@uchicago.edu
+  String $repo_url    = 'https://github.com/netbox-community/netbox.git',
+  String $repo_branch = "master",
+  Boolean $manage_packages,
+  Array $packages = [],
+  Array $ldap_packages = []
 ) {
-
-  $packages =[
-    gcc,
-    python36,
-    python36-devel,
-    libxml2-devel,
-    libxslt-devel,
-    libffi-devel,
-    openssl-devel,
-    redhat-rpm-config
-  ]
 
   $local_tarball = "${download_tmp_dir}/netbox-${version}.tar.gz"
   $software_directory_with_version = "${install_root}/netbox-${version}"
   $software_directory = "${install_root}/netbox"
   $venv_dir = "${software_directory}/venv"
 
-  $ldap_packages = [openldap-devel]
-
-  ensure_packages($packages)
+  if $manage_packages {
+    ensure_packages($packages)
+  }
 
   if $include_ldap {
     ensure_packages($ldap_packages)
@@ -113,15 +111,8 @@ class netbox::install (
     system => true,
   }
 
-  if $install_dependencies_from_filesystem {
-    $install_requirements_command       = "${venv_dir}/bin/pip3 install -r requirements.txt --no-index --find-links ${python_dependency_path}"
-    $install_local_requirements_command = "${venv_dir}/bin/pip3 install -r local_requirements.txt --no-index --find-links ${python_dependency_path}"
-  } else {
-    $install_requirements_command       = "${venv_dir}/bin/pip3 install -r requirements.txt"
-    $install_local_requirements_command = "${venv_dir}/bin/pip3 install -r local_requirements.txt"
-  }
-
-  archive { $local_tarball:
+  if $install_method == "tarball" {
+    archive { $local_tarball:
       source        => $download_url,
       checksum      => $download_checksum,
       checksum_type => $download_checksum_type,
@@ -139,10 +130,24 @@ class netbox::install (
       refreshonly => true,
     }
 
-  file { $software_directory:
-    ensure => 'link',
-    target => $software_directory_with_version,
+    file { $software_directory:
+      ensure => 'link',
+      target => $software_directory_with_version,
+    }
+  } elsif $install_method == 'git_clone' {
+    vcsrepo { $software_directory:
+      ensure   => present,
+      provider => 'git',
+      source   => "${repo_url}",
+      branch   => "${repo_branch}",
+      depth    => 1,
+      owner    => "${user}",
+      group    => "${group}",
+      notify   => Python::Requirements["${software_directory}/requirements.txt"],
+    }
   }
+
+
   file { 'local_requirements':
     ensure => 'present',
     path   => "${software_directory}/local_requirements.txt",
@@ -154,7 +159,7 @@ class netbox::install (
     file_line { 'napalm':
       path    => "${software_directory}/local_requirements.txt",
       line    => 'napalm',
-      notify  => Exec['install local python requirements'],
+      notify  => Python::Requirements["${software_directory}/local_requirements.txt"],
       require => File['local_requirements']
     }
   }
@@ -163,7 +168,7 @@ class netbox::install (
     file_line { 'django_storages':
       path    => "${software_directory}/local_requirements.txt",
       line    => 'django-storages',
-      notify  => Exec['install local python requirements'],
+      notify  => Python::Requirements["${software_directory}/local_requirements.txt"],
       require => File['local_requirements']
     }
   }
@@ -172,36 +177,29 @@ class netbox::install (
     file_line { 'ldap':
       path    => "${software_directory}/local_requirements.txt",
       line    => 'django-auth-ldap',
-      notify  => Exec['install local python requirements'],
+      notify  => Python::Requirements["${software_directory}/local_requirements.txt"],
       require => File['local_requirements']
     }
   }
 
-  exec { "python_venv_${venv_dir}":
-    command => "/usr/bin/python3 -m venv ${venv_dir}",
-    user    => $user,
-    creates => "${venv_dir}/bin/activate",
-    cwd     => '/tmp',
-    unless  => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
+  include python
+
+  python::pyvenv { $venv_dir:
+    ensure  => present,
+    version => 'system',
+    owner   => "${user}",
+    group   => "${group}",
   }
-  ~>exec { 'install python requirements':
-    cwd         => $software_directory,
-    path        => [ "${venv_dir}/bin", '/usr/bin', '/usr/sbin' ],
-    environment => ["VIRTUAL_ENV=${venv_dir}"],
-    provider    => shell,
-    user        => $user,
-    command     => $install_requirements_command,
-    onlyif      => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
-    refreshonly => true,
+
+  python::requirements { "${software_directory}/requirements.txt":
+    virtualenv => "${venv_dir}",
+    owner   => "${user}",
+    group   => "${group}",
   }
-  ~>exec { 'install local python requirements':
-    cwd         => $software_directory,
-    path        => [ "${venv_dir}/bin", '/usr/bin', '/usr/sbin' ],
-    environment => ["VIRTUAL_ENV=${venv_dir}"],
-    provider    => shell,
-    user        => $user,
-    command     => $install_local_requirements_command,
-    onlyif      => "/usr/bin/grep '^[\\t ]*VIRTUAL_ENV=[\\\\'\\\"]*${venv_dir}[\\\"\\\\'][\\t ]*$' ${venv_dir}/bin/activate",
-    refreshonly => true,
+  ~>python::requirements { "${software_directory}/local_requirements.txt":
+    virtualenv => "${venv_dir}",
+    owner   => "${user}",
+    group   => "${group}",
   }
+
 }

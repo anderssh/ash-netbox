@@ -176,7 +176,7 @@ class netbox::config (
   $gunicorn_file = "${software_directory}/gunicorn.py"
 
   $gunicorn_settings = {
-    port                => 8001,
+    bind                => 'unix:/run/netbox/gunicorn.socket',
     workers             => 5,
     threads             => 3,
     timeout             => 120,
@@ -184,11 +184,19 @@ class netbox::config (
     max_requests_jitter => 500,
   }
 
+  file { '/run/netbox/':
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
+    mode   =>  '755',
+  }
+
   file { $gunicorn_file:
     content => epp('netbox/gunicorn.py.epp', $gunicorn_settings),
     owner   => $user,
     group   => $group,
     mode    => '0644',
+    require => File['/run/netbox/'],
   }
 
   $config_file = "${software_directory}/netbox/netbox/configuration.py"
