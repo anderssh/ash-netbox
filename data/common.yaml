@@ -35,6 +35,3 @@ netbox::config::gunicorn_settings:
   timeout: 120
   max_requests: 5000
   max_requests_jitter: 500
-
-# netbox::config::bind: 'unix:/run/netbox/gunicorn.socket'
-# netbox::config::bind: '127.0.0.1:8000'
