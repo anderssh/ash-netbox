@@ -132,6 +132,9 @@
 # Date/time formatting. See the following link for supported formats:
 # https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
+# @param gunicorn_setting
+#   gunicorn custom configurations.
+#
 # @example
 #   include netbox::config
 class netbox::config (
@@ -169,20 +172,13 @@ class netbox::config (
   String $short_time_format,
   String $datetime_format,
   String $short_datetime_format,
+  # added fauzi@uchicago.edu
+  Hash $gunicorn_settings,
 ) {
   $should_create_superuser = false;
   $software_directory = "${install_root}/netbox"
   $venv_dir = "${software_directory}/venv"
   $gunicorn_file = "${software_directory}/gunicorn.py"
-
-  $gunicorn_settings = {
-    bind                => 'unix:/run/netbox/gunicorn.socket',
-    workers             => 5,
-    threads             => 3,
-    timeout             => 120,
-    max_requests        => 5000,
-    max_requests_jitter => 500,
-  }
 
   file { '/run/netbox/':
     ensure => directory,

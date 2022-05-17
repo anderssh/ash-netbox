@@ -120,7 +120,7 @@ class netbox::install (
       extract_path  => $install_root,
       creates       => $software_directory_with_version,
       cleanup       => true,
-      notify        => Exec['install python requirements'],
+      notify        => Python::Requirements["${software_directory}/requirements.txt"],
     }
 
     exec { 'netbox permission':

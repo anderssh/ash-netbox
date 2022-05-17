@@ -201,12 +201,6 @@
 #   Date/time formatting. See the following link for supported formats:
 #   https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
-# @param install_method
-#   Method for getting the Netbox software
-#
-# @param manage_packages
-#   Boolean for wether packages should be installed by the module or not
-#
 # @param redis_options
 #   Redis configurarion to be used
 #
@@ -277,8 +271,6 @@ class netbox (
   String $datetime_format                       = 'N j, Y g:i a',
   String $short_datetime_format                 = 'Y-m-d H:i',
   # Added fauzi@uchicago.edu
-  Enum['tarball', 'git_clone'] $install_method  = 'git_clone',
-  Boolean $manage_packages                      = false,
   Hash $redis_options                           = {},
   Hash $email_options                           = {},
 ) {
@@ -318,8 +310,6 @@ class netbox (
     include_napalm                       => $include_napalm,
     include_django_storages              => $include_django_storages,
     include_ldap                         => $include_ldap,
-    install_method                       => $install_method,
-    manage_packages                      => $manage_packages,
   }
 
   class { 'netbox::config':
