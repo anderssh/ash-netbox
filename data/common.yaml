@@ -24,3 +24,17 @@ netbox::email_options:
   from: ''
   use_tls: false
   use_ssl: false
+
+netbox::install::install_method: 'git_clone'
+netbox::install::manage_packages: false
+
+netbox::config::gunicorn_settings:
+  bind: 'unix:/run/netbox/gunicorn.socket'
+  workers: 5
+  threads: 3
+  timeout: 120
+  max_requests: 5000
+  max_requests_jitter: 500
+
+# netbox::config::bind: 'unix:/run/netbox/gunicorn.socket'
+# netbox::config::bind: '127.0.0.1:8000'
