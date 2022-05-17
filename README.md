@@ -41,6 +41,7 @@ Add dependency modules to your puppet environment:
 * puppet/archive
 * puppetlabs/inifile
 * puppetlabs/stdlib
+* puppet/python
 
 If you are going to use this module to install PostgreSQL and Redis, then you need these as well:
 
