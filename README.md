@@ -197,4 +197,4 @@ There are several optional integrations and configuration options found in the N
  
 ## Development
 
-I would be more than happy if you wanted to improve this module. Use the Github issue tracker to submit issues og fork it and issue Pull Requests. 
+I would be more than happy if you wanted to improve this module. Use the Github issue tracker to submit issues or fork it and issue Pull Requests.
