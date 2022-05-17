@@ -184,7 +184,14 @@ class netbox::config (
     ensure => directory,
     owner  => $user,
     group  => $group,
-    mode   =>  '755',
+    mode   =>  '0755',
+  }
+
+  file { '/var/log/netbox':
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
+    mode   => '0755',
   }
 
   file { $gunicorn_file:

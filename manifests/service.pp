@@ -17,6 +17,8 @@ class netbox::service (
   Stdlib::Absolutepath $install_root,
   String $user,
   String $group,
+  Stdlib::Absolutepath $access_logfile,
+  Stdlib::Absolutepath $error_logfile,
 ){
 
   $netbox_pid_file = '/var/tmp/netbox.pid'
@@ -28,10 +30,12 @@ class netbox::service (
   }
 
   $service_params_netbox = {
-    'netbox_home'  => "${install_root}/netbox",
-    'user'         => $user,
-    'group'        => $group,
-    'pidfile'      => $netbox_pid_file,
+    'netbox_home'    => "${install_root}/netbox",
+    'user'           => $user,
+    'group'          => $group,
+    'pidfile'        => $netbox_pid_file,
+    'access_logfile' => $access_logfile,
+    'error_logfile'  => $error_logfile,
   }
 
   systemd::unit_file { 'netbox-rq.service':

@@ -3,6 +3,8 @@
   String $group,
   Stdlib::Absolutepath $netbox_home,
   Stdlib::Absolutepath $pidfile,
+  Stdlib::Absolutepath $access_logfile,
+  Stdlib::Absolutepath $error_logfile,
   | -%>
 
 [Unit]
@@ -19,7 +21,7 @@ Group=<%= $group %>
 PIDFile=<%= $pidfile %>
 WorkingDirectory=<%= $netbox_home %>
 
-ExecStart=<%= $netbox_home %>/venv/bin/gunicorn --pid <%= $pidfile %> --pythonpath <%= $netbox_home %>/netbox --config <%= $netbox_home %>/gunicorn.py netbox.wsgi
+ExecStart=<%= $netbox_home %>/venv/bin/gunicorn --access-logfile <%= $access_logfile %> --error-logfile <%= $error_logfile %> --pid <%= $pidfile %> --pythonpath <%= $netbox_home %>/netbox --config <%= $netbox_home %>/gunicorn.py netbox.wsgi
 
 Restart=on-failure
 RestartSec=30
