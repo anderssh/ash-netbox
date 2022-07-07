@@ -229,7 +229,8 @@ class netbox::config (
     }),
     owner        => $user,
     group        => $group,
-    mode         => '0644',
+    mode         => '0640',
+    show_diff    => false,
     validate_cmd => "${venv_dir}/bin/python -m py_compile %",
     notify       => Exec['collect static files'],
   }
