@@ -212,18 +212,30 @@
 #   Date/time formatting. See the following link for supported formats:
 #   https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date
 #
+# @param custom_configuration
+#   An array of strings containing custom configuration blocks
+#   Make sure these are valid python
+#
 # @example Defaults
 #   class { 'netbox':
-#     secret_key => $my_secret_variable
+#     secret_key          => $my_secret_variable
 #   }
 #
 # @example Downloading from a different repository
 #   class { 'netbox':
-#     version           => 'x.y.z',
-#     download_url      => 'https://my.local.repo.example.com/netbox/netbox-x.y.z.tar.gz',
-#     download_checksum => 'abcde...',
+#     version             => 'x.y.z',
+#     download_url        => 'https://my.local.repo.example.com/netbox/netbox-x.y.z.tar.gz',
+#     download_checksum   => 'abcde...',
 #   }
 #
+# @example Using custom configuration entries
+# class { '::netbox':
+#   custom_configuration => [
+#     'SOCIAL_AUTH_KEYCLOAK_AUTHORIZATION_URL = "https://login.keycloak/auth",
+#     'SOCIAL_AUTH_KEYCLOAK_SECRET = "secret",
+#   ]
+# }
+
 class netbox (
   String $secret_key,
   String $version = '2.10.1',
@@ -277,6 +289,7 @@ class netbox (
   String $short_time_format = 'H:i:s',
   String $datetime_format = 'N j, Y g:i a',
   String $short_datetime_format = 'Y-m-d H:i',
+  Array[String] $custom_configuration = [],
 ) {
 
   Class['netbox::install'] -> Class['netbox::config'] ~> Class['netbox::service']
@@ -381,6 +394,7 @@ class netbox (
     short_time_format       => $short_time_format,
     datetime_format         => $datetime_format,
     short_datetime_format   => $short_datetime_format,
+    custom_configuration    => $custom_configuration,
   }
 
   class {'netbox::service':

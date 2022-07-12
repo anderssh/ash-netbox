@@ -30,6 +30,7 @@
   String $short_time_format, 
   String $datetime_format,
   String $short_datetime_format,
+  Array[String] $custom_configuration,
   | -%>
 
 #########################
@@ -257,3 +258,6 @@ TIME_FORMAT = '<%= $time_format %>'
 SHORT_TIME_FORMAT = '<%= $short_time_format %>'
 DATETIME_FORMAT = '<%= $datetime_format %>'
 SHORT_DATETIME_FORMAT = '<%= $short_datetime_format %>'
+<% $custom_configuration.each|String $block| { -%>
+<%= $block %>
+<% } -%>
