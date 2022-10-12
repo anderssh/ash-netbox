@@ -78,6 +78,12 @@
 #   Enforcement of unique IP space can be toggled on a per-VRF basis. To enforce unique IP space within the global table
 #   (all prefixes and IP addresses not assigned to a VRF), set ENFORCE_GLOBAL_UNIQUE to True.
 #
+# @param include_ldap
+#   Makes sure the packages and the python modules needed for LDAP-authentication are installed and loaded.
+#   The LDAP-config itself is not handled by this Puppet module at present.
+#   Use the documentation found here: https://netbox.readthedocs.io/en/stable/installation/5-ldap/ for information about
+#   the config file.
+#
 # @param login_required
 #   Setting this to True will permit only authenticated users to access any part of NetBox. By default, anonymous users
 #   are permitted to access most data in NetBox (excluding secrets) but not make any changes.
@@ -155,6 +161,7 @@ class netbox::config (
   String $base_path,
   Boolean $debug,
   Boolean $enforce_global_unique,
+  Boolean $include_ldap,
   Boolean $login_required,
   Boolean $metrics_enabled,
   Boolean $prefer_ipv4,
@@ -212,6 +219,7 @@ class netbox::config (
       'base_path'               => $base_path,
       'debug'                   => $debug,
       'enforce_global_unique'   => $enforce_global_unique,
+      'include_ldap'            => $include_ldap,
       'exempt_view_permissions' => $exempt_view_permissions,
       'login_required'          => $login_required,
       'metrics_enabled'         => $metrics_enabled,

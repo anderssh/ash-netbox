@@ -16,6 +16,7 @@
   Array $admins,
   Boolean $debug,
   Boolean $enforce_global_unique,
+  Boolean $include_ldap,
   Boolean $login_required,
   Boolean $metrics_enabled,
   Boolean $prefer_ipv4,
@@ -54,6 +55,10 @@ DATABASE = {
     'PORT': <%=$database_port%>,   # Database port (leave blank for default)
     'CONN_MAX_AGE': <%=$database_conn_max_age%>,      # Max database connection age
 }
+
+<% if $include_ldap { -%>
+REMOTE_AUTH_BACKEND = 'netbox.authentication.LDAPBackend'
+<% } -%>
 
 # Redis database settings. The Redis database is used for caching and background processing such as webhooks
 # Seperate sections for webhooks and caching allow for connecting to seperate Redis instances/datbases if desired.
