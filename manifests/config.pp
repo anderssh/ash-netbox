@@ -243,7 +243,7 @@ class netbox::config (
   }
 
   exec { 'database migration':
-    onlyif  => "${venv_dir}/bin/python3 netbox/manage.py showmigrations | grep '\[ \]'",
+    onlyif  => "${venv_dir}/bin/python3 netbox/manage.py showmigrations | grep '\\[ \\]'",
     command => "${venv_dir}/bin/python3 netbox/manage.py migrate --no-input",
     require => File[$config_file],
     notify  => Exec['collect static files'],
