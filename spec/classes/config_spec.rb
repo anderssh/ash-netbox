@@ -70,6 +70,7 @@ describe 'netbox::config' do
           login_required: false,
           metrics_enabled: false,
           prefer_ipv4: false,
+          session_file_path: '',
           exempt_view_permissions: [],
           napalm_username: 'some_username',
           napalm_password: 'some_secret_password',
