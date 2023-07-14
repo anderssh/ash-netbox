@@ -8,6 +8,7 @@
   Integer $database_conn_max_age,
   Hash $redis_options,
   Hash $email_options,
+  Optional[Stdlib::Absolutepath] $reports_root,
   String $secret_key,
   String $banner_top,
   String $banner_bottom,
@@ -233,9 +234,11 @@ PREFER_IPV4 = True
 PREFER_IPV4 = False
 <% } -%>
 
+<% unless $reports_root =~ Undef { -%>
 # The file path where custom reports will be stored. A trailing slash is not needed. Note that the default value of
 # this setting is derived from the installed location.
-# REPORTS_ROOT = '/opt/netbox/netbox/reports'
+REPORTS_ROOT = '<%= $reports_root %>'
+<% } -%>
 
 # The file path where custom scripts will be stored. A trailing slash is not needed. Note that the default value of
 # this setting is derived from the installed location.

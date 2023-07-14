@@ -13,6 +13,10 @@
 # @param install_root
 #   The directory where the netbox installation is unpacked
 #
+# @param reports_root
+#   The file path to the location where custom reports will be kept.
+#   By default, this is the netbox/reports/ directory within the base NetBox installation path.
+#
 # @param allowed_hosts
 #   Array of valid fully-qualified domain names (FQDNs) for the NetBox server. NetBox will not permit write
 #   access to the server via any other hostnames. The first FQDN in the list will be treated as the preferred name.
@@ -138,6 +142,7 @@ class netbox::config (
   String $user,
   String $group,
   Stdlib::Absolutepath $install_root,
+  Optional[Stdlib::Absolutepath] $reports_root,
   Array[Stdlib::Host] $allowed_hosts,
   String $database_name,
   String $database_user,
@@ -202,6 +207,7 @@ class netbox::config (
       'database_host'           => $database_host,
       'database_port'           => $database_port,
       'database_conn_max_age'   => $database_conn_max_age,
+      'reports_root'            => $reports_root,
       'redis_options'           => $redis_options,
       'email_options'           => $email_options,
       'secret_key'              => $secret_key,
